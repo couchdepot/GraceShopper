@@ -1,13 +1,13 @@
 const faker = require('faker');
 const db = require('./db');
 const User = require('./User');
+const Category = require('./Category');
+const Product = require('./Product');
 // const Cart = require('./Cart');
-// const Category = require('./Category');
-// const Product = require('./Product');
 
 // Association
+Product.belongsTo(Category);
 // Cart.belongsTo(User);
-// Product.belongsTo(Category);
 
 // Class methods for creating fake model instances
 User.createFakeUser = function() {
@@ -32,19 +32,57 @@ User.createFakeUsers = function(count) {
 };
 
 // need Class method for creating fake category and categories
+Category.createFakeCategory = function() {
+  return this.create({ name: faker.commerce.department() });
+};
+
+Category.createFakeCategories = function(count) {
+  const categories = [];
+  while (categories.length < count) {
+    categories.push(this.createFakeCategory());
+  }
+  return categories;
+};
 // need Class method for creating fake product
+Product.createFakeProduct = function(id) {
+  return this.create({
+    name: faker.commerce.productName(),
+    description: faker.lorem.paragraph(4),
+    price: 9.99,
+    quantity: 10,
+    imageUrl: faker.image.cats(),
+    categoryId: id,
+  });
+};
+
+Product.createFakeProducts = function(count, id) {
+  const products = [];
+  while (products.length < count) {
+    products.push(this.createFakeProduct(id));
+  }
+  return products;
+};
 
 const syncAndSeed = () => {
   return (
     db
       .sync({ force: true })
-      .then(() => User.createFakeUsers(5))
-      //map over users and create cart for each use userId is user.id
-      //create some number of fake categories
-      //map over catagories and create some number of fake products
+      .then(() => User.createFakeUsers(3))
+      //map over users and create cart for each user (userId is user.id)
+      .then(() => Category.createFakeCategories(5))
+      .then(categories =>
+        categories.forEach(cat => console.log(cat.name))
+        // Promise.all(
+        //   categories.map(category =>
+        //     Product.createFakeProducts(2, category.id)
+        //   )
+        // )
+      )
       .then(() => console.log('Database is synced and seeded'))
       .catch(err => console.error(err))
   );
 };
+
+syncAndSeed();
 
 module.exports = { User, syncAndSeed };
