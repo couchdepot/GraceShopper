@@ -9,7 +9,7 @@
     "start": "node Server",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack -- --mode=development --watch",
-    "start:dev": "npm run webpack:dev & nodemon Server --ignore src/ --ignore dist/"
+    "start:dev": "npm run webpack:dev & nodemon server --ignore src/ --ignore dist/"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "faker": "^4.1.0",
+    "nodemon": "^1.19.0",
     "pg": "^7.10.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
