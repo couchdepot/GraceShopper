@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('../Db');
+const { User } = require('../db');
 
 
 // To login
 router.post('/', (req, res, next) => {
   User.findOne({
-      where: {
-        email: req.body.email,
-        password: req.body.password
-      }
-    })
+    where: {
+      email: req.body.email,
+      password: req.body.password
+    }
+  })
     .then(user => {
       if (!user) {
         const error = new Error('Incorrect email or password');
