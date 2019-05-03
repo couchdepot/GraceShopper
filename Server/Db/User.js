@@ -1,30 +1,30 @@
-const Sequilize = require('sequelize');
+const Sequelize = require('sequelize');
 const db = require('./db');
 
 const User = db.define('user', {
   firstName: {
-    type: Sequilize.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   lastName: {
-    type: Sequilize.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   address: {
-    type: Sequilize.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   email: {
-    type: Sequilize.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
     unique: { msg: 'Email must be unique' },
     validate: {
@@ -33,7 +33,7 @@ const User = db.define('user', {
     },
   },
   password: {
-    type: Sequilize.STRING,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -41,7 +41,7 @@ const User = db.define('user', {
     },
   },
   admin: {
-    type: Sequilize.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false,
   },

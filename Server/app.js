@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const session = require('express-session');
-const { auth } = require('./Routes');
+const { auth } = require('./routes');
 
 // Body parsing middleware
 app.use(express.json());
