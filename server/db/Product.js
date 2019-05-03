@@ -25,7 +25,8 @@ const Product = db.define('product', {
         }
     },
     imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'http://sites.psu.edu/siowfa15/wp-content/uploads/sites/29639/2015/10/cat.jpg'
     }
 });
 

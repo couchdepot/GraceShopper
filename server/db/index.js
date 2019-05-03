@@ -4,12 +4,15 @@ const User = require('./User');
 const Category = require('./Category');
 const Product = require('./Product');
 // const Cart = require('./Cart');
+// const LineItem = require('./LineItem');
 
 // Association
 Product.belongsTo(Category);
 // Cart.belongsTo(User);
+// LineItem.belongsTo(Cart);
 
 // Class methods for creating fake model instances
+// Creating fake users
 User.createFakeUser = function() {
   return this.create({
     firstName: faker.name.firstName(),
@@ -31,34 +34,32 @@ User.createFakeUsers = function(count) {
   return users;
 };
 
-// need Class method for creating fake category and categories
-Category.createFakeCategory = function() {
-  return this.create({ name: faker.commerce.department() });
-};
-
+// Creating unique categories
 Category.createFakeCategories = function(count) {
-  const categories = [];
-  while (categories.length < count) {
-    categories.push(this.createFakeCategory());
+  const names =[];
+  while (names.length < count) {
+    const name = faker.commerce.department();
+    if(!names.includes(name)) names.push(name);
   }
-  return categories;
-};
-// need Class method for creating fake product
-Product.createFakeProduct = function(id) {
+  return names.map(name => this.create({name}));
+}
+
+// Creating fake product
+Product.createFakeProduct = function(categoryId) {
   return this.create({
     name: faker.commerce.productName(),
-    description: faker.lorem.paragraph(4),
-    price: 9.99,
+    description: faker.lorem.paragraph(3),
+    price: faker.finance.amount(50, 150, 2),
     quantity: 10,
     imageUrl: faker.image.cats(),
-    categoryId: id,
+    categoryId,
   });
 };
 
-Product.createFakeProducts = function(count, id) {
+Product.createFakeProducts = function(count, categoryId) {
   const products = [];
   while (products.length < count) {
-    products.push(this.createFakeProduct(id));
+    products.push(this.createFakeProduct(categoryId));
   }
   return products;
 };
@@ -82,6 +83,5 @@ const syncAndSeed = () => {
   );
 };
 
-syncAndSeed();
 
 module.exports = { User, syncAndSeed };

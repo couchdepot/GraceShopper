@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Product = require('../Db/Product')
+const Product = require('../db/Product')
 
 router.get('/', (req, res, next) => {
     return Product.findAll()
