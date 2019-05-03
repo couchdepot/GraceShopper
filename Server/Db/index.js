@@ -67,16 +67,15 @@ const syncAndSeed = () => {
   return (
     db
       .sync({ force: true })
-      .then(() => User.createFakeUsers(3))
+      .then(() => Promise.all(User.createFakeUsers(3)))
       //map over users and create cart for each user (userId is user.id)
-      .then(() => Category.createFakeCategories(5))
+      .then(() => Promise.all(Category.createFakeCategories(5)))
       .then(categories =>
-        categories.forEach(cat => console.log(cat.name))
-        // Promise.all(
-        //   categories.map(category =>
-        //     Product.createFakeProducts(2, category.id)
-        //   )
-        // )
+        Promise.all(
+          categories.map(category =>
+            Product.createFakeProducts(5, category.id)
+          )
+        )
       )
       .then(() => console.log('Database is synced and seeded'))
       .catch(err => console.error(err))
