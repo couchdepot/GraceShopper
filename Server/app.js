@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const session = require('express-session');
-const { auth } = require('./routes');
+const { auth, products } = require('./routes');
 
 // Body parsing middleware
 app.use(express.json());
@@ -17,11 +17,12 @@ app.use(session({
 // Authentication router
 app.use('auth', auth);
 
+app.use('/api/products', products);
+
 
 app.get('/app.js', (req, res, next) => res.sendFile(path.join(__dirname, '..', 'dist', 'main.js')));
 
 app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, 'index.html')));
-
 
 // Handle 404s
 app.use((req, res, next) => {
