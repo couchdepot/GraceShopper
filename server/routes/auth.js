@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../db');
+const { User } = require('../db').models;
 
 module.exports = router;
 
@@ -40,5 +40,3 @@ router.get('/', (req, res, next) => {
   }
   res.send(req.session.user);
 });
-
-module.exports = router;

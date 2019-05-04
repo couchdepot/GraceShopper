@@ -82,4 +82,13 @@ const syncAndSeed = () => {
   );
 };
 
-module.exports = { User, syncAndSeed };
+module.exports = {
+  syncAndSeed,
+  models: {
+    User,
+    Category,
+    Product,
+    Cart,
+    LineItem,
+  },
+};
