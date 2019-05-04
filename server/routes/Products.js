@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Product = require('../db/Product');
 
+module.exports = router;
+
 // GET :/api/products
 router.get('/', (req, res, next) => {
   return Product.findAll()
@@ -25,5 +27,3 @@ router.get('/:productId', (req, res, next) => {
     .then(product => res.send(product))
     .catch(next);
 });
-
-module.exports = router;

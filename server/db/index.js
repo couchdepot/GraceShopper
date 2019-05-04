@@ -3,13 +3,14 @@ const db = require('./db');
 const User = require('./User');
 const Category = require('./Category');
 const Product = require('./Product');
-// const Cart = require('./Cart');
-// const LineItem = require('./LineItem');
+const Cart = require('./Cart');
+const LineItem = require('./LineItem');
 
 // Association
 Product.belongsTo(Category);
-// Cart.belongsTo(User);
-// LineItem.belongsTo(Cart);
+Cart.belongsTo(User);
+LineItem.belongsTo(Cart);
+LineItem.belongsTo(Product);
 
 // Class methods for creating fake model instances
 // Creating fake users
@@ -36,13 +37,13 @@ User.createFakeUsers = function(count) {
 
 // Creating unique categories
 Category.createFakeCategories = function(count) {
-  const names =[];
+  const names = [];
   while (names.length < count) {
     const name = faker.commerce.department();
-    if(!names.includes(name)) names.push(name);
+    if (!names.includes(name)) names.push(name);
   }
-  return names.map(name => this.create({name}));
-}
+  return names.map(name => this.create({ name }));
+};
 
 // Creating fake product
 Product.createFakeProduct = function(categoryId) {
@@ -73,15 +74,12 @@ const syncAndSeed = () => {
       .then(() => Promise.all(Category.createFakeCategories(5)))
       .then(categories =>
         Promise.all(
-          categories.map(category =>
-            Product.createFakeProducts(5, category.id)
-          )
+          categories.map(category => Product.createFakeProducts(5, category.id))
         )
       )
       .then(() => console.log('Database is synced and seeded'))
       .catch(err => console.error(err))
   );
 };
-
 
 module.exports = { User, syncAndSeed };
