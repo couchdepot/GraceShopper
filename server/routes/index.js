@@ -1,3 +1,13 @@
-const auth = require('./auth');
+const router = require('express').Router();
+module.exports = router;
 
-module.exports = { auth };
+// api/auth
+router.use('/auth', require('./auth'));
+
+// api/products
+router.use('/products', require('./products'));
+
+// Handle 404s
+router.use((req, res, next) => {
+  res.status(404).send('Not Found!');
+});
