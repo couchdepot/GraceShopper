@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProducts } from '../reducers';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -12,10 +11,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
 class ProductsList extends Component {
-  componentDidMount() {
-    return this.props.getProducts();
-  }
-
   render() {
     return (
       <div>
@@ -85,15 +80,8 @@ class ProductsList extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  getProducts: () => dispatch(getProducts()),
-});
-
 const mapStateToProps = state => ({
   products: state.products,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductsList);
+export default connect(mapStateToProps)(ProductsList);

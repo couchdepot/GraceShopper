@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { ProductsList, Login, SingleProduct } from './';
 import Navbar from './Navbar';
-import { loginSession, getUsersCart } from '../reducers';
+import { loginSession, getUsersCart, getProducts } from '../reducers';
 
 class App extends Component {
   componentDidMount() {
-    this.props.loginSession();
+    Promise.all([this.props.loginSession(), this.props.getProducts()]);
   }
 
   componentDidUpdate(prevProps) {
     const { user, getUsersCart } = this.props;
-    if (user.id !== prevProps.user.id) getUsersCart(user.id, 'inCart');
+    if (user.id !== prevProps.user.id)
+      Promise.all([getUsersCart(user.id, 'inCart'), this.props.getProducts()]);
   }
 
   render() {
@@ -37,6 +38,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getUsersCart: (userId, status) => dispatch(getUsersCart(userId, status)),
     loginSession: () => dispatch(loginSession()),
+    getProducts: () => dispatch(getProducts()),
   };
 };
 
