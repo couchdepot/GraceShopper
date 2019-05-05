@@ -1,11 +1,14 @@
 const router = require('express').Router();
 module.exports = router;
 
-// api/auth
+// :/api/auth
 router.use('/auth', require('./auth'));
 
-// api/products
+// :/api/products
 router.use('/products', require('./products'));
+
+// :/api/carts
+router.use('/carts', require('./carts'));
 
 // Handle 404s
 router.use((req, res, next) => {
