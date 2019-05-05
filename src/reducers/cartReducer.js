@@ -9,7 +9,7 @@ const gotCart = cart => {
   };
 };
 
-export const cartReducer = (state = [], action) => {
+export const cartReducer = (state = {}, action) => {
   switch (action.type) {
     case GOT_CART:
       return action.cart;
@@ -24,6 +24,6 @@ export const getUsersCart = (userId, status) => {
     return axios
       .get(`/api/carts/${userId}/${status}`)
       .then(response => response.data)
-      .then(cart => dispatch(gotCart(cart)));
+      .then(cart => dispatch(gotCart(cart[0])));
   };
 };
