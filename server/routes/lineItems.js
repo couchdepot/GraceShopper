@@ -1,7 +1,9 @@
 const router = require('express').Router();
 module.exports = router;
 
-const { LineItem } = require('../db').models;
+const {
+  models: { LineItem },
+} = require('../db');
 
 // POST :/api/lineItems
 router.post('/', (req, res, next) => {

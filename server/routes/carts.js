@@ -1,7 +1,9 @@
 const router = require('express').Router();
 module.exports = router;
 
-const { Cart } = require('../db').models;
+const {
+  models: { Cart },
+} = require('../db');
 
 // POST :/api/carts
 router.post('/', (req, res, next) => {
