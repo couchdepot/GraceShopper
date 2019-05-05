@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom';
-import { ProductsList, Login } from './';
+import { ProductsList, Login, SingleProduct } from './';
 import Navbar from './Navbar';
 import { loginSession, getUsersCart } from '../reducers';
 
@@ -17,13 +17,12 @@ class App extends Component {
 
   render() {
     return (
-      <Fragment>
-        <Router>
-          <Navbar />
-          <Route path="/login" exact component={Login} />
-          <Route path="/products" component={ProductsList} />
-        </Router>
-      </Fragment>
+      <Router>
+        <Navbar />
+        <Route path="/login" exact component={Login} />
+        <Route exact path="/products" component={ProductsList} />
+        <Route path="/products/:productId" component={SingleProduct} />
+      </Router>
     );
   }
 }
