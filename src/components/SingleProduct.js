@@ -19,12 +19,12 @@ const SingleProduct = props => {
     <div>
       <Paper
         style={{
-          marginTop: '5vh',
+          marginTop: '1vh',
           paddingLeft: '2vw',
           paddingRight: '2vw',
           paddingTop: '4vh',
           paddingBottom: '4vh',
-          marginBottom: '2vh',
+          marginBottom: '1vh',
         }}
       >
         <Grid container spacing={16}>

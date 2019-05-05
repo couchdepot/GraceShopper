@@ -40,7 +40,7 @@ class ProductsList extends Component {
         <Grid
           container
           spacing={40}
-          style={{ marginTop: '60px', paddingLeft: 240 }}
+          style={{ marginTop: '60px', paddingLeft: 250 }}
         >
           {this.props.products.map(product => (
             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>

@@ -5,6 +5,7 @@ const session = require('express-session');
 
 // Body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // for API testing in Postman
 
 // Session middleware
 app.use(
