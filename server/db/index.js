@@ -52,7 +52,7 @@ Product.createFakeProduct = function(categoryId) {
     description: faker.lorem.paragraph(3),
     price: faker.finance.amount(50, 150, 2),
     quantity: 10,
-    imageUrl: faker.image.cats(),
+    imageUrl: `${faker.image.image()}/${Math.floor(Math.random()*10)}`,
     categoryId,
   });
 };
