@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getProducts } from '../reducers'
 import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
-import CardActions from '@material-ui/core/CardActions'
+import List from '@material-ui/core/List'
 import Button from '@material-ui/core/Button'
-import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
-import ListSubheader from '@material-ui/core/ListSubheader'
+import ListItem from '@material-ui/core/ListItem'
+import Divider from '@material-ui/core/Divider'
 import Drawer from '@material-ui/core/Drawer'
 
 class ProductsList extends Component {
@@ -25,23 +22,33 @@ class ProductsList extends Component {
         return (
             <div >
                 <Drawer variant='permanent' >
-                    <h4 style={{ width: 240 }}>Departments:</h4>
+                    <Typography variant='headline' color='textPrimary' style={{ textAlign: 'center', width: 240 }} >
+                        Category
+                    </Typography>
+                    <List >
+                        <ListItem button={true} >
+                            Example
+                        </ListItem>
+                    </List>
+                    <Typography variant='headline' color='textPrimary' style={{ textAlign: 'center', width: 240 }} >
+                        Filters
+                    </Typography>
+                    <Divider />
                 </Drawer>
                 <main style={{ paddingLeft: 240 }}>
-                    <Grid container spacing={24} style={{ marginTop: '60px' }}>
+                    <Grid container spacing={40} style={{ marginTop: '60px' }}>
                         {this.props.products.map(product => (
                             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id} >
-                                <img src={product.imageUrl} style={{ width: '100%' }} />
-                                <div>
-                                    <Typography variant='title' color='textPrimary' style={{ textAlign: 'center' }} >
-                                        <div>
-                                            {product.name}
-                                        </div>
-                                        <div>
-                                            ${product.price}
-                                        </div>
-                                    </Typography>
-                                </div>
+                                <Link to={`/products/${product.id}`}>
+                                    <img src={product.imageUrl} style={{ width: '100%' }} />
+                                </Link>
+                                <Typography variant='headline' color='textPrimary' style={{ textAlign: 'justify' }} >
+                                    ${product.price}
+                                </Typography>
+                                <Typography variant='subheading' color='textPrimary' style={{ textAlign: 'justify' }} >
+                                    {product.name}
+                                </Typography>
+                                <Button variant='outlined' color='primary' size='large' fullWidth={true} >Add To Cart</Button>
                             </Grid>
                         ))}
                     </Grid>
