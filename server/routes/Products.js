@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  models: { Product },
+  models: { Product, Category },
 } = require('../db');
 
 module.exports = router;
@@ -12,11 +12,18 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-// GET :/api/products/category/:category
-router.get('/category/:category', (req, res, next) => {
+// GET :/api/products/categories
+router.get('/categories', (req, res, next) => {
+  return Category.findAll()
+    .then(categories => res.send(categories))
+    .catch(next);
+});
+
+// GET :/api/products/categories/:category
+router.get('/categories/:categoryId', (req, res, next) => {
   return Product.findAll({
     where: {
-      category: req.params.category,
+      categoryId: req.params.categoryId,
     },
   })
     .then(products => res.send(products))
