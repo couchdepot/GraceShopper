@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import LockOutlined from '@material-ui/icons/LockOutlined';
+import Button from '@material-ui/core/Button';
+import { loginUser } from '../reducers';
 
-const Login = () => {
+const Login = ({ loginUser, history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleEmailChange = ({ target: { value } }) => setEmail(value);
   const handlePasswordChange = ({ target: { value } }) => setPassword(value);
+
+  const handleOnSubmit = event => {
+    event.preventDefault();
+    loginUser(email, password)
+      .then(() => history.push('/'))
+      .catch(ex => setErrorMessage(ex.response.data));
+  };
 
   return (
     <Grid
@@ -20,22 +31,28 @@ const Login = () => {
       alignItems="center"
       style={{ height: '100vh' }}
     >
-      <Grid item xs={12} sm={6} lg={4}>
+      <Grid item xs={12} sm={6}>
         <Paper style={{ height: '400px' }}>
           <Grid
             container
             direction="column"
             justify="center"
             alignItems="center"
-            style={{ height: '100%' }}
+            style={{ height: '100%', paddingLeft: '20px', paddingRight: '20px' }}
           >
             <LockOutlined fontSize="large" style={{ marginBottom: '10px' }} />
             <Typography variant="h5" gutterBottom>
               Log In
             </Typography>
 
-            <form>
-              <FormGroup>
+            {errorMessage && (
+              <Typography variant="subtitle1" color="error">
+                {errorMessage}
+              </Typography>
+            )}
+
+            <form onSubmit={handleOnSubmit}>
+              <FormControl fullWidth>
                 <TextField
                   label="Email"
                   type="email"
@@ -44,9 +61,9 @@ const Login = () => {
                   margin="normal"
                   onChange={handleEmailChange}
                 />
-              </FormGroup>
+              </FormControl>
 
-              <FormGroup>
+              <FormControl fullWidth>
                 <TextField
                   label="Password"
                   type="password"
@@ -55,7 +72,18 @@ const Login = () => {
                   margin="normal"
                   onChange={handlePasswordChange}
                 />
-              </FormGroup>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  color="primary"
+                  style={{ marginTop: '30px' }}
+                >
+                  Log in
+                </Button>
+              </FormControl>
             </form>
           </Grid>
         </Paper>
@@ -64,4 +92,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+  return {
+    loginUser: (email, password) => dispatch(loginUser(email, password)),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);
