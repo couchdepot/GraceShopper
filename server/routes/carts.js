@@ -5,6 +5,15 @@ const {
   models: { Cart },
 } = require('../db');
 
+// GET :/api/carts
+router.get('/', (req, res, next) => {
+  Cart.findAll()
+    .then(carts => {
+      res.status(200).json(carts);
+    })
+    .catch(next);
+});
+
 // POST :/api/carts
 router.post('/', (req, res, next) => {
   const { status, userId } = req.body;
@@ -24,7 +33,7 @@ router.put('/:cartId', (req, res, next) => {
     .then(cart => {
       return cart.update({ status });
     })
-    .then(updatedCart => res.status(204).json(updatedCart))
+    .then(updatedCart => res.status(202).json(updatedCart))
     .catch(next);
 });
 
