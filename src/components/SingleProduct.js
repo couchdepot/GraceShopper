@@ -22,18 +22,13 @@ const SingleProduct = props => {
           marginTop: '5vh',
           paddingLeft: '2vw',
           paddingRight: '2vw',
+          paddingTop: '4vh',
+          paddingBottom: '4vh',
           marginBottom: '2vh',
         }}
       >
         <Grid container spacing={16}>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            lg={8}
-            xl={7}
-            style={{ borderRight: '0.1em solid lightGray' }}
-          >
+          <Grid item xs={12} sm={12} lg={8} xl={7}>
             <Typography align="left" variant="headline">
               {product.name}
             </Typography>
@@ -48,6 +43,9 @@ const SingleProduct = props => {
               }}
             />
           </Grid>
+          <Hidden smDown>
+            <span style={{ borderLeft: '0.1em solid lightGray' }} />
+          </Hidden>
           <Hidden lgDown>
             <Grid item xl={2} style={{ borderRight: '0.1em solid lightGray' }}>
               <Typography variant="headline">Product Description</Typography>
@@ -60,8 +58,8 @@ const SingleProduct = props => {
             item
             xs={12}
             sm={12}
-            lg={4}
-            xl={3}
+            lg={3}
+            xl={2}
             style={{
               paddingTop: '2vh',
               paddingLeft: '3vw',
