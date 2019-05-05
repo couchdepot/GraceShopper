@@ -38,7 +38,11 @@ const Login = ({ loginUser, history }) => {
             direction="column"
             justify="center"
             alignItems="center"
-            style={{ height: '100%', paddingLeft: '20px', paddingRight: '20px' }}
+            style={{
+              height: '100%',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+            }}
           >
             <LockOutlined fontSize="large" style={{ marginBottom: '10px' }} />
             <Typography variant="h5" gutterBottom>

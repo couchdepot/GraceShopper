@@ -12,9 +12,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
 class ProductsList extends Component {
-  componentDidMount() {
-    return this.props.getProducts();
-  }
+  //   componentDidMount() {
+  //     return this.props.getProducts();
+  //   }
 
   render() {
     return (
