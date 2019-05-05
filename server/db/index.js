@@ -82,4 +82,13 @@ const syncAndSeed = () => {
     .catch(err => console.error(err));
 };
 
-module.exports = { User, syncAndSeed };
+module.exports = {
+  syncAndSeed,
+  models: {
+    User,
+    Category,
+    Product,
+    Cart,
+    LineItem,
+  },
+};
