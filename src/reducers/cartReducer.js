@@ -19,6 +19,7 @@ export const cartReducer = (state = {}, action) => {
 };
 
 // Thunks
+// Get users cart. There should be only one with status of 'inCart'
 export const getUsersCart = (userId, status) => {
   return dispatch => {
     return axios
