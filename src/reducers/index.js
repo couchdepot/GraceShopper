@@ -1,8 +1,13 @@
 import { combineReducers } from 'redux';
 import { getProducts, productsReducer } from './productsReducer';
-import {userReducer, loginUser, logOutUser, loginSession} from './userReducer';
+import {
+  userReducer,
+  loginUser,
+  logOutUser,
+  loginSession,
+} from './userReducer';
 import { cartReducer, getUsersCart } from './cartReducer';
-import { lineItemReducer, getLineItems } from './lineItemReducer';
+import { lineItemReducer, getLineItems, addLineItem } from './lineItemReducer';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -19,4 +24,5 @@ export {
   loginSession,
   getUsersCart,
   getLineItems,
+  addLineItem,
 };
