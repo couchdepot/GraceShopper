@@ -11,7 +11,6 @@ import Drawer from '@material-ui/core/Drawer';
 
 class ProductsList extends Component {
   render() {
-    console.log(this.props);
     const { cart, lineItems, addLineItem } = this.props;
 
     return (
@@ -40,7 +39,6 @@ class ProductsList extends Component {
             const inCart = lineItems.find(
               item => item.productId === product.id
             );
-            console.log(product.id);
             return (
               <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
                 <Link to={`/products/${product.id}`}>

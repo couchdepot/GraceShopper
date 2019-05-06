@@ -11,7 +11,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 
 const SingleProduct = props => {
-  console.log(props);
   const product =
     props.products.find(prod => prod.id === props.match.params.productId * 1) ||
     {};
