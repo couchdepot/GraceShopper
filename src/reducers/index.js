@@ -7,7 +7,7 @@ import {
   loginSession,
 } from './userReducer';
 import { cartReducer, getUsersCart } from './cartReducer';
-import { lineItemReducer, getLineItems, addLineItem } from './lineItemReducer';
+import { lineItemReducer, getLineItems, addLineItem, updateLineItem } from './lineItemReducer';
 
 const rootReducer = combineReducers({
   products: productsReducer,
