@@ -7,8 +7,6 @@ import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 
 class ProductsList extends Component {
   render() {
@@ -32,7 +30,7 @@ class ProductsList extends Component {
         <Grid
           container
           spacing={40}
-          style={{ marginTop: '60px', paddingLeft: 250 }}
+          style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
         >
           {this.props.products.map(product => (
             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
