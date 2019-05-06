@@ -18,6 +18,7 @@ const styles = theme => ({
     },
   },
   search: {
+    flexGrow: 1,
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.grey, 0.15),

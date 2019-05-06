@@ -7,18 +7,27 @@ import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 // Material-UI Icons
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
 
 import Logo from './Logo';
 import styles from './styles';
+import Sidelist from './Sidelist';
 
 class Navbar extends Component {
+  state = {
+    drawerOpened: false,
+  };
+
+  toggleDrawer = open => {
+    this.setState({ drawerOpened: open });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -33,11 +42,33 @@ class Navbar extends Component {
             zIndex: 1400,
           }}
         >
+          <SwipeableDrawer
+            open={this.state.drawerOpened}
+            onClose={() => {
+              this.toggleDrawer(false);
+            }}
+            onOpen={() => {
+              this.toggleDrawer(true);
+            }}
+          >
+            <div
+              tabIndex={0}
+              role="button"
+              onKeyDown={() => {
+                this.toggleDrawer(true);
+              }}
+            >
+              <Sidelist classes={classes} />
+            </div>
+          </SwipeableDrawer>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
               style={{ color: 'grey' }}
               aria-label="Open drawer"
+              onClick={() => {
+                this.toggleDrawer(!this.state.drawerOpened);
+              }}
             >
               <MenuIcon />
             </IconButton>
@@ -54,20 +85,14 @@ class Navbar extends Component {
                 }}
               />
             </div>
-            <div className={classes.grow} />
+            <IconButton className={classes.IconButton}>
+              <Badge badgeContent={4} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
             <div className={classes.sectionDesktop}>
               <IconButton className={classes.IconButton}>
-                <Badge badgeContent={4} color="secondary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-              <IconButton className={classes.IconButton}>
                 <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton className={classes.IconButton}>
-                <MoreIcon />
               </IconButton>
             </div>
           </Toolbar>
