@@ -14,15 +14,12 @@ class ProductsList extends Component {
   render() {
     return (
       <div>
-        <AppBar>
-          <Toolbar style={{ margin: 'auto' }}>
-            <Typography variant="headline" color="inherit">
-              Products
-            </Typography>
-          </Toolbar>
-        </AppBar>
         <Drawer variant="permanent">
-          <Typography variant="headline" color="textPrimary">
+          <Typography
+            variant="headline"
+            color="textPrimary"
+            style={{ marginTop: '3em' }}
+          >
             Category
           </Typography>
           <List style={{ width: 240 }}>
