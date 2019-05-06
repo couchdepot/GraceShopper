@@ -51,11 +51,11 @@ export const addLineItem = item => {
 
 
 // Updated line item quantity
-// After updating will fetch all the line items for the cart
-export const updateLineItem = (lineItemId, quantity, cartId) => {
+// After updating db will fetch all the line items for the cart
+export const updateLineItem = (lineItem) => {
   return dispatch => {
     return axios
-      .put(`api/lineItems/${lineItemId}`, { lineItemId, quantity, cartId })
-      .then(() => dispatch(getLineItems(cartId)))
+      .put(`api/lineItems/${lineItem.id}`, lineItem)
+      .then(() => dispatch(getLineItems(lineItem.cartId)))
   }
 }

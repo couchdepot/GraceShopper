@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addLineItem } from '../reducers';
+import { addLineItem, updateLineItem } from '../reducers';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -10,8 +10,26 @@ import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
 
 class ProductsList extends Component {
+
+  // Will add a new line item or increment it if it already exists
+  handleAddToCart = (productId, quantity, cartId) => {
+    const { addLineItem, updateLineItem, lineItems } = this.props;
+    const lineItem = lineItems.find(lineItem => lineItem.productId === productId);
+
+    if (cartId && lineItem) {
+      const quantity = lineItem.quantity + 1;
+      const udatedlineItem = { ...lineItem, quantity }
+      updateLineItem(udatedlineItem)
+    }
+    else if (cartId) {
+      addLineItem({ productId, quantity, cartId });
+    }
+  }
+
+
   render() {
-    const { cart, lineItems, addLineItem } = this.props;
+    const { cart, lineItems } = this.props;
+    const { handleAddToCart } = this;
 
     return (
       <div>
@@ -71,13 +89,7 @@ class ProductsList extends Component {
                   color="primary"
                   size="large"
                   fullWidth={true}
-                  onClick={() =>
-                    addLineItem({
-                      productId: product.id,
-                      quanitity: 1,
-                      cartId: cart.id,
-                    })
-                  }
+                  onClick={() => handleAddToCart(product.id, 1, cart.id)}
                 >
                   {inCart ? 'Add More' : 'Add To Cart'}
                 </Button>
@@ -99,6 +111,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addLineItem: item => dispatch(addLineItem(item)),
+  updateLineItem: lineItem => dispatch(updateLineItem(lineItem))
 });
 
 export default connect(
