@@ -1,19 +1,29 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { ProductsList, Login, SingleProduct } from './';
 import Navbar from './Navbar';
-import { loginSession, getUsersCart, getProducts } from '../reducers';
+import {
+  loginSession,
+  getUsersCart,
+  getProducts,
+  getLineItems,
+} from '../reducers';
 
 class App extends Component {
   componentDidMount() {
-    Promise.all([this.props.loginSession(), this.props.getProducts()]);
+    const { loginSession, getProducts } = this.props;
+    Promise.all([loginSession(), getProducts()]);
   }
 
   componentDidUpdate(prevProps) {
-    const { user, getUsersCart } = this.props;
-    if (user.id !== prevProps.user.id)
-      Promise.all([getUsersCart(user.id, 'inCart'), this.props.getProducts()]);
+    const { user, cart, getUsersCart, getLineItems } = this.props;
+    if (user.id !== prevProps.user.id) {
+      getUsersCart(user.id, 'inCart');
+    }
+    if (cart.id !== prevProps.cart.id) {
+      getLineItems(cart.id);
+    }
   }
 
   render() {
@@ -31,12 +41,14 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user,
+    cart: state.cart,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getUsersCart: (userId, status) => dispatch(getUsersCart(userId, status)),
+    getLineItems: cartId => dispatch(getLineItems(cartId)),
     loginSession: () => dispatch(loginSession()),
     getProducts: () => dispatch(getProducts()),
   };

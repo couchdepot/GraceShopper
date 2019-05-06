@@ -27,6 +27,20 @@ User.createFakeUser = function() {
   });
 };
 
+User.createAdmin = function() {
+  return this.create({
+    firstName: "Alex",
+    lastName: "Bukhman",
+    address: `${faker.address.streetAddress()}
+      ${faker.address.city()}
+      ${faker.address.stateAbbr()}
+      ${faker.address.zipCode()}`,
+    email: "email@gmail.com",
+    password: '12345',
+    admin: true,
+  });
+};
+
 User.createFakeUsers = function(count) {
   const users = [];
   while (users.length < count) {
@@ -72,6 +86,8 @@ const syncAndSeed = () => {
     .then(users =>
       Promise.all(users.map(user => Cart.create({ userId: user.id })))
     )
+    .then(() => User.createAdmin())
+    .then(user => Cart.create({userId: user.id}))
     .then(() => Promise.all(Category.createFakeCategories(5)))
     .then(categories =>
       Promise.all(
