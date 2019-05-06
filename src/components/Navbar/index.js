@@ -29,6 +29,8 @@ class Navbar extends Component {
             boxShadow: 'none',
             background: 'white',
             borderBottom: 'lightGrey 1px solid',
+            position: 'relative',
+            zIndex: 1400,
           }}
         >
           <Toolbar>
