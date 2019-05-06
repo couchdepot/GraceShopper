@@ -4,6 +4,9 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
+  button: {
+    marginTop: theme.spacing.unit,
+  },
   grow: {
     flexGrow: 1,
   },

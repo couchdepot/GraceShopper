@@ -8,6 +8,11 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 // Material-UI Icons
 import MenuIcon from '@material-ui/icons/Menu';
@@ -22,10 +27,15 @@ import Sidelist from './Sidelist';
 class Navbar extends Component {
   state = {
     drawerOpened: false,
+    profileOpened: false,
   };
 
   toggleDrawer = open => {
     this.setState({ drawerOpened: open });
+  };
+
+  toggleProfile = open => {
+    this.setState({ profileOpened: open });
   };
 
   render() {
@@ -87,13 +97,70 @@ class Navbar extends Component {
             </div>
             <IconButton className={classes.IconButton}>
               <Badge badgeContent={4} color="secondary">
-                <ShoppingCartIcon />
+                <a href="/" style={{ textDecoration: 'none', color: 'grey' }}>
+                  <ShoppingCartIcon />
+                </a>
               </Badge>
             </IconButton>
             <div className={classes.sectionDesktop}>
-              <IconButton className={classes.IconButton}>
+              <IconButton
+                className={classes.IconButton}
+                onClick={() => {
+                  this.toggleProfile(!this.state.profileOpened);
+                }}
+              >
                 <AccountCircle />
               </IconButton>
+              <div>
+                <Menu
+                  id="menu-appbar"
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={this.state.profileOpened}
+                  onClose={() => {
+                    this.toggleProfile(false);
+                  }}
+                  style={{ top: '50px' }}
+                >
+                  <MenuItem style={{ height: '100px' }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="https://material-ui.com/static/images/avatar/1.jpg"
+                      style={{ margin: 10, width: 60, height: 60 }}
+                    />
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        marginLeft: '1rem',
+                      }}
+                    >
+                      <Typography variant="subtitle2">Foo Bar</Typography>
+                      <Typography variant="caption">
+                        fooBar123@gmail.com
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        className={classes.button}
+                        onClick={() => {
+                          console.log('clicked');
+                        }}
+                      >
+                        Logout
+                      </Button>
+                    </div>
+                  </MenuItem>
+                </Menu>
+              </div>
             </div>
           </Toolbar>
         </AppBar>
