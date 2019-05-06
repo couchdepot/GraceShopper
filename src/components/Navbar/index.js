@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 // Material-UI Core
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/ToolBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';

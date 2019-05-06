@@ -39,6 +39,7 @@ export const getLineItems = cartId => {
   };
 };
 
+// Add a new line item
 export const addLineItem = item => {
   return dispatch => {
     return axios
@@ -47,3 +48,14 @@ export const addLineItem = item => {
       .then(lineItem => dispatch(addedLineItem(lineItem)));
   };
 };
+
+
+// Updated line item quantity
+// After updating db will fetch all the line items for the cart
+export const updateLineItem = (lineItem) => {
+  return dispatch => {
+    return axios
+      .put(`api/lineItems/${lineItem.id}`, lineItem)
+      .then(() => dispatch(getLineItems(lineItem.cartId)))
+  }
+}
