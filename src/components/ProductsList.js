@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addLineItem } from '../reducers';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -10,6 +11,9 @@ import Drawer from '@material-ui/core/Drawer';
 
 class ProductsList extends Component {
   render() {
+    console.log(this.props);
+    const { cart, lineItems, addLineItem } = this.props;
+
     return (
       <div>
         <Drawer variant="permanent">
@@ -32,43 +36,56 @@ class ProductsList extends Component {
           spacing={40}
           style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
         >
-          {this.props.products.map(product => (
-            <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <img
-                  src={product.imageUrl}
-                  style={{
-                    width: 'auto',
-                    height: 240,
-                    margin: 'auto',
-                    display: 'block',
-                  }}
-                />
-              </Link>
-              <Typography
-                variant="headline"
-                color="textPrimary"
-                style={{ textAlign: 'justify' }}
-              >
-                ${product.price}
-              </Typography>
-              <Typography
-                variant="subheading"
-                color="textSecondary"
-                style={{ textAlign: 'justify' }}
-              >
-                {product.name}
-              </Typography>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="large"
-                fullWidth={true}
-              >
-                Add To Cart
-              </Button>
-            </Grid>
-          ))}
+          {this.props.products.map(product => {
+            const inCart = lineItems.find(
+              item => item.productId === product.id
+            );
+            console.log(product.id);
+            return (
+              <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
+                <Link to={`/products/${product.id}`}>
+                  <img
+                    src={product.imageUrl}
+                    style={{
+                      width: 'auto',
+                      height: 240,
+                      margin: 'auto',
+                      display: 'block',
+                    }}
+                  />
+                </Link>
+                <Typography
+                  variant="headline"
+                  color="textPrimary"
+                  style={{ textAlign: 'justify' }}
+                >
+                  ${product.price}
+                </Typography>
+                <Typography
+                  variant="subheading"
+                  color="textSecondary"
+                  style={{ textAlign: 'justify' }}
+                >
+                  {product.name}
+                </Typography>
+                <Button
+                  variant={inCart ? 'contained' : 'outlined'}
+                  color="primary"
+                  size="large"
+                  fullWidth={true}
+                  onClick={() =>
+                    addLineItem({
+                      productId: product.id,
+                      quanitity: 1,
+                      cartId: cart.id,
+                    })
+                  }
+                >
+                  {inCart ? 'Add More' : 'Add To Cart'}
+                </Button>
+              </Grid>
+            );
+          })}
         </Grid>
       </div>
     );
@@ -77,6 +94,16 @@ class ProductsList extends Component {
 
 const mapStateToProps = state => ({
   products: state.products,
+  user: state.user,
+  cart: state.cart,
+  lineItems: state.lineItems,
 });
 
-export default connect(mapStateToProps)(ProductsList);
+const mapDispatchToProps = dispatch => ({
+  addLineItem: item => dispatch(addLineItem(item)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProductsList);
