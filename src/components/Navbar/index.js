@@ -105,13 +105,16 @@ class Navbar extends Component {
             <div className={classes.sectionDesktop}>
               <IconButton
                 className={classes.IconButton}
+                aria-owns={open ? 'menu-appbar' : undefined}
+                aria-haspopup="true"
                 onClick={() => {
                   this.toggleProfile(!this.state.profileOpened);
                 }}
               >
                 <AccountCircle />
               </IconButton>
-              <div>
+              {/* Below is the profile menu popup; not implemented yet due to position bug */}
+              {/* <div>
                 <Menu
                   id="menu-appbar"
                   anchorOrigin={{
@@ -160,7 +163,7 @@ class Navbar extends Component {
                     </div>
                   </MenuItem>
                 </Menu>
-              </div>
+              </div> */}
             </div>
           </Toolbar>
         </AppBar>
