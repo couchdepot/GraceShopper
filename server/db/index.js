@@ -63,7 +63,7 @@ Category.createFakeCategories = function(count) {
 Product.createFakeProduct = function(categoryId) {
   return this.create({
     name: faker.commerce.productName(),
-    description: faker.lorem.paragraph(3),
+    description: faker.lorem.paragraphs(5),
     price: faker.finance.amount(50, 150, 2),
     quantity: 10,
     imageUrl: `${faker.image.image()}/${Math.floor(Math.random()*10)}`,

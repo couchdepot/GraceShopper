@@ -1,19 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addLineItem, updateLineItem } from '../reducers';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
+import { addLineItem, updateLineItem } from '../reducers';
+
 
 const ProductsList = ({ addLineItem, updateLineItem, lineItems, cart, products }) => {
 
   // Will add a new line item or updated quantity if it already exists
   const handleAddToCart = (productId, quantity, cartId) => {
-    const lineItem = lineItems.find(lI => lI.productId === productId);
+    const lineItem = lineItems.find(lnItm => lnItm.productId === productId);
     
     if (cartId && lineItem) {
       const newQuantity = lineItem.quantity + quantity;
@@ -97,7 +98,6 @@ const ProductsList = ({ addLineItem, updateLineItem, lineItems, cart, products }
 
 const mapStateToProps = state => ({
   products: state.products,
-  user: state.user,
   cart: state.cart,
   lineItems: state.lineItems,
 });

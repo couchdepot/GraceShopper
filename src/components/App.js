@@ -16,8 +16,7 @@ from '../reducers';
 class App extends Component {
   componentDidMount() {
     const { user, loginSession, getProducts } = this.props;
-    getProducts();
-    loginSession();
+    Promise.all([getProducts(), loginSession()]);
   }
 
   componentDidUpdate(prevProps) {
