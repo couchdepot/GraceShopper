@@ -8,53 +8,55 @@ import {
   getUsersCart,
   getProducts,
   getLineItems,
-} from '../reducers';
+}
+from '../reducers';
 
 class App extends Component {
   componentDidMount() {
-    const { loginSession, getProducts } = this.props;
-    Promise.all([loginSession(), getProducts()]);
+    const { user, loginSession, getProducts } = this.props;
+    getProducts();
+    if (user.id) loginSession();
   }
 
-  componentDidUpdate(prevProps) {
-    const { user, cart, getUsersCart, getLineItems } = this.props;
-    if (user.id !== prevProps.user.id) {
-      getUsersCart(user.id, 'inCart');
+    componentDidUpdate(prevProps) {
+      const { user, cart, getUsersCart, getLineItems } = this.props;
+      if (user.id !== prevProps.user.id) {
+        getUsersCart(user.id, 'inCart');
+      }
+      if (cart.id !== prevProps.cart.id) {
+        getLineItems(cart.id);
+      }
     }
-    if (cart.id !== prevProps.cart.id) {
-      getLineItems(cart.id);
-    }
-  }
 
-  render() {
-    return (
-      <Router>
+    render() {
+      return (
+        <Router>
         <Navbar />
         <Route path="/login" exact component={Login} />
         <Route exact path="/products" component={ProductsList} />
         <Route path="/products/:productId" component={SingleProduct} />
       </Router>
-    );
+      );
+    }
   }
-}
 
-const mapStateToProps = state => {
-  return {
-    user: state.user,
-    cart: state.cart,
+  const mapStateToProps = state => {
+    return {
+      user: state.user,
+      cart: state.cart,
+    };
   };
-};
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getUsersCart: (userId, status) => dispatch(getUsersCart(userId, status)),
-    getLineItems: cartId => dispatch(getLineItems(cartId)),
-    loginSession: () => dispatch(loginSession()),
-    getProducts: () => dispatch(getProducts()),
+  const mapDispatchToProps = dispatch => {
+    return {
+      getUsersCart: (userId, status) => dispatch(getUsersCart(userId, status)),
+      getLineItems: cartId => dispatch(getLineItems(cartId)),
+      loginSession: () => dispatch(loginSession()),
+      getProducts: () => dispatch(getProducts()),
+    };
   };
-};
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App);
