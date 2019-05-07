@@ -105,17 +105,18 @@ class Navbar extends Component {
               </Badge>
             </IconButton>
             <div className={classes.sectionDesktop}>
-              <IconButton
-                className={classes.IconButton}
-                aria-owns={open ? 'menu-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={() => {
-                  this.toggleProfile(!this.state.profileOpened);
-                }}
-              >
-                <AccountCircle />
-              </IconButton>
-              {/* Below is the profile menu popup; not implemented yet due to position bug */}
+              <a href="#/login">
+                <IconButton
+                  className={classes.IconButton}
+                  aria-owns={open ? 'menu-appbar' : undefined}
+                  aria-haspopup="true"
+                  onClick={() => {
+                    this.toggleProfile(!this.state.profileOpened);
+                  }}
+                >
+                  <AccountCircle />
+                </IconButton>
+              </a>
               {/* <div>
                 <Menu
                   id="menu-appbar"
