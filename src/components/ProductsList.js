@@ -1,37 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addLineItem, updateLineItem } from '../reducers';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
+import { addLineItem, updateLineItem } from '../reducers';
 
-class ProductsList extends Component {
-  // Will add a new line item or increment it if it already exists
-  handleAddToCart = (productId, quantity, cartId) => {
-    const { addLineItem, updateLineItem, lineItems } = this.props;
-    const lineItem = lineItems.find(
-      lineItem => lineItem.productId === productId
-    );
 
+const ProductsList = ({ addLineItem, updateLineItem, lineItems, cart, products }) => {
+
+  // Will add a new line item or updated quantity if it already exists
+  const handleAddToCart = (productId, quantity, cartId) => {
+    const lineItem = lineItems.find(lnItm => lnItm.productId === productId);
+    
     if (cartId && lineItem) {
-      const quantity = lineItem.quantity + 1;
-      const udatedlineItem = { ...lineItem, quantity };
+      const newQuantity = lineItem.quantity + quantity;
+      const udatedlineItem = { ...lineItem, quantity: newQuantity };
       updateLineItem(udatedlineItem);
-    } else if (cartId) {
+    }
+    else if (cartId) {
       addLineItem({ productId, quantity, cartId });
     }
   };
 
-  render() {
-    const { cart, lineItems } = this.props;
-    const { handleAddToCart } = this;
-
-    return (
-      <div style={{ marginTop: '80px' }}>
+  return (
+    <div style={{ marginTop: '80px' }}>
         <Drawer variant="permanent">
           <Typography
             variant="headline"
@@ -52,7 +48,7 @@ class ProductsList extends Component {
           spacing={40}
           style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
         >
-          {this.props.products.map(product => {
+          {products.map(product => {
             const inCart = lineItems.find(
               item => item.productId === product.id
             );
@@ -97,13 +93,11 @@ class ProductsList extends Component {
           })}
         </Grid>
       </div>
-    );
-  }
+  );
 }
 
 const mapStateToProps = state => ({
   products: state.products,
-  user: state.user,
   cart: state.cart,
   lineItems: state.lineItems,
 });
