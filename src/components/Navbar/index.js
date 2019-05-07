@@ -43,12 +43,11 @@ class Navbar extends Component {
     return (
       <div className={classes.root}>
         <AppBar
-          position="static"
+          position="fixed"
           style={{
             boxShadow: 'none',
             background: 'white',
             borderBottom: 'lightGrey 1px solid',
-            position: 'relative',
             zIndex: 1400,
           }}
         >
@@ -97,7 +96,10 @@ class Navbar extends Component {
             </div>
             <IconButton className={classes.IconButton}>
               <Badge badgeContent={4} color="secondary">
-                <a href="/" style={{ textDecoration: 'none', color: 'grey' }}>
+                <a
+                  href="#/cart"
+                  style={{ textDecoration: 'none', color: 'grey' }}
+                >
                   <ShoppingCartIcon />
                 </a>
               </Badge>

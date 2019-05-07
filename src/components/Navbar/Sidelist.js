@@ -17,7 +17,7 @@ const Sidelist = ({ classes }) => {
     <div style={{ width: 250 }}>
       <List style={{ top: '64px' }}>
         <ListItem button>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <a href="/#/cart" style={{ textDecoration: 'none', display: 'flex' }}>
             <ListItemIcon>
               <ShoppingCart />
             </ListItemIcon>

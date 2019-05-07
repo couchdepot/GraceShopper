@@ -10,29 +10,28 @@ import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
 
 class ProductsList extends Component {
-
   // Will add a new line item or increment it if it already exists
   handleAddToCart = (productId, quantity, cartId) => {
     const { addLineItem, updateLineItem, lineItems } = this.props;
-    const lineItem = lineItems.find(lineItem => lineItem.productId === productId);
+    const lineItem = lineItems.find(
+      lineItem => lineItem.productId === productId
+    );
 
     if (cartId && lineItem) {
       const quantity = lineItem.quantity + 1;
-      const udatedlineItem = { ...lineItem, quantity }
-      updateLineItem(udatedlineItem)
-    }
-    else if (cartId) {
+      const udatedlineItem = { ...lineItem, quantity };
+      updateLineItem(udatedlineItem);
+    } else if (cartId) {
       addLineItem({ productId, quantity, cartId });
     }
-  }
-
+  };
 
   render() {
     const { cart, lineItems } = this.props;
     const { handleAddToCart } = this;
 
     return (
-      <div>
+      <div style={{ marginTop: '80px' }}>
         <Drawer variant="permanent">
           <Typography
             variant="headline"
@@ -111,7 +110,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addLineItem: item => dispatch(addLineItem(item)),
-  updateLineItem: lineItem => dispatch(updateLineItem(lineItem))
+  updateLineItem: lineItem => dispatch(updateLineItem(lineItem)),
 });
 
 export default connect(
