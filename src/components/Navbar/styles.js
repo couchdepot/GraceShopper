@@ -4,6 +4,9 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
+  button: {
+    marginTop: theme.spacing.unit,
+  },
   grow: {
     flexGrow: 1,
   },
@@ -18,6 +21,7 @@ const styles = theme => ({
     },
   },
   search: {
+    flexGrow: 1,
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.grey, 0.15),
