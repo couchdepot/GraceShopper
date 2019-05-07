@@ -8,7 +8,7 @@ const green = '#4caf50';
 
 const logo = ({ classes }) => {
   return (
-    <a style={{ display: 'flex', textDecoration: 'none' }} href="/">
+    <a style={{ display: 'flex', textDecoration: 'none' }} href="/#/products">
       <Typography
         className={classes.title}
         style={{ color: blue }}

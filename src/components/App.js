@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { ProductsList, Login, SingleProduct } from './';
 import Navbar from './Navbar';
+import Cart from './Cart';
+
 import {
   loginSession,
   getUsersCart,
@@ -31,6 +33,7 @@ class App extends Component {
       <Router>
         <Navbar />
         <Route path="/login" exact component={Login} />
+        <Route exact path="/cart" component={Cart} />
         <Route exact path="/products" component={ProductsList} />
         <Route path="/products/:productId" component={SingleProduct} />
       </Router>
