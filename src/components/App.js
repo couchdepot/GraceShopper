@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import { ProductsList, Login, SingleProduct } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
@@ -20,46 +20,47 @@ class App extends Component {
     if (user.id) loginSession();
   }
 
-    componentDidUpdate(prevProps) {
-      const { user, cart, getUsersCart, getLineItems } = this.props;
-      if (user.id !== prevProps.user.id) {
-        getUsersCart(user.id, 'inCart');
-      }
-      if (cart.id !== prevProps.cart.id) {
-        getLineItems(cart.id);
-      }
+  componentDidUpdate(prevProps) {
+    const { user, cart, getUsersCart, getLineItems } = this.props;
+    if (user.id !== prevProps.user.id) {
+      getUsersCart(user.id, 'inCart');
     }
+    if (cart.id !== prevProps.cart.id) {
+      getLineItems(cart.id);
+    }
+  }
 
-    render() {
-      return (
-        <Router>
+  render() {
+    return (
+      <Router>
         <Navbar />
+        <Route path="/" exact render={() => <Redirect to="/products"/>} />
         <Route path="/login" exact component={Login} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/products" component={ProductsList} />
         <Route path="/products/:productId" component={SingleProduct} />
       </Router>
-      );
-    }
+    );
   }
+}
 
-  const mapStateToProps = state => {
-    return {
-      user: state.user,
-      cart: state.cart,
-    };
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    cart: state.cart,
   };
+};
 
-  const mapDispatchToProps = dispatch => {
-    return {
-      getUsersCart: (userId, status) => dispatch(getUsersCart(userId, status)),
-      getLineItems: cartId => dispatch(getLineItems(cartId)),
-      loginSession: () => dispatch(loginSession()),
-      getProducts: () => dispatch(getProducts()),
-    };
+const mapDispatchToProps = dispatch => {
+  return {
+    getUsersCart: (userId, status) => dispatch(getUsersCart(userId, status)),
+    getLineItems: cartId => dispatch(getLineItems(cartId)),
+    loginSession: () => dispatch(loginSession()),
+    getProducts: () => dispatch(getProducts()),
   };
+};
 
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
