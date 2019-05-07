@@ -11,6 +11,7 @@ import History from '@material-ui/icons/History';
 import Store from '@material-ui/icons/StoreOutlined';
 import Departments from '@material-ui/icons/BorderAll';
 import ShoppingCart from '@material-ui/icons/ShoppingCartOutlined';
+import AccountCircle from '@material-ui/icons/AccountCircleOutlined';
 
 const Sidelist = ({ classes }) => {
   return (
@@ -46,6 +47,14 @@ const Sidelist = ({ classes }) => {
               <History />
             </ListItemIcon>
             <ListItemText primary="Orders" />
+          </a>
+        </ListItem>
+        <ListItem button>
+          <a href="#/login" style={{ textDecoration: 'none', display: 'flex' }}>
+            <ListItemIcon>
+              <AccountCircle />
+            </ListItemIcon>
+            <ListItemText primary="Login" />
           </a>
         </ListItem>
       </List>
