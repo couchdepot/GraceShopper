@@ -10,13 +10,13 @@ import {
   getUsersCart,
   getProducts,
   getLineItems,
-}
-from '../reducers';
+  getCategories,
+} from '../reducers';
 
 class App extends Component {
   componentDidMount() {
-    const { user, loginSession, getProducts } = this.props;
-    Promise.all([getProducts(), loginSession()]);
+    const { user, loginSession, getProducts, getCategories } = this.props;
+    Promise.all([getProducts(), loginSession(), getCategories()]);
   }
 
   componentDidUpdate(prevProps) {
@@ -35,10 +35,11 @@ class App extends Component {
     return (
       <Router>
         <Navbar />
-        <Route path="/" exact render={() => <Redirect to="/products"/>} />
+        <Route path="/" exact render={() => <Redirect to="/products" />} />
         <Route path="/login" exact component={Login} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/products" component={ProductsList} />
+        <Route exact path="/category/:categoryId" component={ProductsList} />
         <Route path="/products/:productId" component={SingleProduct} />
       </Router>
     );
@@ -58,6 +59,7 @@ const mapDispatchToProps = dispatch => {
     getLineItems: cartId => dispatch(getLineItems(cartId)),
     loginSession: () => dispatch(loginSession()),
     getProducts: () => dispatch(getProducts()),
+    getCategories: () => dispatch(getCategories()),
   };
 };
 
