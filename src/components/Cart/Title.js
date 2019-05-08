@@ -45,7 +45,7 @@ const mapStateToProps = ({ lineItems, products }) => {
     : 0;
 
   return {
-    subTotal,
+    subTotal: subTotal.toFixed(2),
   };
 };
 
