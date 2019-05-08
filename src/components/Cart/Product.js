@@ -8,8 +8,6 @@ import Button from '@material-ui/core/Button';
 
 import QuantityDropdown from './QuantityDropdown';
 
-// key={id} price={price} name={name} imageUrl={imageUrl}
-
 const Product = ({ lineItemId, price, name, imageUrl }) => {
   return (
     <div

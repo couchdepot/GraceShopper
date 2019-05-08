@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // Material-UI Core
 import { withStyles } from '@material-ui/core/styles';
@@ -39,7 +40,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, itemsInCart } = this.props;
     return (
       <div className={classes.root}>
         <AppBar
@@ -95,7 +96,7 @@ class Navbar extends Component {
               />
             </div>
             <IconButton className={classes.IconButton}>
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={itemsInCart} color="secondary">
                 <a
                   href="#/cart"
                   style={{ textDecoration: 'none', color: 'grey' }}
@@ -175,4 +176,8 @@ class Navbar extends Component {
   }
 }
 
-export default withStyles(styles)(Navbar);
+const mapStateToProps = ({ lineItems = [] }) => ({
+  itemsInCart: lineItems.length,
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Navbar));
