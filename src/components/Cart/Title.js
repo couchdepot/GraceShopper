@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { mapArrByProps, filterArrByKey } from '../../util';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-const Title = () => {
+const Title = ({ subTotal }) => {
   return (
     <div
       style={{
@@ -16,7 +19,7 @@ const Title = () => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="subtitle1">Subtotal: </Typography>
         <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
-          $27.99
+          ${subTotal}
         </Typography>
         <Button
           variant="contained"
@@ -30,4 +33,20 @@ const Title = () => {
   );
 };
 
-export default Title;
+const mapStateToProps = ({ lineItems, products }) => {
+  const productIds = mapArrByProps(lineItems, 'productId');
+  const productsInCart = filterArrByKey(products, 'id', productIds);
+
+  const subTotal = productsInCart.length
+    ? productsInCart.reduce((sum, { price }) => {
+        sum += price;
+        return sum;
+      }, 0)
+    : 0;
+
+  return {
+    subTotal,
+  };
+};
+
+export default connect(mapStateToProps)(Title);

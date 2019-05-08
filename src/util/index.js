@@ -1,4 +1,5 @@
-// a util function that accepts an array of objects and prop and return an array of the corresponding value to the prop
+// accepts 1) an array of objects 2) a prop
+// returns an array of values of keys
 export const mapArrByProps = (arrOfObjs, prop) => {
   return arrOfObjs.map(elem => {
     return elem[prop];
