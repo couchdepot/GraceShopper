@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
 import { addLineItem, updateLineItem } from '../reducers';
+import { productsReducer } from '../reducers/productsReducer';
 
 const ProductsList = ({
   addLineItem,
@@ -16,6 +17,7 @@ const ProductsList = ({
   cart,
   products,
   categories,
+  match,
 }) => {
   // Will add a new line item or updated quantity if it already exists
   const handleAddToCart = (productId, quantity, cartId) => {
@@ -29,7 +31,12 @@ const ProductsList = ({
       addLineItem({ productId, quantity, cartId });
     }
   };
-  console.log(categories);
+
+  products = match.params.categoryId
+    ? products.filter(
+        product => product.categoryId === match.params.categoryId * 1
+      )
+    : products;
   return (
     <div style={{ marginTop: '80px' }}>
       <Drawer variant="permanent">
