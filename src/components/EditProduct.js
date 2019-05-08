@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 
+// Custom hook
+const useFormInput = (initialValue) => {
+  const [value, setValue] = useState(initialValue);
+  const handleChange = ({target}) => {
+    setValue(target.value);
+  };
+  return {
+    value,
+    handleChange
+  }
+}
 
-const EditProduct = () => {
-  const categories = [1, 2, 3, 4];
+
+const EditProduct = ({product, categories}) => {
   return (
     <form>
       <Grid container justify="center" spacing={24} style={{marginTop: "100px", paddingLeft: "40px", paddingRight: "40px"}}>
@@ -53,9 +65,9 @@ const EditProduct = () => {
           value={"category"}
           margin="normal"
         >
-          {categories.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option}
+          {categories.map(ctg => (
+            <MenuItem key={ctg.id} value={ctg.name}>
+              {ctg.name}
             </MenuItem>
           ))}
         </TextField>
@@ -92,4 +104,12 @@ const EditProduct = () => {
 }
 
 
-export default EditProduct;
+const mapStateToProps = (state, ownProps) => {
+  const { id } = ownProps.match.params.id * 1
+  return {
+    product: state.products.find(prod => prod.id === id) || {},
+    categories: state.categories
+  }
+};
+
+export default connect(mapStateToProps)(EditProduct);
