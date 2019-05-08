@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
-import { ProductsList, Login, SingleProduct } from './';
+import { ProductsList, Login, SingleProduct, ManageProducts, EditProduct } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
 
@@ -41,6 +41,8 @@ class App extends Component {
         <Route exact path="/products" component={ProductsList} />
         <Route exact path="/category/:categoryId" component={ProductsList} />
         <Route path="/products/:productId" component={SingleProduct} />
+        <Route path="/admin/products" component={ManageProducts} />
+        <Route path="/admin/products/edit/:id?" component={EditProduct} />
       </Router>
     );
   }
