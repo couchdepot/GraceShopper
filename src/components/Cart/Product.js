@@ -8,7 +8,9 @@ import Button from '@material-ui/core/Button';
 
 import QuantityDropdown from './QuantityDropdown';
 
-const Product = () => {
+// key={id} price={price} name={name} imageUrl={imageUrl}
+
+const Product = ({ lineItemId, price, name, imageUrl }) => {
   return (
     <div
       style={{
@@ -20,16 +22,13 @@ const Product = () => {
         alignItems: 'center',
       }}
     >
-      <img
-        src="https://jetimages.jetcdn.net/md5/d3689eb6758f93e8745e4f9fb78bd529?odnBound=112"
-        height="100px"
-      />
+      <a href={`#/products/${lineItemId}`}>
+        <img src={imageUrl} height="100px" />
+      </a>
       <div style={{ marginLeft: '2rem' }}>
-        <Typography variant="subtitle1">
-          Nestle Pure Life Splash Water
-        </Typography>
+        <Typography variant="subtitle1">{name}</Typography>
         <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
-          $12.48
+          ${price}
         </Typography>
       </div>
       <div
