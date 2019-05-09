@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
+
+import { updateLineItem } from '../../reducers/index';
 
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,19 +13,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 class QuantityDropdown extends Component {
   state = {
-    quantity: 1,
+    quantity: this.props.quantity || 1,
   };
 
   onSelectChange = evt => {
-    this.setState({ quantity: evt.target.value });
+    const { lineItemId, updateLineItem, cartId } = this.props;
+    this.setState({ quantity: evt.target.value }, () => {
+      updateLineItem(lineItemId, cartId, this.state);
+    });
   };
 
-  // To do:
-  // 1. submit this to redux store
-  // 2. Submit handler
-
   render() {
-    const { classes } = this.props;
+    const { classes, lineItemId } = this.props;
     return (
       <form
         className={classes.root}
@@ -32,7 +34,6 @@ class QuantityDropdown extends Component {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="quantity-simple">Quantity</InputLabel>
           <Select
-            name={'product1'}
             onChange={this.onSelectChange}
             value={this.state.quantity}
             style={{ textAlign: 'center' }}
@@ -54,4 +55,7 @@ class QuantityDropdown extends Component {
   }
 }
 
-export default withStyles(styles)(QuantityDropdown);
+export default connect(
+  null,
+  { updateLineItem }
+)(withStyles(styles)(QuantityDropdown));

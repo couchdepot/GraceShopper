@@ -18,6 +18,7 @@ const Product = ({
   imageUrl,
   cartId,
   removeLineItem,
+  quantity,
 }) => {
   return (
     <div
@@ -46,7 +47,11 @@ const Product = ({
           width: '100%',
         }}
       >
-        <QuantityDropdown />
+        <QuantityDropdown
+          quantity={quantity}
+          lineItemId={lineItemId}
+          cartId={cartId}
+        />
         <Button
           onClick={() => {
             removeLineItem(lineItemId, cartId);

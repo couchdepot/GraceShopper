@@ -176,8 +176,15 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProps = ({ lineItems = [] }) => ({
-  itemsInCart: lineItems.length,
-});
+const mapStateToProps = ({ lineItems = [] }) => {
+  const itemsInCart = lineItems.reduce((sum, { quantity }) => {
+    sum += quantity;
+    return sum;
+  }, 0);
+
+  return {
+    itemsInCart,
+  };
+};
 
 export default connect(mapStateToProps)(withStyles(styles)(Navbar));

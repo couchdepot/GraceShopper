@@ -7,9 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import EmptyCart from './EmptyCart';
 
-const Title = ({ subTotal, numberOfItemsInCart }) => {
+const Title = ({ subTotal, numberOfItemsInCart, lineItems }) => {
   if (!numberOfItemsInCart) return <EmptyCart />;
-
   return (
     <div
       style={{
@@ -37,12 +36,17 @@ const Title = ({ subTotal, numberOfItemsInCart }) => {
 };
 
 const mapStateToProps = ({ lineItems, products }) => {
-  const productIds = mapArrByProps(lineItems, 'productId');
-  const productsInCart = filterArrByKey(products, 'id', productIds);
+  const productsInCart = lineItems.map(lineItem => {
+    lineItem.productInfo = products.find(product => {
+      return product.id === lineItem.productId;
+    });
+
+    return lineItem;
+  });
 
   const subTotal = productsInCart.length
-    ? productsInCart.reduce((sum, { price }) => {
-        sum += price;
+    ? productsInCart.reduce((sum, { quantity, productInfo: { price } }) => {
+        sum += price * quantity;
         return sum;
       }, 0)
     : 0;
