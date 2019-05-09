@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { updateProduct, createProduct } from '../reducers';
 
 // Custom hook for form input field
@@ -51,7 +52,6 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
       description: description.value,
       imageUrl: imageUrl.value,
     };
-
     if (product.id) {
       updateProduct(product.id, newProduct)
         .then(() => history.push('/admin/products'))
@@ -62,6 +62,14 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
         .catch(ex => setErrorMessage(ex.response.data));
     }
   };
+  
+  const handleErrorMessage = (errorMessage) => {
+    return errorMessage.split(',')
+      .map((msg,idx) => (
+        <Typography key={idx} variant="subtitle1" color="error">
+          {msg}
+        </Typography>))
+  }
 
   return (
     <form onSubmit={handleOnSubmit}>
@@ -75,6 +83,13 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
           paddingRight: '40px',
         }}
       >
+      
+      {errorMessage && (
+        <Grid item xs={12}>
+          {handleErrorMessage(errorMessage)}
+        </Grid>
+      )}
+            
         <Grid item xs={12}>
           <FormControl fullWidth>
             <TextField
