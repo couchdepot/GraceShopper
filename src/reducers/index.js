@@ -1,17 +1,22 @@
 import { combineReducers } from 'redux';
+
 import {
   getProducts,
   deleteProduct,
   updateProduct,
+  createProduct,
   productsReducer,
 } from './productsReducer';
+
 import {
   userReducer,
   loginUser,
   logOutUser,
   loginSession,
 } from './userReducer';
+
 import { cartReducer, getUsersCart } from './cartReducer';
+
 import {
   lineItemReducer,
   getLineItems,
@@ -19,6 +24,7 @@ import {
   updateLineItem,
   removeLineItem,
 } from './lineItemReducer';
+
 import { categoriesReducer, getCategories } from './categoriesReducer';
 
 const rootReducer = combineReducers({
@@ -34,6 +40,7 @@ export {
   getProducts,
   deleteProduct,
   updateProduct,
+  createProduct,
   loginUser,
   logOutUser,
   loginSession,

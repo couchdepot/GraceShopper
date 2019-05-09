@@ -5,10 +5,12 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
-import { updateProduct } from '../reducers';
+import { updateProduct, createProduct } from '../reducers';
 
 // Custom hook for form input field
+// Sets input field value creates setValue and handleChage methods
 const useFormInput = initialValue => {
   const [value, setValue] = useState(initialValue);
   const handleChange = ({ target }) => {
@@ -21,7 +23,7 @@ const useFormInput = initialValue => {
   };
 };
 
-const EditProduct = ({ product, categories, updateProduct, history }) => {
+const EditProduct = ({ product, categories, updateProduct, createProduct, history }) => {
   const name = useFormInput('');
   const price = useFormInput('');
   const quantity = useFormInput('');
@@ -40,18 +42,25 @@ const EditProduct = ({ product, categories, updateProduct, history }) => {
   }, [product]);
 
   const handleOnSubmit = event => {
-    const { id } = product;
     event.preventDefault();
-    updateProduct(id, {
+    const newProduct = {
       name: name.value,
       price: price.value,
       quantity: quantity.value,
       categoryId: categoryId.value,
       description: description.value,
       imageUrl: imageUrl.value,
-    })
-      .then(() => history.push('/admin/products'))
-      .catch(ex => setErrorMessage(ex.response.data));
+    };
+
+    if (product.id) {
+      updateProduct(product.id, newProduct)
+        .then(() => history.push('/admin/products'))
+        .catch(ex => setErrorMessage(ex.response.data));
+    } else {
+      createProduct(newProduct)
+        .then(() => history.push('/admin/products'))
+        .catch(ex => setErrorMessage(ex.response.data));
+    }
   };
 
   return (
@@ -73,10 +82,11 @@ const EditProduct = ({ product, categories, updateProduct, history }) => {
               value={name.value}
               onChange={name.handleChange}
               margin="normal"
+              helperText="require"
             />
           </FormControl>
         </Grid>
-
+        
         <Grid item xs={12} sm={3}>
           <FormControl fullWidth>
             <TextField
@@ -84,6 +94,7 @@ const EditProduct = ({ product, categories, updateProduct, history }) => {
               value={price.value}
               onChange={price.handleChange}
               margin="normal"
+              helperText="require"
             />
           </FormControl>
         </Grid>
@@ -95,6 +106,7 @@ const EditProduct = ({ product, categories, updateProduct, history }) => {
               value={quantity.value}
               onChange={quantity.handleChange}
               margin="normal"
+              helperText="require"
             />
           </FormControl>
         </Grid>
@@ -104,7 +116,7 @@ const EditProduct = ({ product, categories, updateProduct, history }) => {
             <TextField
               select
               label="Category"
-              value={categoryId.value}
+              value={categoryId.value || ''}
               onChange={categoryId.handleChange}
               margin="normal"
             >
@@ -142,12 +154,26 @@ const EditProduct = ({ product, categories, updateProduct, history }) => {
             />
           </FormControl>
         </Grid>
+        
         <Grid item>
-          <FormControl>
-            <Button type="submit" variant="contained" color="primary">
-              Save
+          <FormGroup row>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              {product.id ? "Update" : "Create"}
             </Button>
-          </FormControl>
+            <Button
+              type="button"
+              variant="contained"
+              color="default"
+              style={{marginLeft: "10px"}}
+              onClick={() => history.push('/admin/products')}
+            >
+              Cancel
+            </Button>
+          </FormGroup>
         </Grid>
       </Grid>
     </form>
@@ -165,6 +191,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     updateProduct: (id, product) => dispatch(updateProduct(id, product)),
+    createProduct: (product) => dispatch(createProduct(product)),
   };
 };
 

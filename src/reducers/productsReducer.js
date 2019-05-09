@@ -41,7 +41,14 @@ export const updateProduct = (id, product) => {
   return dispatch => {
     return axios
       .put(`/api/products/${id}`, product)
-      .then((response )=> console.log(response.data))
       .then(() => dispatch(getProducts()));
   };
 };
+
+// create product
+export const createProduct = (product) => {
+  return dispatch => {
+    return axios.post('/api/products', product)
+    .then(() => dispatch(getProducts()));
+  }
+}
