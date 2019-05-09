@@ -1,7 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
-import { ProductsList, Login, SingleProduct, ManageProducts, EditProduct } from './';
+import {
+  ProductsList,
+  Login,
+  SingleProduct,
+  ManageProducts,
+  EditProduct,
+  AccessDenied,
+} from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
 
@@ -15,7 +22,7 @@ import {
 
 class App extends Component {
   componentDidMount() {
-    const { user, loginSession, getProducts, getCategories } = this.props;
+    const { loginSession, getProducts, getCategories } = this.props;
     Promise.all([getProducts(), loginSession(), getCategories()]);
   }
 
@@ -32,6 +39,8 @@ class App extends Component {
   }
 
   render() {
+    const { user } = this.props;
+
     return (
       <Router>
         <Navbar />
@@ -41,8 +50,14 @@ class App extends Component {
         <Route exact path="/products" component={ProductsList} />
         <Route exact path="/category/:categoryId" component={ProductsList} />
         <Route path="/products/:productId" component={SingleProduct} />
-        <Route path="/admin/products" exact component={ManageProducts} />
-        <Route path="/admin/products/edit/:id?" component={EditProduct} />
+        {user.admin ? (
+          <Fragment>
+            <Route path="/admin/products" exact component={ManageProducts} />
+            <Route path="/admin/products/edit/:id?" component={EditProduct} />
+          </Fragment>
+        ) : (
+          <Route path="/admin" component={AccessDenied} />
+        )}
       </Router>
     );
   }

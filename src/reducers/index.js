@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
-import { getProducts, deleteProduct, productsReducer } from './productsReducer';
+import {
+  getProducts,
+  deleteProduct,
+  updateProduct,
+  productsReducer,
+} from './productsReducer';
 import {
   userReducer,
   loginUser,
@@ -27,6 +32,7 @@ export {
   rootReducer,
   getProducts,
   deleteProduct,
+  updateProduct,
   loginUser,
   logOutUser,
   loginSession,

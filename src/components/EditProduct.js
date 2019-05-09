@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import { updateProduct } from '../reducers';
 
 // Custom hook for form input field
 const useFormInput = initialValue => {
@@ -19,13 +21,14 @@ const useFormInput = initialValue => {
   };
 };
 
-const EditProduct = ({ product, categories }) => {
+const EditProduct = ({ product, categories, updateProduct, history }) => {
   const name = useFormInput('');
   const price = useFormInput('');
   const quantity = useFormInput('');
   const categoryId = useFormInput('');
   const description = useFormInput('');
   const imageUrl = useFormInput('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     name.setValue(product.name);
@@ -36,13 +39,28 @@ const EditProduct = ({ product, categories }) => {
     imageUrl.setValue(product.imageUrl);
   }, [product]);
 
+  const handleOnSubmit = event => {
+    const { id } = product;
+    event.preventDefault();
+    updateProduct(id, {
+      name: name.value,
+      price: price.value,
+      quantity: quantity.value,
+      categoryId: categoryId.value,
+      description: description.value,
+      imageUrl: imageUrl.value,
+    })
+      .then(() => history.push('/admin/products'))
+      .catch(ex => setErrorMessage(ex.response.data));
+  };
+
   return (
-    <form>
+    <form onSubmit={handleOnSubmit}>
       <Grid
         container
-        justify="center"
         spacing={24}
         style={{
+          width: '100vw',
           marginTop: '100px',
           paddingLeft: '40px',
           paddingRight: '40px',
@@ -75,7 +93,7 @@ const EditProduct = ({ product, categories }) => {
             <TextField
               label="Quantity"
               value={quantity.value}
-              onChange={quantity.value}
+              onChange={quantity.handleChange}
               margin="normal"
             />
           </FormControl>
@@ -124,6 +142,13 @@ const EditProduct = ({ product, categories }) => {
             />
           </FormControl>
         </Grid>
+        <Grid item>
+          <FormControl>
+            <Button type="submit" variant="contained" color="primary">
+              Save
+            </Button>
+          </FormControl>
+        </Grid>
       </Grid>
     </form>
   );
@@ -137,4 +162,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(EditProduct);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateProduct: (id, product) => dispatch(updateProduct(id, product)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditProduct);

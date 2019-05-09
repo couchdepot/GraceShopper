@@ -22,10 +22,10 @@ router.get('/categories', (req, res, next) => {
 // GET :/api/products/categories/:category
 router.get('/categories/:categoryId', (req, res, next) => {
   return Product.findAll({
-      where: {
-        categoryId: req.params.categoryId,
-      },
-    })
+    where: {
+      categoryId: req.params.categoryId,
+    },
+  })
     .then(products => res.send(products))
     .catch(next);
 });
@@ -41,5 +41,13 @@ router.get('/:productId', (req, res, next) => {
 router.delete('/:productId', (req, res, next) => {
   Product.destroy({ where: { id: req.params.productId } })
     .then(() => res.sendStatus(204))
+    .catch(next);
+});
+
+// PUT :/api/products/:productId
+router.put('/:productId', (req, res, next) => {
+  Product.findByPk(req.params.productId)
+    .then(product => product.update(req.body))
+    .then(product => res.send(product))
     .catch(next)
-})
+});

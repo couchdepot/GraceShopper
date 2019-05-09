@@ -8,7 +8,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import EditProduct from './EditProduct';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -31,9 +30,6 @@ const styles = theme => ({
 
 const ManageProducts = ({ classes, products, deleteProduct }) => {
   return (
-    // Will have add product functionality 
-    // Will have list of products with edit product functionality
-
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
