@@ -9,7 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import QuantityDropdown from './QuantityDropdown';
+// import QuantitySetter from './QuantitySetter';
+import QuantitySetter from './QuantitySetter';
 
 const Product = ({ lineItem, removeLineItem }) => {
   const {
@@ -44,7 +45,7 @@ const Product = ({ lineItem, removeLineItem }) => {
           width: '100%',
         }}
       >
-        <QuantityDropdown />
+        <QuantitySetter lineItem={lineItem} />
         <Button
           onClick={() => {
             removeLineItem(id, cartId);
