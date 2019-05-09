@@ -5,8 +5,11 @@ import { mapArrByProps, filterArrByKey } from '../../util';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import EmptyCart from './EmptyCart';
 
-const Title = ({ subTotal }) => {
+const Title = ({ subTotal, numberOfItemsInCart }) => {
+  if (!numberOfItemsInCart) return <EmptyCart />;
+
   return (
     <div
       style={{
@@ -46,6 +49,7 @@ const mapStateToProps = ({ lineItems, products }) => {
 
   return {
     subTotal: subTotal.toFixed(2),
+    numberOfItemsInCart: lineItems.length,
   };
 };
 

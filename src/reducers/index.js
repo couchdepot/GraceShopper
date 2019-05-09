@@ -17,6 +17,7 @@ import {
   getLineItems,
   addLineItem,
   updateLineItem,
+  removeLineItem,
 } from './lineItemReducer';
 import { categoriesReducer, getCategories } from './categoriesReducer';
 
@@ -41,4 +42,5 @@ export {
   addLineItem,
   updateLineItem,
   getCategories,
+  removeLineItem,
 };

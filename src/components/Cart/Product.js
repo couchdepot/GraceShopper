@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { removeLineItem } from '../../reducers';
 
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,7 +11,14 @@ import Button from '@material-ui/core/Button';
 
 import QuantityDropdown from './QuantityDropdown';
 
-const Product = ({ lineItemId, price, name, imageUrl }) => {
+const Product = ({
+  lineItemId,
+  price,
+  name,
+  imageUrl,
+  cartId,
+  removeLineItem,
+}) => {
   return (
     <div
       style={{
@@ -26,7 +36,7 @@ const Product = ({ lineItemId, price, name, imageUrl }) => {
       <div style={{ marginLeft: '2rem' }}>
         <Typography variant="subtitle1">{name}</Typography>
         <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
-          ${price}
+          ${price.toFixed(2)}
         </Typography>
       </div>
       <div
@@ -37,7 +47,13 @@ const Product = ({ lineItemId, price, name, imageUrl }) => {
         }}
       >
         <QuantityDropdown />
-        <Button color="secondary" style={{ margin: '1rem' }}>
+        <Button
+          onClick={() => {
+            removeLineItem(lineItemId, cartId);
+          }}
+          color="secondary"
+          style={{ margin: '1rem' }}
+        >
           Remove
         </Button>
       </div>
@@ -45,4 +61,7 @@ const Product = ({ lineItemId, price, name, imageUrl }) => {
   );
 };
 
-export default withStyles(styles)(Product);
+export default connect(
+  null,
+  { removeLineItem }
+)(withStyles(styles)(Product));

@@ -3,6 +3,9 @@ const app = express();
 const path = require('path');
 const session = require('express-session');
 
+// Logger for development
+app.use(require('morgan')('dev'));
+
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // for API testing in Postman
