@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
 // GET :/api/lineItems/:cartId
 router.get('/:cartId', (req, res, next) => {
   const { cartId } = req.params;
-  LineItem.findAll({ where: { cartId } })
+  LineItem.findAll({ where: { cartId }, order: [['createdAt']] })
     .then(lineItems => res.status(200).json(lineItems))
     .catch(next);
 });
@@ -29,7 +29,7 @@ router.put('/:lineItemId', (req, res, next) => {
   const { lineItemId } = req.params;
   const { quantity } = req.body;
   LineItem.findByPk(lineItemId)
-    .then(lineItem => lineItem.update({quantity}))
+    .then(lineItem => lineItem.update({ quantity }))
     .then(newLineItem => res.status(204).json(newLineItem))
     .catch(next);
 });
