@@ -48,6 +48,15 @@ router.delete('/:productId', (req, res, next) => {
 router.put('/:productId', (req, res, next) => {
   Product.findByPk(req.params.productId)
     .then(product => product.update(req.body))
-    .then(product => res.send(product))
+    .then(product => res.status(201).send(product))
     .catch(next)
 });
+
+// POST :/api/products
+router.post('/', (req, res, next) => {
+  return Product.create(req.body)
+    .then(product => res.status(201).send(product))
+    .catch(next)
+});
+
+

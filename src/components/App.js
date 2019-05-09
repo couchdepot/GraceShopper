@@ -27,8 +27,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props);
-    console.log(this.prevProps);
     const { user, cart, getUsersCart, getLineItems } = this.props;
     if (user.id !== prevProps.user.id) {
       getUsersCart(user.id, 'inCart');

@@ -1,23 +1,25 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { deleteProduct } from '../reducers'
+import { deleteProduct } from '../reducers';
 
 
 const styles = theme => ({
   root: {
     width: 'auto',
-    marginTop: theme.spacing.unit * 10,
+    marginTop: theme.spacing.unit * 12,
     marginBottom: theme.spacing.unit * 10,
     marginLeft: theme.spacing.unit * 5,
     marginRight: theme.spacing.unit * 5,
@@ -30,7 +32,27 @@ const styles = theme => ({
 
 const ManageProducts = ({ classes, products, deleteProduct }) => {
   return (
-    <Paper className={classes.root}>
+    <Grid
+      container
+      direction='column'
+      spacing={24}
+      className={classes.root}
+    >
+    
+    <Grid item>
+    <Button
+      type="button"
+      variant="contained"
+      color="primary"
+      component={Link}
+      to={'/admin/products/edit'}
+      >
+        Add New Product
+    </Button>
+    </Grid>
+   
+   <Grid item>
+    <Paper>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
@@ -64,8 +86,9 @@ const ManageProducts = ({ classes, products, deleteProduct }) => {
         </TableBody>
       </Table>
     </Paper>
+    </Grid>
 
-
+  </Grid>
   )
 }
 

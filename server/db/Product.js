@@ -11,22 +11,24 @@ const Product = db.define('product', {
     },
     description: Sequelize.TEXT,
     price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         validation: {
-            notEmpty: true
+            notEmpty: true,
+            min: 0.00
         }
     },
     quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
         validation: {
-            notEmpty: true
+            notEmpty: true,
+            min: 0
         }
     },
     imageUrl: {
         type: Sequelize.STRING,
-        defaultValue: 'http://sites.psu.edu/siowfa15/wp-content/uploads/sites/29639/2015/10/cat.jpg'
+        defaultValue: 'http://lorempixel.com/640/480/abstract/1'
     }
 });
 
