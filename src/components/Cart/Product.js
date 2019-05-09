@@ -11,14 +11,12 @@ import Button from '@material-ui/core/Button';
 
 import QuantityDropdown from './QuantityDropdown';
 
-const Product = ({
-  lineItemId,
-  price,
-  name,
-  imageUrl,
-  cartId,
-  removeLineItem,
-}) => {
+const Product = ({ lineItem, removeLineItem }) => {
+  const {
+    id,
+    cartId,
+    productInfo: { imageUrl, price, name },
+  } = lineItem;
   return (
     <div
       style={{
@@ -30,13 +28,13 @@ const Product = ({
         alignItems: 'center',
       }}
     >
-      <a href={`#/products/${lineItemId}`}>
+      <a href={`#/products/${id}`}>
         <img src={imageUrl} height="100px" />
       </a>
       <div style={{ marginLeft: '2rem' }}>
         <Typography variant="subtitle1">{name}</Typography>
         <Typography variant="subtitle2" style={{ fontWeight: 'bold' }}>
-          ${price.toFixed(2)}
+          ${Number(price).toFixed(2)}
         </Typography>
       </div>
       <div
@@ -49,7 +47,7 @@ const Product = ({
         <QuantityDropdown />
         <Button
           onClick={() => {
-            removeLineItem(lineItemId, cartId);
+            removeLineItem(id, cartId);
           }}
           color="secondary"
           style={{ margin: '1rem' }}

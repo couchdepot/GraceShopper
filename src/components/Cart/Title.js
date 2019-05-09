@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import EmptyCart from './EmptyCart';
 
-const Title = ({ subTotal, numberOfItemsInCart }) => {
+const Title = ({ numberOfItemsInCart, subTotal }) => {
   if (!numberOfItemsInCart) return <EmptyCart />;
 
   return (
@@ -37,19 +37,22 @@ const Title = ({ subTotal, numberOfItemsInCart }) => {
 };
 
 const mapStateToProps = ({ lineItems, products }) => {
-  const productIds = mapArrByProps(lineItems, 'productId');
-  const productsInCart = filterArrByKey(products, 'id', productIds);
+  const productsInCart = lineItems.map(lineItem => {
+    lineItem.productInfo = products.find(product => {
+      return product.id === lineItem.productId;
+    });
+    return lineItem;
+  });
 
   const subTotal = productsInCart.length
-    ? productsInCart.reduce((sum, { price }) => {
-        sum += price;
+    ? productsInCart.reduce((sum, { quantity, productInfo: { price } }) => {
+        sum += quantity * price;
         return sum;
       }, 0)
     : 0;
-
   return {
     subTotal: subTotal.toFixed(2),
-    numberOfItemsInCart: lineItems.length,
+    numberOfItemsInCart: productsInCart.length,
   };
 };
 

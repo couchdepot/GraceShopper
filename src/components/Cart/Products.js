@@ -6,22 +6,12 @@ import Product from './Product';
 class Products extends React.Component {
   render() {
     const { productsInCart } = this.props;
+    console.log(productsInCart);
     return (
       <div style={{ margin: '2rem 0' }}>
-        {productsInCart.map(
-          ({ productInfo: { price, name, imageUrl }, id, cartId }) => {
-            return (
-              <Product
-                key={id}
-                price={price}
-                name={name}
-                imageUrl={imageUrl}
-                lineItemId={id}
-                cartId={cartId}
-              />
-            );
-          }
-        )}
+        {productsInCart.map((lineItem, idx) => {
+          return <Product key={idx} lineItem={lineItem} />;
+        })}
       </div>
     );
   }
