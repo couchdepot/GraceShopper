@@ -36,3 +36,18 @@ router.get('/:productId', (req, res, next) => {
     .then(product => res.send(product))
     .catch(next);
 });
+
+// DELETE :/api/products/:productId
+router.delete('/:productId', (req, res, next) => {
+  Product.destroy({ where: { id: req.params.productId } })
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});
+
+// PUT :/api/products/:productId
+router.put('/:productId', (req, res, next) => {
+  Product.findByPk(req.params.productId)
+    .then(product => product.update(req.body))
+    .then(product => res.send(product))
+    .catch(next)
+});
