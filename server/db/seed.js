@@ -1,14 +1,11 @@
 const faker = require('faker');
 const db = require('./db');
-const {models: {
-    User,
-    Category,
-    Product,
-    Cart,
-    LineItem,
-  }
-} = require("./");
-
+const User = require('./User');
+const Category = require('./Category');
+const Product = require('./Product')
+const Cart = require('./Cart');
+const LineItem = require('./LineItem');
+const Address = require('./Address');
 
 // Class methods for creating fake model instances
 // Creating fake users
@@ -16,10 +13,7 @@ User.createFakeUser = function() {
   return this.create({
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
-    address: `${faker.address.streetAddress()}
-      ${faker.address.city()}
-      ${faker.address.stateAbbr()}
-      ${faker.address.zipCode()}`,
+    imageUrl: faker.internet.avatar(),
     email: faker.internet.email(),
     password: '12345',
   });
@@ -27,12 +21,9 @@ User.createFakeUser = function() {
 
 User.createAdmin = function() {
   return this.create({
-    firstName: "Alex",
-    lastName: "Bukhman",
-    address: `${faker.address.streetAddress()}
-      ${faker.address.city()}
-      ${faker.address.stateAbbr()}
-      ${faker.address.zipCode()}`,
+    firstName: "Curly",
+    lastName: "Howard",
+    imageUrl: 'https://images.dailykos.com/images/479822/story_image/unnamed.jpg?1512326578',
     email: "email@gmail.com",
     password: '12345',
     admin: true,
@@ -46,6 +37,17 @@ User.createFakeUsers = function(count) {
   }
   return users;
 };
+
+// Creating fake address
+Address.createFakeAddress = function(userId) {
+  return this.create({
+    streetAddress: faker.address.streetAddress(),
+    city: faker.address.city(),
+    state: faker.address.stateAbbr(),
+    zipCode: faker.address.zipCode(),
+    userId,
+  })
+}
 
 // Creating unique categories
 Category.createFakeCategories = function(count) {
@@ -83,10 +85,16 @@ const syncAndSeed = () => {
     .sync({ force: true })
     .then(() => Promise.all(User.createFakeUsers(3)))
     .then(users =>
-      Promise.all(users.map(user => Cart.create({ userId: user.id })))
+      Promise.all(users.map(user => Promise.all([
+        Address.createFakeAddress(user.id),
+        Cart.create({ userId: user.id })
+      ])))
     )
     .then(() => User.createAdmin())
-    .then(user => Cart.create({userId: user.id}))
+    .then(user => Promise.all([
+      Address.createFakeAddress(user.id), Cart.create({ userId: user.id })
+      ])
+    )
     .then(() => Promise.all(Category.createFakeCategories(5)))
     .then(categories =>
       Promise.all(
