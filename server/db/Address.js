@@ -34,9 +34,9 @@ const Address = db.define('address', {
       type: Sequelize.VIRTUAL,
       get () {
           return `
-            ${this.getDataValue('streetAddress')}
-            ${this.getDataValue('city')},
-            ${this.getDataValue('state')}
+            ${this.getDataValue('streetAddress')} 
+            ${this.getDataValue('city')}, 
+            ${this.getDataValue('state')} 
             ${this.getDataValue('zipCode')}
             `
       }

@@ -19,6 +19,12 @@ app.use(
   })
 );
 
+// Session logging middleware
+app.use((req, res, next) => {
+  console.log('SESSION: ', req.session)
+  next()
+})
+
 app.get('/app.js', (req, res, next) =>
   res.sendFile(path.join(__dirname, '..', 'dist', 'main.js'))
 );

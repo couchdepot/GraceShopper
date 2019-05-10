@@ -14,29 +14,15 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
-import { addLineItem, updateLineItem } from '../reducers';
+import { addlineItemToCart } from '../reducers';
 
 
-const SingleProduct = ({ addLineItem, updateLineItem, lineItems, cart, product }) => {
+const SingleProduct = ({ addlineItemToCart, lineItem, cart, product }) => {
   const [itemQty, setItemQty] = useState(1);
 
   const onPlusMinus = (num) => {
     setItemQty(itemQty + num);
   }
-
-  // Will add a new line item or updated quantity if it already exists
-  const handleAddToCart = (productId, quantity, cartId) => {
-    const lineItem = lineItems.find(lnItm => lnItm.productId === productId);
-
-    if (cartId && lineItem) {
-      const newQuantity = lineItem.quantity + quantity;
-      const udatedlineItem = { ...lineItem, quantity: newQuantity };
-      updateLineItem(udatedlineItem);
-    }
-    else if (cartId) {
-      addLineItem({ productId, quantity, cartId });
-    }
-  };
 
   return (
     <Grid container spacing={16} style={{ marginTop: '60px' }}>
@@ -114,7 +100,7 @@ const SingleProduct = ({ addLineItem, updateLineItem, lineItems, cart, product }
               size="large"
               fullWidth={true}
               style={{marginTop: '10px'}}
-              onClick={() => handleAddToCart(product.id, itemQty, cart.id )}
+              onClick={() => addlineItemToCart(product.id, itemQty, cart.id, lineItem )}
             >
               Add To Cart
             </Button>
@@ -139,16 +125,20 @@ const SingleProduct = ({ addLineItem, updateLineItem, lineItems, cart, product }
 };
 
 
-const mapStateToProps = (state, ownProps) => ({
-  product: state.products.find(prod => prod.id === ownProps.match.params.productId * 1) || {},
-  cart: state.cart,
-  lineItems: state.lineItems,
-});
+const mapStateToProps = (state, ownProps) => {
+  const productId = ownProps.match.params.productId * 1;
+  return {
+    product: state.products.find(prod => prod.id === productId) || {},
+    cart: state.cart,
+    lineItem: state.lineItems.find(lnItm => lnItm.productId === productId),
+  }
+};
 
 
 const mapDispatchToProps = dispatch => ({
-  addLineItem: item => dispatch(addLineItem(item)),
-  updateLineItem: lineItem => dispatch(updateLineItem(lineItem)),
+  addlineItemToCart: (productId, quantity, cartId, lineItem) => {
+    return dispatch(addlineItemToCart(productId, quantity, cartId, lineItem))
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);

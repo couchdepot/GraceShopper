@@ -7,30 +7,16 @@ import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
-import { addLineItem, updateLineItem } from '../reducers';
-import { productsReducer } from '../reducers/productsReducer';
+import { addlineItemToCart } from '../reducers';
 
 const ProductsList = ({
-  addLineItem,
-  updateLineItem,
+  addlineItemToCart,
   lineItems,
   cart,
   products,
   categories,
   match,
 }) => {
-  // Will add a new line item or updated quantity if it already exists
-  const handleAddToCart = (productId, quantity, cartId) => {
-    const lineItem = lineItems.find(lnItm => lnItm.productId === productId);
-
-    if (cartId && lineItem) {
-      const newQuantity = lineItem.quantity + quantity;
-      const udatedlineItem = { ...lineItem, quantity: newQuantity };
-      updateLineItem(udatedlineItem);
-    } else if (cartId) {
-      addLineItem({ productId, quantity, cartId });
-    }
-  };
 
   products = match.params.categoryId
     ? products.filter(
@@ -69,7 +55,7 @@ const ProductsList = ({
         style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
       >
         {products.map(product => {
-          const inCart = lineItems.find(item => item.productId === product.id);
+          const lineItem = lineItems.find(item => item.productId === product.id);
           return (
             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
               <Link to={`/products/${product.id}`}>
@@ -98,13 +84,13 @@ const ProductsList = ({
                 {product.name}
               </Typography>
               <Button
-                variant={inCart ? 'contained' : 'outlined'}
+                variant={lineItem ? 'contained' : 'outlined'}
                 color="primary"
                 size="large"
                 fullWidth={true}
-                onClick={() => handleAddToCart(product.id, 1, cart.id)}
+                onClick={() => addlineItemToCart(product.id, 1, cart.id, lineItem)}
               >
-                {inCart ? 'Add More' : 'Add To Cart'}
+                {lineItem ? 'Add More' : 'Add To Cart'}
               </Button>
             </Grid>
           );
@@ -114,6 +100,7 @@ const ProductsList = ({
   );
 };
 
+
 const mapStateToProps = state => ({
   products: state.products,
   cart: state.cart,
@@ -122,8 +109,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLineItem: item => dispatch(addLineItem(item)),
-  updateLineItem: lineItem => dispatch(updateLineItem(lineItem)),
+  addlineItemToCart: (productId, quantity, cartId, lineItem) => {
+    return dispatch(addlineItemToCart(productId, quantity, cartId, lineItem))
+  }
 });
 
 export default connect(

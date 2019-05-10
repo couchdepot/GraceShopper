@@ -23,6 +23,7 @@ import {
   addLineItem,
   updateLineItem,
   removeLineItem,
+  addlineItemToCart,
 } from './lineItemReducer';
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
@@ -48,6 +49,7 @@ export {
   getLineItems,
   addLineItem,
   updateLineItem,
+  addlineItemToCart,
   getCategories,
   removeLineItem,
 };
