@@ -16,11 +16,12 @@ const User = db.define('user', {
       notEmpty: true,
     },
   },
-  address: {
+  imageUrl: {
     type: Sequelize.STRING,
-    allowNull: false,
+    defaultValue:
+      'https://images.dailykos.com/images/479822/story_image/unnamed.jpg?1512326578',
     validate: {
-      notEmpty: true,
+      isUrl: true,
     },
   },
   email: {

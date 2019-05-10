@@ -67,3 +67,16 @@ export const removeLineItem = (lineItemId, cartId) => {
       .then(() => dispatch(getLineItems(cartId)));
   };
 };
+
+export const addlineItemToCart = (productId, quantity, cartId, lineItem) => {
+  return dispatch => {
+    if (cartId && lineItem) {
+      const newQuantity = lineItem.quantity + quantity;
+      const udatedlineItem = { ...lineItem, quantity: newQuantity };
+      dispatch(updateLineItem(udatedlineItem));
+    }
+    else if (cartId) {
+      dispatch(addLineItem({ productId, quantity, cartId }));
+    }
+  }
+}
