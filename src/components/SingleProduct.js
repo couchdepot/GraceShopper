@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import { addlineItemToCart } from '../reducers';
@@ -86,11 +87,22 @@ const SingleProduct = ({ addlineItemToCart, lineItem, cart, product }) => {
               margin="normal"
               variant="outlined"
            />
-            <Fab color="primary" style={{marginLeft: '10px'}}>
-            <AddIcon onClick={() => onPlusMinus(1)}/>
+            <Fab
+              color="primary"
+              component={IconButton}
+              style={{marginLeft: "10px"}}
+              onClick={() => onPlusMinus(1)}
+            >
+              <AddIcon/>
             </Fab>
-            <Fab color="secondary" style={{marginLeft: '10px'}}>
-            <RemoveIcon onClick={() => {if (itemQty > 1) onPlusMinus(-1)}}/>
+            <Fab
+              color="secondary"
+              component={IconButton}
+              style={{marginLeft: "10px"}}
+              disabled={itemQty < 2}
+              onClick={() => onPlusMinus(-1)}
+            >
+              <RemoveIcon/>
             </Fab>
           </Grid>
         
