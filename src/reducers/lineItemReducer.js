@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const GOT_LINE_ITEMS = 'GOT_LINE_ITEMS';
 const ADDED_LINE_ITEM = 'ADDED_LINE_ITEM';
+const EMPTY_LINE_ITEM = 'EMPTY_LINE_ITEM';
 
 const gotLineItems = lineItems => {
   return {
@@ -17,12 +18,20 @@ const addedLineItem = lineItem => {
   };
 };
 
+export const emptyLineItem = () => {
+  return {
+    type: EMPTY_LINE_ITEM,
+  };
+};
+
 export const lineItemReducer = (state = [], action) => {
   switch (action.type) {
     case GOT_LINE_ITEMS:
       return action.lineItems;
     case ADDED_LINE_ITEM:
       return [...state, action.lineItem];
+    case EMPTY_LINE_ITEM:
+      return [];
     default:
       return state;
   }
@@ -74,9 +83,8 @@ export const addlineItemToCart = (productId, quantity, cartId, lineItem) => {
       const newQuantity = lineItem.quantity + quantity;
       const udatedlineItem = { ...lineItem, quantity: newQuantity };
       dispatch(updateLineItem(udatedlineItem));
-    }
-    else if (cartId) {
+    } else if (cartId) {
       dispatch(addLineItem({ productId, quantity, cartId }));
     }
-  }
-}
+  };
+};
