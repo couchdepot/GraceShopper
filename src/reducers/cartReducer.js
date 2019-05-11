@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const GOT_CART = 'GOT_CART';
 
-const gotCart = cart => {
+export const gotCart = cart => {
   return {
     type: GOT_CART,
     cart,

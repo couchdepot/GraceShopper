@@ -15,7 +15,7 @@ import {
   loginSession,
 } from './userReducer';
 
-import { cartReducer, getUsersCart } from './cartReducer';
+import { cartReducer, getUsersCart, gotCart } from './cartReducer';
 
 import {
   lineItemReducer,
@@ -50,6 +50,7 @@ export {
   logOutUser,
   loginSession,
   getUsersCart,
+  gotCart,
   getLineItems,
   addLineItem,
   updateLineItem,
