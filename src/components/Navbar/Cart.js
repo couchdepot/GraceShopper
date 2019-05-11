@@ -16,7 +16,7 @@ const Cart = ({ classes, itemsInCart }) => {
   );
 };
 
-const mapStateToProps = ({ lineItems }) => {
+const mapStateToProps = ({ lineItems, cart }) => {
   const itemsInCart = lineItems.reduce((sum, { quantity }) => {
     sum += quantity;
     return sum;

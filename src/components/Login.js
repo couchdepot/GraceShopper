@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import LockOutlined from '@material-ui/icons/LockOutlined';
 import Button from '@material-ui/core/Button';
-import { loginUser } from '../reducers';
+import { loginUser, getLineItems } from '../reducers';
 
 const Login = ({ loginUser, history }) => {
   const [email, setEmail] = useState('');
@@ -20,7 +20,9 @@ const Login = ({ loginUser, history }) => {
   const handleOnSubmit = event => {
     event.preventDefault();
     loginUser(email, password)
-      .then(() => history.push('/'))
+      .then(() => {
+        history.push('/');
+      })
       .catch(ex => setErrorMessage(ex.response.data));
   };
 
@@ -102,7 +104,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Login);
+export default connect(mapDispatchToProps)(Login);

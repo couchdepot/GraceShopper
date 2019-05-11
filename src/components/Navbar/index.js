@@ -33,7 +33,9 @@ class Navbar extends Component {
   };
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, lineItems } = this.props;
+    // console.log('user:', user);
+    // console.log('lineItems:', lineItems);
     return (
       <div className={classes.root}>
         <AppBar
@@ -92,8 +94,9 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, lineItems }) => ({
   user,
+  lineItems,
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Navbar));

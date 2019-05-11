@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { Grid, Avatar, Fab, Button, Menu, Typography } from '@material-ui/core';
 
-import { logOutUser, loginUser } from '../../reducers';
+import { logOutUser, emptyLineItem } from '../../reducers';
 
-const Profile = ({ user, logOutUser }) => {
+const Profile = ({ user, logOutUser, emptyLineItem }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
@@ -67,6 +67,7 @@ const Profile = ({ user, logOutUser }) => {
                 style={{ margin: '1rem 0' }}
                 onClick={() => {
                   logOutUser();
+                  emptyLineItem();
                 }}
               >
                 Sign Out
@@ -83,7 +84,14 @@ const mapStateToProps = ({ user }) => ({
   user,
 });
 
+const mapDispatchToProps = dispatch => {
+  return {
+    logOutUser: () => dispatch(logOutUser()),
+    emptyLineItem: () => dispatch(emptyLineItem()),
+  };
+};
+
 export default connect(
   mapStateToProps,
-  { logOutUser }
+  mapDispatchToProps
 )(Profile);
