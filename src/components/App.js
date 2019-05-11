@@ -29,10 +29,10 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     const { user, cart, getUsersCart, getLineItems } = this.props;
-    if (user.id !== prevProps.user.id) {
+    if (user.id && user.id !== prevProps.user.id) {
       getUsersCart(user.id, 'inCart');
     }
-    if (cart.id !== prevProps.cart.id) {
+    if (cart.id && cart.id !== prevProps.cart.id) {
       getLineItems(cart.id);
     }
   }
