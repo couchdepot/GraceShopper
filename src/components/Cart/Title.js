@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
-import { mapArrByProps, filterArrByKey } from '../../util';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -25,13 +24,15 @@ const Title = ({ numberOfItemsInCart, subTotal, user }) => {
         <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
           ${subTotal}
         </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{ marginLeft: '1rem' }}
-        >
-          Checkout
-        </Button>
+        <a href="#/checkout" style={{ textDecoration: 'none' }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginLeft: '1rem' }}
+          >
+            Checkout
+          </Button>
+        </a>
       </div>
     </div>
   );

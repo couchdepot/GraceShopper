@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import { Grid, Avatar, Fab, Button, Menu, Typography } from '@material-ui/core';
 
-import { logOutUser, emptyLineItem } from '../../reducers';
+import { logOutUser, emptyLineItem, gotCart } from '../../reducers';
 
-const Profile = ({ user, logOutUser, emptyLineItem }) => {
+const Profile = ({ user, logOutUser, emptyLineItem, emptyCart }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   function handleClick(event) {
@@ -68,6 +68,7 @@ const Profile = ({ user, logOutUser, emptyLineItem }) => {
                 onClick={() => {
                   logOutUser();
                   emptyLineItem();
+                  emptyCart();
                 }}
               >
                 Sign Out
@@ -88,6 +89,7 @@ const mapDispatchToProps = dispatch => {
   return {
     logOutUser: () => dispatch(logOutUser()),
     emptyLineItem: () => dispatch(emptyLineItem()),
+    emptyCart: () => dispatch(gotCart({})),
   };
 };
 

@@ -11,6 +11,7 @@ import {
 } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
+import Checkout from './Checkout';
 
 import {
   loginSession,
@@ -56,6 +57,7 @@ class App extends Component {
         ) : (
           <Route path="/admin" component={AccessDenied} />
         )}
+        <Route path="/checkout" component={Checkout} />
       </Router>
     );
   }
