@@ -24,7 +24,8 @@ import {
   updateLineItem,
   removeLineItem,
   emptyLineItem,
-  addlineItemToCart,
+  addLineItemToCart,
+  lineItemsSession,
 } from './lineItemReducer';
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
@@ -51,7 +52,8 @@ export {
   getLineItems,
   addLineItem,
   updateLineItem,
-  addlineItemToCart,
+  addLineItemToCart,
+  lineItemsSession,
   emptyLineItem,
   getCategories,
   removeLineItem,
