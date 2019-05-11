@@ -16,6 +16,9 @@ router.use('/lineItems', require('./lineItems'));
 // :/api/address
 router.use('/address', require('./address'));
 
+// :/api/orders
+router.use('/orders', require('./orders'));
+
 // Handle 404s
 router.use((req, res, next) => {
   res.status(404).send('Not Found!');

@@ -29,12 +29,15 @@ import {
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
 
+import { ordersReducer, getOrders } from './ordersReducer';
+
 const rootReducer = combineReducers({
   products: productsReducer,
   user: userReducer,
   cart: cartReducer,
   lineItems: lineItemReducer,
   categories: categoriesReducer,
+  orders: ordersReducer,
 });
 
 export {
@@ -54,4 +57,5 @@ export {
   emptyLineItem,
   getCategories,
   removeLineItem,
+  getOrders,
 };
