@@ -16,9 +16,25 @@ router.get('/:userId', (req, res, next) => {
 
 // POST :/api/address/
 router.post('/', (req, res, next) => {
-  const { streetAddress, city, state, zipCode, userId, cartId } = req.body;
+  const {
+    streetAddress,
+    streetAddress2,
+    city,
+    state,
+    zipCode,
+    userId,
+    cartId,
+  } = req.body;
 
-  Address.create({ streetAddress, city, state, zipCode, userId, cartId })
+  Address.create({
+    streetAddress,
+    streetAdress2,
+    city,
+    state,
+    zipCode,
+    userId,
+    cartId,
+  })
     .then(address => {
       res.status(201).json(address);
     })

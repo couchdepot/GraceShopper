@@ -9,6 +9,13 @@ const Address = db.define('address', {
       notEmpty: true,
     },
   },
+  streetAddress2: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      notEmpty: true,
+    },
+  },
   city: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -31,16 +38,17 @@ const Address = db.define('address', {
     },
   },
   fullAddress: {
-      type: Sequelize.VIRTUAL,
-      get () {
-          return `
+    type: Sequelize.VIRTUAL,
+    get() {
+      return `
             ${this.getDataValue('streetAddress')} 
+            ${this.getDataValue('streetAddress2')} 
             ${this.getDataValue('city')}, 
             ${this.getDataValue('state')} 
             ${this.getDataValue('zipCode')}
-            `
-      }
-  }
+            `;
+    },
+  },
 });
 
 module.exports = Address;
