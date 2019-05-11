@@ -14,9 +14,9 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
-import { addLineItemToCart } from '../reducers';
+import { ManageLineItemQty } from '../reducers';
 
-const SingleProduct = ({ addLineItemToCart, lineItem, cart, product }) => {
+const SingleProduct = ({ ManageLineItemQty, lineItem, cart, product }) => {
   const [itemQty, setItemQty] = useState(1);
 
   const onPlusMinus = num => {
@@ -113,7 +113,7 @@ const SingleProduct = ({ addLineItemToCart, lineItem, cart, product }) => {
             fullWidth={true}
             style={{ marginTop: '10px' }}
             onClick={() =>
-              addLineItemToCart(product.id, itemQty, cart.id, lineItem)
+              ManageLineItemQty(product.id, itemQty, cart.id, lineItem)
             }
           >
             Add To Cart
@@ -151,8 +151,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addLineItemToCart: (productId, quantity, cartId, lineItem) => {
-    return dispatch(addLineItemToCart(productId, quantity, cartId, lineItem));
+  ManageLineItemQty: (productId, quantity, cartId, lineItem) => {
+    return dispatch(ManageLineItemQty(productId, quantity, cartId, lineItem));
   },
 });
 

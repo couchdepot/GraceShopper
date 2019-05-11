@@ -89,7 +89,7 @@ export const removeLineItem = (lineItemId, cartId) => {
 };
 
 // Will updated quantities for a cart or session
-export const addLineItemToCart = (productId, quantity, cartId, lineItem) => {
+export const ManageLineItemQty = (productId, quantity, cartId, lineItem) => {
   return dispatch => {
     if (cartId && lineItem) {
       const newQuantity = lineItem.quantity + quantity;
