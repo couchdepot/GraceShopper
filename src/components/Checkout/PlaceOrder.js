@@ -17,7 +17,6 @@ const PlaceOrder = ({
     if (selectedAddressId) {
       updateCart(cartId, 'processing', selectedAddressId);
       createCart(userId);
-      getLineItems(cartId);
       console.log('order submitted!');
     }
   };
