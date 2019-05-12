@@ -15,12 +15,20 @@ import {
   loginSession,
 } from './userReducer';
 
-import { cartReducer, getUsersCart, gotCart } from './cartReducer';
+import {
+  cartReducer,
+  getUsersCart,
+  gotCart,
+  updateUserCart,
+  createUserCart,
+} from './cartReducer';
 
 import {
   getUserAddresses,
   createAddress,
   addressReducer,
+  removeAddress,
+  updateAddress,
 } from './addressReducer';
 
 import {
@@ -71,6 +79,8 @@ export {
   loginSession,
   getUsersCart,
   gotCart,
+  updateUserCart,
+  createUserCart,
   getLineItems,
   addLineItem,
   updateLineItem,
@@ -85,5 +95,7 @@ export {
   getCurrentOrders,
   getPastOrders,
   getUserAddresses,
+  removeAddress,
   createAddress,
+  updateAddress,
 };
