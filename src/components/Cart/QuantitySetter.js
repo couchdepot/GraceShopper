@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Fab from '@material-ui/core/Fab';
 
-import { updateLineItem } from '../../reducers';
+import { manageLineItemQty } from '../../reducers';
 
 class QuantitySetter extends Component {
   state = {
@@ -14,8 +14,8 @@ class QuantitySetter extends Component {
   };
 
   onPlusMinus = num => {
-    const { lineItem } = this.props;
-
+    const { lineItem, manageLineItemQty } = this.props;
+    const {productId, cartId} = lineItem;
     this.setState(
       prevState => {
         return {
@@ -23,8 +23,7 @@ class QuantitySetter extends Component {
         };
       },
       () => {
-        lineItem.quantity = this.state.quantity;
-        this.props.updateLineItem(lineItem);
+        manageLineItemQty (productId, num, cartId, lineItem)
       }
     );
   };
@@ -72,5 +71,5 @@ class QuantitySetter extends Component {
 
 export default connect(
   null,
-  { updateLineItem }
+  { manageLineItemQty }
 )(QuantitySetter);

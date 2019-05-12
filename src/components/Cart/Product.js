@@ -16,6 +16,7 @@ const Product = ({ lineItem, removeLineItem }) => {
   const {
     id,
     cartId,
+    productId,
     productInfo: { imageUrl, price, name },
   } = lineItem;
   return (
@@ -48,7 +49,7 @@ const Product = ({ lineItem, removeLineItem }) => {
         <QuantitySetter lineItem={lineItem} />
         <Button
           onClick={() => {
-            removeLineItem(id, cartId);
+            removeLineItem(id, cartId, productId);
           }}
           color="secondary"
           style={{ margin: '1rem' }}
