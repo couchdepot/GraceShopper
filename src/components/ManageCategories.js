@@ -1,18 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import {
+  withStyles,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  IconButton,
+} from '@material-ui/core';
+import { Delete, Edit } from '@material-ui/icons';
 import { deleteCategory } from '../reducers';
 
 const styles = theme => ({
@@ -29,8 +30,14 @@ const styles = theme => ({
   },
 });
 
-const ManageCategories = ({ classes, categories, products, deleteCategory }) => {
-  const getProdInCtg = (id, products) => products.filter(p => p.categoryId === id);
+const ManageCategories = ({
+  classes,
+  categories,
+  products,
+  deleteCategory,
+}) => {
+  const getProdInCtg = (id, products) =>
+    products.filter(p => p.categoryId === id);
 
   return (
     <Grid container direction="column" spacing={24} className={classes.root}>
@@ -74,7 +81,7 @@ const ManageCategories = ({ classes, categories, products, deleteCategory }) => 
                         component={Link}
                         to={`/admin/categories/edit/${category.id}`}
                       >
-                        <EditIcon />
+                        <Edit />
                       </IconButton>
                     </TableCell>
                     <TableCell align="center">
@@ -82,7 +89,7 @@ const ManageCategories = ({ classes, categories, products, deleteCategory }) => 
                         aria-label="Delete"
                         onClick={() => deleteCategory(category.id)}
                       >
-                        <DeleteIcon />
+                        <Delete />
                       </IconButton>
                     </TableCell>
                   </TableRow>

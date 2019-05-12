@@ -34,7 +34,13 @@ import {
   lineItemsSession,
 } from './lineItemReducer';
 
-import { categoriesReducer, getCategories, deleteCategory } from './categoriesReducer';
+import {
+  categoriesReducer,
+  getCategories,
+  deleteCategory,
+  updateCategory,
+  createCategory,
+} from './categoriesReducer';
 
 import {
   currentOrdersReducer,
@@ -73,6 +79,8 @@ export {
   emptyLineItem,
   getCategories,
   deleteCategory,
+  updateCategory,
+  createCategory,
   removeLineItem,
   getCurrentOrders,
   getPastOrders,

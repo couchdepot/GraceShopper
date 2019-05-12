@@ -32,3 +32,20 @@ export const deleteCategory = id => {
       .then(() => dispatch(getCategories()));
   };
 };
+
+// update category
+export const updateCategory = (id, category) => {
+  return dispatch => {
+    return axios
+      .put(`/api/products/categories/${id}`, category)
+      .then(() => dispatch(getCategories()));
+  };
+};
+
+// create category
+export const createCategory = (category) => {
+  return dispatch => {
+    return axios.post('/api/products/categories', category)
+    .then(() => dispatch(getCategories()));
+  }
+}
