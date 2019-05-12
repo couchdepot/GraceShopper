@@ -29,7 +29,6 @@ class AddressForm extends React.Component {
         state,
       });
     } else {
-      console.log('savedAddress does not exist in form submit');
       this.props.createAddress(userId, {
         streetAddress,
         streetAddress2,

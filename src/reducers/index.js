@@ -28,6 +28,7 @@ import {
   createAddress,
   addressReducer,
   removeAddress,
+  updateSelectedAddress,
   updateAddress,
 } from './addressReducer';
 
@@ -76,6 +77,7 @@ export {
   removeLineItem,
   getUserAddresses,
   removeAddress,
+  updateSelectedAddress,
   createAddress,
   updateAddress,
 };
