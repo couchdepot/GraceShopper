@@ -38,3 +38,25 @@ router.post('/', (req, res, next) => {
     })
     .catch(next);
 });
+
+// PUT :/api/address/:addressId
+router.put('/:addressId', (req, res, next) => {
+  const { addressId } = req.params;
+  const revisedAddress = req.body;
+
+  Address.findByPk(addressId)
+    .then(address => address.update(revisedAddress))
+    .then(newAddress => res.status(202).json(newAddress))
+    .catch(next);
+});
+
+// DELETE :/api/address/:addressId
+router.delete('/:addressId', (req, res, next) => {
+  const { addressId } = req.params;
+
+  Address.destroy({ where: { id: addressId } })
+    .then(() => {
+      res.sendStatus(202);
+    })
+    .catch(next);
+});

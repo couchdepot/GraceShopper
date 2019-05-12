@@ -2,12 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { TextField, Button } from '@material-ui/core';
-import { createAddress } from '../../reducers';
+import { createAddress, updateAddress } from '../../reducers';
 
 class AddressForm extends React.Component {
-  // const [values, setValues] = React.useState({
-  // });
-
   state = {
     streetAddress: '',
     streetAddress2: '',
@@ -17,38 +14,49 @@ class AddressForm extends React.Component {
   };
 
   handleChange = name => event => {
-    console.log(event.target.value);
-    // this.setState(prevState => {
-    //   return { ...prevState, [name]: event.target.value };
-    // });
+    this.setState({ ...this.state, [name]: event.target.value });
+  };
+
+  handleFormSubmit = (event, userId, newAddress, savedAddress) => {
+    event.preventDefault();
+    const { streetAddress, streetAddress2, city, zipCode, state } = newAddress;
+    if (savedAddress) {
+      this.props.updateAddress(userId, savedAddress.id, {
+        streetAddress,
+        streetAddress2,
+        city,
+        zipCode,
+        state,
+      });
+    } else {
+      console.log('savedAddress does not exist in form submit');
+      this.props.createAddress(userId, {
+        streetAddress,
+        streetAddress2,
+        city,
+        zipCode,
+        state,
+      });
+    }
   };
 
   componentDidMount() {
-    if (!this.props.address.streetAddress2)
-      this.setState({ ...this.props.address, streetAddress2: '' });
-    else this.setState({ ...this.props.address });
+    if (this.props.savedAddress) this.setState({ ...this.props.savedAddress });
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.address !== this.props.address) {
-      if (!this.props.address.streetAddress2)
-        this.setState({ ...this.props.address, streetAddress2: '' });
-      else this.setState({ ...this.props.address });
+    if (
+      prevProps.savedAddress !== this.props.savedAddress &&
+      !!this.props.savedAddress.id
+    ) {
+      this.setState({ ...this.props.savedAddress });
     }
   }
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-
-    // const {} = this.props;
-    // createAddress(userId, values);
-  };
-
-  // console.log('state', thisState);
-  // console.log('address', streetAddress);
   render() {
     const { handleChange, handleFormSubmit } = this;
     const { streetAddress, streetAddress2, city, zipCode, state } = this.state;
+    const { userId, savedAddress } = this.props;
     return (
       <form
         style={{
@@ -56,8 +64,8 @@ class AddressForm extends React.Component {
           flewWrap: 'wrap',
           width: '100%',
           flexDirection: 'column',
+          paddingLeft: '1rem',
         }}
-        onSubmit={handleFormSubmit}
       >
         <TextField
           label="Address line 1"
@@ -123,7 +131,10 @@ class AddressForm extends React.Component {
           <Button
             variant="contained"
             color="primary"
-            style={{ width: '100px' }}
+            style={{ width: '100px', marginBottom: '1rem' }}
+            onClick={event =>
+              handleFormSubmit(event, userId, { ...this.state }, savedAddress)
+            }
           >
             Save
           </Button>
@@ -137,12 +148,11 @@ const mapStateToProps = state => {
   return {
     cartId: state.cart.id,
     userId: state.user.id,
-    address: state.addresses[0] || {},
     state,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { createAddress }
+  { createAddress, updateAddress }
 )(AddressForm);
