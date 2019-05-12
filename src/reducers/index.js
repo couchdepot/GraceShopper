@@ -36,12 +36,21 @@ import {
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
 
+import {
+  currentOrdersReducer,
+  pastOrdersReducer,
+  getCurrentOrders,
+  getPastOrders,
+} from './ordersReducer';
+
 const rootReducer = combineReducers({
   products: productsReducer,
   user: userReducer,
   cart: cartReducer,
   lineItems: lineItemReducer,
   categories: categoriesReducer,
+  currentOrders: currentOrdersReducer,
+  pastOrders: pastOrdersReducer,
   addresses: addressReducer,
 });
 
@@ -64,6 +73,8 @@ export {
   emptyLineItem,
   getCategories,
   removeLineItem,
+  getCurrentOrders,
+  getPastOrders,
   getUserAddresses,
   createAddress,
 };

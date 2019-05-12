@@ -8,6 +8,7 @@ import {
   ManageProducts,
   EditProduct,
   AccessDenied,
+  Orders,
 } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
@@ -63,6 +64,7 @@ class App extends Component {
       <Router>
         <Navbar />
         <Route path="/" exact render={() => <Redirect to="/products" />} />
+        <Route path="/orders" component={Orders} />
         <Route path="/login" exact component={Login} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/products" component={ProductsList} />
