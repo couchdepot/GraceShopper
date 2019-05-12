@@ -6,7 +6,7 @@ const {
 } = require('../db');
 
 // POST :/api/lineItems
-// Will add line item to db of session
+// Will add line item to db, or to session if not logged in
 router.post('/', (req, res, next) => {
   const { productId, quantity, cartId } = req.body;
   const { user, lineItems } = req.session;
