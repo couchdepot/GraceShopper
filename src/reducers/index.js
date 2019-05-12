@@ -29,7 +29,12 @@ import {
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
 
-import { ordersReducer, getOrders } from './ordersReducer';
+import {
+  currentOrdersReducer,
+  pastOrdersReducer,
+  getCurrentOrders,
+  getPastOrders,
+} from './ordersReducer';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -37,7 +42,8 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   lineItems: lineItemReducer,
   categories: categoriesReducer,
-  orders: ordersReducer,
+  currentOrders: currentOrdersReducer,
+  pastOrders: pastOrdersReducer,
 });
 
 export {
@@ -58,5 +64,6 @@ export {
   emptyLineItem,
   getCategories,
   removeLineItem,
-  getOrders,
+  getCurrentOrders,
+  getPastOrders,
 };

@@ -5,7 +5,7 @@ const Product = require('./Product');
 const Cart = require('./Cart');
 const LineItem = require('./LineItem');
 const Address = require('./Address');
-const syncAndSeed = require("./seed");
+const syncAndSeed = require('./seed');
 
 // Association
 Product.belongsTo(Category);
@@ -14,7 +14,7 @@ Cart.belongsTo(User);
 Cart.belongsTo(Address);
 LineItem.belongsTo(Cart);
 LineItem.belongsTo(Product);
-
+Cart.hasMany(LineItem);
 
 module.exports = {
   syncAndSeed,
