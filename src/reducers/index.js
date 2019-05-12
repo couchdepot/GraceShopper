@@ -18,6 +18,12 @@ import {
 import { cartReducer, getUsersCart, gotCart } from './cartReducer';
 
 import {
+  getUserAddresses,
+  createAddress,
+  addressReducer,
+} from './addressReducer';
+
+import {
   lineItemReducer,
   getLineItems,
   addLineItem,
@@ -36,6 +42,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   lineItems: lineItemReducer,
   categories: categoriesReducer,
+  addresses: addressReducer,
 });
 
 export {
@@ -57,4 +64,6 @@ export {
   emptyLineItem,
   getCategories,
   removeLineItem,
+  getUserAddresses,
+  createAddress,
 };
