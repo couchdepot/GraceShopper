@@ -1,12 +1,21 @@
 import axios from 'axios';
 
 const GOT_ALL_ADDRESSES = 'GOT_ALL_ADDRESSES';
+const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
+
+const initialState = {
+  userAddresses: [],
+  selectedAddress: {},
+};
 
 // Reducer
-export const addressReducer = (state = [], action) => {
+export const addressReducer = (state = initialState, action) => {
   switch (action.type) {
     case GOT_ALL_ADDRESSES:
-      return action.addresses;
+      return { ...state, userAddresses: action.addresses };
+    case UPDATE_ADDRESS: {
+      return { ...state, selectedAddress: action.address };
+    }
     default:
       return state;
   }
@@ -15,6 +24,11 @@ export const addressReducer = (state = [], action) => {
 export const gotAddresses = addresses => ({
   type: GOT_ALL_ADDRESSES,
   addresses,
+});
+
+export const updateSelectedAddress = address => ({
+  type: UPDATE_ADDRESS,
+  address,
 });
 
 export const getUserAddresses = userId => {
@@ -32,4 +46,18 @@ export const createAddress = (userId, address) => {
       .post(`/api/address`, { ...address, userId })
       .then(() => dispatch(getUserAddresses(userId)));
   };
+};
+
+export const updateAddress = (userId, addressId, newAddress) => {
+  return dispatch => {
+    return axios
+      .put(`/api/address/${addressId}`, { ...newAddress })
+      .then(() => dispatch(getUserAddresses(userId)));
+  };
+};
+
+export const removeAddress = (addressId, userId) => dispatch => {
+  return axios
+    .delete(`/api/address/${addressId}`)
+    .then(() => dispatch(getUserAddresses(userId)));
 };

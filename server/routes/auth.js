@@ -23,7 +23,7 @@ router.post('/', (req, res, next) => {
         throw error;
       }
       req.session.user = user;
-
+// Will merge the lineItems from session with what's in the users cart on login
       if (lineItems) {
         let usersCart;
         Cart.findOne({ where: { userId: user.id, status: 'inCart' } })

@@ -8,6 +8,8 @@ import {
   ManageProducts,
   EditProduct,
   AccessDenied,
+  ManageCategories,
+  EditCategory,
   Orders,
 } from './';
 import Navbar from './Navbar';
@@ -83,6 +85,8 @@ class App extends Component {
           <Fragment>
             <Route path="/admin/products" exact component={ManageProducts} />
             <Route path="/admin/products/edit/:id?" component={EditProduct} />
+            <Route path="/admin/categories" exact component={ManageCategories} />
+            <Route path="/admin/categories/edit/:id?" component={EditCategory} />
           </Fragment>
         ) : (
           <Route path="/admin" component={AccessDenied} />
