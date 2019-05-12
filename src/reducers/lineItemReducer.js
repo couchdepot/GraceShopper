@@ -53,7 +53,7 @@ export const lineItemReducer = (state = [], action) => {
 export const getLineItems = cartId => {
   return dispatch => {
     return axios
-      .get(`/api/lineItems/${cartId}`)
+      .get(`/api/lineItems/${cartId ? cartId : ''}`)
       .then(response => response.data)
       .then(lineItems => dispatch(gotLineItems(lineItems)));
   };
@@ -80,16 +80,16 @@ export const updateLineItem = lineItem => {
 };
 
 // Remove a line item
-export const removeLineItem = (lineItemId, cartId) => {
+export const removeLineItem = (lineItemId, cartId, productId) => {
   return dispatch => {
     return axios
-      .delete(`api/lineItems/${lineItemId}`)
+      .delete(`api/lineItems/${lineItemId}/${productId}`)
       .then(() => dispatch(getLineItems(cartId)));
   };
 };
 
 // Will updated quantities for a cart or session
-export const ManageLineItemQty = (productId, quantity, cartId, lineItem) => {
+export const manageLineItemQty = (productId, quantity, cartId, lineItem) => {
   return dispatch => {
     if (cartId && lineItem) {
       const newQuantity = lineItem.quantity + quantity;

@@ -24,7 +24,7 @@ import {
   updateLineItem,
   removeLineItem,
   emptyLineItem,
-  ManageLineItemQty,
+  manageLineItemQty,
   lineItemsSession,
 } from './lineItemReducer';
 
@@ -52,7 +52,7 @@ export {
   getLineItems,
   addLineItem,
   updateLineItem,
-  ManageLineItemQty,
+  manageLineItemQty,
   lineItemsSession,
   emptyLineItem,
   getCategories,
