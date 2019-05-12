@@ -14,6 +14,7 @@ Cart.belongsTo(User);
 Cart.belongsTo(Address);
 LineItem.belongsTo(Cart);
 LineItem.belongsTo(Product);
+Cart.hasMany(LineItem);
 
 module.exports = {
   syncAndSeed,
