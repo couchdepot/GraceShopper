@@ -7,7 +7,7 @@ module.exports = router;
 
 // GET :/api/products
 router.get('/', (req, res, next) => {
-  return Product.findAll()
+  return Product.findAll({order:[['id']]})
     .then(products => res.send(products))
     .catch(next);
 });

@@ -9,8 +9,8 @@ class Products extends React.Component {
     console.log(productsInCart);
     return (
       <div style={{ margin: '2rem 0' }}>
-        {productsInCart.map((lineItem, idx) => {
-          return <Product key={idx} lineItem={lineItem} />;
+        {productsInCart.map(lineItem => {
+          return <Product key={lineItem.productId} lineItem={lineItem} />;
         })}
       </div>
     );

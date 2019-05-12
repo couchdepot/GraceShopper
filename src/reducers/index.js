@@ -18,13 +18,20 @@ import {
 import { cartReducer, getUsersCart, gotCart } from './cartReducer';
 
 import {
+  getUserAddresses,
+  createAddress,
+  addressReducer,
+} from './addressReducer';
+
+import {
   lineItemReducer,
   getLineItems,
   addLineItem,
   updateLineItem,
   removeLineItem,
   emptyLineItem,
-  addlineItemToCart,
+  manageLineItemQty,
+  lineItemsSession,
 } from './lineItemReducer';
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
@@ -44,6 +51,7 @@ const rootReducer = combineReducers({
   categories: categoriesReducer,
   currentOrders: currentOrdersReducer,
   pastOrders: pastOrdersReducer,
+  addresses: addressReducer,
 });
 
 export {
@@ -60,10 +68,13 @@ export {
   getLineItems,
   addLineItem,
   updateLineItem,
-  addlineItemToCart,
+  manageLineItemQty,
+  lineItemsSession,
   emptyLineItem,
   getCategories,
   removeLineItem,
   getCurrentOrders,
   getPastOrders,
+  getUserAddresses,
+  createAddress,
 };

@@ -7,10 +7,10 @@ import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
-import { addlineItemToCart } from '../reducers';
+import { manageLineItemQty } from '../reducers';
 
 const ProductsList = ({
-  addlineItemToCart,
+  manageLineItemQty,
   lineItems,
   cart,
   products,
@@ -88,7 +88,7 @@ const ProductsList = ({
                 color="primary"
                 size="large"
                 fullWidth={true}
-                onClick={() => addlineItemToCart(product.id, 1, cart.id, lineItem)}
+                onClick={() => manageLineItemQty(product.id, 1, cart.id, lineItem)}
               >
                 {lineItem ? 'Add More' : 'Add To Cart'}
               </Button>
@@ -109,8 +109,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addlineItemToCart: (productId, quantity, cartId, lineItem) => {
-    return dispatch(addlineItemToCart(productId, quantity, cartId, lineItem))
+  manageLineItemQty: (productId, quantity, cartId, lineItem) => {
+    return dispatch(manageLineItemQty(productId, quantity, cartId, lineItem))
   }
 });
 

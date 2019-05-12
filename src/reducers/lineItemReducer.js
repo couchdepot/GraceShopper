@@ -3,10 +3,18 @@ import axios from 'axios';
 const GOT_LINE_ITEMS = 'GOT_LINE_ITEMS';
 const ADDED_LINE_ITEM = 'ADDED_LINE_ITEM';
 const EMPTY_LINE_ITEM = 'EMPTY_LINE_ITEM';
+const GOT_SESSION_LINE_ITEMS = 'GOT_SESSION_LINE_ITEMS';
 
 const gotLineItems = lineItems => {
   return {
     type: GOT_LINE_ITEMS,
+    lineItems,
+  };
+};
+
+const gotSessionLineItems = lineItems => {
+  return {
+    type: GOT_SESSION_LINE_ITEMS,
     lineItems,
   };
 };
@@ -29,7 +37,10 @@ export const lineItemReducer = (state = [], action) => {
     case GOT_LINE_ITEMS:
       return action.lineItems;
     case ADDED_LINE_ITEM:
-      return [...state, action.lineItem];
+      if (Array.isArray(action.lineItem)) return action.lineItem;
+      else return [...state, action.lineItem];
+    case GOT_SESSION_LINE_ITEMS:
+      return action.lineItems;
     case EMPTY_LINE_ITEM:
       return [];
     default:
@@ -42,7 +53,7 @@ export const lineItemReducer = (state = [], action) => {
 export const getLineItems = cartId => {
   return dispatch => {
     return axios
-      .get(`/api/lineItems/${cartId}`)
+      .get(`/api/lineItems/${cartId ? cartId : ''}`)
       .then(response => response.data)
       .then(lineItems => dispatch(gotLineItems(lineItems)));
   };
@@ -69,22 +80,33 @@ export const updateLineItem = lineItem => {
 };
 
 // Remove a line item
-export const removeLineItem = (lineItemId, cartId) => {
+export const removeLineItem = (lineItemId, cartId, productId) => {
   return dispatch => {
     return axios
-      .delete(`api/lineItems/${lineItemId}`)
+      .delete(`api/lineItems/${lineItemId}/${productId}`)
       .then(() => dispatch(getLineItems(cartId)));
   };
 };
 
-export const addlineItemToCart = (productId, quantity, cartId, lineItem) => {
+// Will updated quantities for a cart or session
+export const manageLineItemQty = (productId, quantity, cartId, lineItem) => {
   return dispatch => {
     if (cartId && lineItem) {
       const newQuantity = lineItem.quantity + quantity;
-      const udatedlineItem = { ...lineItem, quantity: newQuantity };
-      dispatch(updateLineItem(udatedlineItem));
-    } else if (cartId) {
+      const updatedLineItem = { ...lineItem, quantity: newQuantity };
+      dispatch(updateLineItem(updatedLineItem));
+    } else {
       dispatch(addLineItem({ productId, quantity, cartId }));
     }
+  };
+};
+
+// Check session for lineItems. Will keep line items in store on hard reload
+export const lineItemsSession = () => {
+  return dispatch => {
+    return axios
+      .get('/api/lineItems')
+      .then(response => response.data)
+      .then(lineItems => dispatch(gotSessionLineItems(lineItems)));
   };
 };
