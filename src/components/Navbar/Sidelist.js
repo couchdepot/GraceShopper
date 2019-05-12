@@ -69,7 +69,7 @@ const Sidelist = ({ classes, user }) => {
             <ListItemText primary="Login" />
           </a>
         </ListItem>
-        
+
         {user.admin &&
         <Fragment>
           <ListItem button onClick={()=> setOpen(!open)}>
@@ -86,6 +86,15 @@ const Sidelist = ({ classes, user }) => {
                   <ListIcon />
                 </ListItemIcon>
                 <ListItemText inset primary="Products" />
+              </ListItem>
+            </List>
+
+            <List component="div" disablePadding>
+              <ListItem button component={Link} to='/admin/categories'>
+                <ListItemIcon>
+                  <ListIcon />
+                </ListItemIcon>
+                <ListItemText inset primary="Categories" />
               </ListItem>
             </List>
           </Collapse>

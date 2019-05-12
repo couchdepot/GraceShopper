@@ -24,3 +24,11 @@ export const getCategories = () => {
       .then(action => dispatch(action));
   };
 };
+
+export const deleteCategory = id => {
+  return dispatch => {
+    return axios
+      .delete(`/api/products/categories/${id}`)
+      .then(() => dispatch(getCategories()));
+  };
+};

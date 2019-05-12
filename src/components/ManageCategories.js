@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { deleteProduct } from '../reducers';
+import { deleteCategory } from '../reducers';
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,9 @@ const styles = theme => ({
   },
 });
 
-const ManageCategories = ({ classes, products, deleteProduct }) => {
+const ManageCategories = ({ classes, categories, products, deleteCategory }) => {
+  const getProdInCtg = (id, products) => products.filter(p => p.categoryId === id);
+
   return (
     <Grid container direction="column" spacing={24} className={classes.root}>
       <Grid item>
@@ -38,9 +40,9 @@ const ManageCategories = ({ classes, products, deleteProduct }) => {
           variant="contained"
           color="primary"
           component={Link}
-          to={'/admin/products/edit'}
+          to={'/admin/categories/edit'}
         >
-          Add New Product
+          Add New Category
         </Button>
       </Grid>
 
@@ -49,42 +51,43 @@ const ManageCategories = ({ classes, products, deleteProduct }) => {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>Product Name</TableCell>
-                <TableCell align="right">ID</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Quantity</TableCell>
+                <TableCell>Category Name</TableCell>
+                <TableCell align="center">ID</TableCell>
+                <TableCell align="center"># Products</TableCell>
                 <TableCell align="center">Edit</TableCell>
                 <TableCell align="center">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.map(product => (
-                <TableRow key={product.id}>
-                  <TableCell component="th" scope="row">
-                    {product.name}
-                  </TableCell>
-                  <TableCell align="right">{product.id}</TableCell>
-                  <TableCell align="right">{product.price}</TableCell>
-                  <TableCell align="right">{product.quantity}</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      aria-label="EditIcon"
-                      component={Link}
-                      to={`/admin/products/edit/${product.id}`}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      aria-label="Delete"
-                      onClick={() => deleteProduct(product.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {categories.map(category => {
+                const prodBelongTo = getProdInCtg(category.id, products);
+                return (
+                  <TableRow key={category.id}>
+                    <TableCell component="th" scope="row">
+                      {category.name}
+                    </TableCell>
+                    <TableCell align="center">{category.id}</TableCell>
+                    <TableCell align="center">{prodBelongTo.length}</TableCell>
+                    <TableCell align="center">
+                      <IconButton
+                        aria-label="EditIcon"
+                        component={Link}
+                        to={`/admin/categories/edit/${category.id}`}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton
+                        aria-label="Delete"
+                        onClick={() => deleteCategory(category.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </Paper>
@@ -93,15 +96,16 @@ const ManageCategories = ({ classes, products, deleteProduct }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ categories, products }) => {
   return {
-    products: state.products,
+    categories,
+    products,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteProduct: productId => dispatch(deleteProduct(productId)),
+    deleteCategory: categoryId => dispatch(deleteCategory(categoryId)),
   };
 };
 
