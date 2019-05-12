@@ -29,7 +29,7 @@ const styles = theme => ({
   },
 });
 
-const ManageProducts = ({ classes, products, deleteProduct }) => {
+const ManageCategories = ({ classes, products, deleteProduct }) => {
   return (
     <Grid container direction="column" spacing={24} className={classes.root}>
       <Grid item>
@@ -108,4 +108,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ManageProducts));
+)(withStyles(styles)(ManageCategories));

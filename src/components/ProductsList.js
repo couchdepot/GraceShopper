@@ -17,7 +17,6 @@ const ProductsList = ({
   categories,
   match,
 }) => {
-
   products = match.params.categoryId
     ? products.filter(
         product => product.categoryId === match.params.categoryId * 1
@@ -55,7 +54,9 @@ const ProductsList = ({
         style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
       >
         {products.map(product => {
-          const lineItem = lineItems.find(item => item.productId === product.id);
+          const lineItem = lineItems.find(
+            item => item.productId === product.id
+          );
           return (
             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
               <Link to={`/products/${product.id}`}>
@@ -88,7 +89,9 @@ const ProductsList = ({
                 color="primary"
                 size="large"
                 fullWidth={true}
-                onClick={() => manageLineItemQty(product.id, 1, cart.id, lineItem)}
+                onClick={() =>
+                  manageLineItemQty(product.id, 1, cart.id, lineItem)
+                }
               >
                 {lineItem ? 'Add More' : 'Add To Cart'}
               </Button>
@@ -100,7 +103,6 @@ const ProductsList = ({
   );
 };
 
-
 const mapStateToProps = state => ({
   products: state.products,
   cart: state.cart,
@@ -110,8 +112,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   manageLineItemQty: (productId, quantity, cartId, lineItem) => {
-    return dispatch(manageLineItemQty(productId, quantity, cartId, lineItem))
-  }
+    return dispatch(manageLineItemQty(productId, quantity, cartId, lineItem));
+  },
 });
 
 export default connect(
