@@ -12,9 +12,6 @@ const Address = db.define('address', {
   streetAddress2: {
     type: Sequelize.STRING,
     allowNull: true,
-    validate: {
-      notEmpty: true,
-    },
   },
   city: {
     type: Sequelize.STRING,
