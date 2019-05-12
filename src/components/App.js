@@ -49,8 +49,7 @@ class App extends Component {
     } = this.props;
 
     if (user.id && user.id !== prevProps.user.id) {
-      getUsersCart(user.id, 'inCart');
-      if (user.id) getUserAddresses(user.id);
+      Promise.all([getUsersCart(user.id, 'inCart'), getUserAddresses(user.id)]);
     }
     if (cart.id && cart.id !== prevProps.cart.id) {
       getLineItems(cart.id);
