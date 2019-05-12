@@ -30,7 +30,8 @@ import {
   updateLineItem,
   removeLineItem,
   emptyLineItem,
-  addlineItemToCart,
+  manageLineItemQty,
+  lineItemsSession,
 } from './lineItemReducer';
 
 import { categoriesReducer, getCategories } from './categoriesReducer';
@@ -58,7 +59,8 @@ export {
   getLineItems,
   addLineItem,
   updateLineItem,
-  addlineItemToCart,
+  manageLineItemQty,
+  lineItemsSession,
   emptyLineItem,
   getCategories,
   removeLineItem,
