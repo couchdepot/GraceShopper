@@ -22,6 +22,8 @@ import {
   lineItemsSession,
   getCategories,
   getUserAddresses,
+  getCurrentOrders,
+  getPastOrders,
 } from '../reducers';
 
 class App extends Component {
@@ -47,10 +49,17 @@ class App extends Component {
       getUsersCart,
       getLineItems,
       getUserAddresses,
+      getCurrentOrders,
+      getPastOrders,
     } = this.props;
 
     if (user.id && user.id !== prevProps.user.id) {
-      Promise.all([getUsersCart(user.id, 'inCart'), getUserAddresses(user.id)]);
+      Promise.all([
+        getUsersCart(user.id, 'inCart'),
+        getUserAddresses(user.id),
+        getCurrentOrders(user.id),
+        getPastOrders(user.id),
+      ]);
     }
     if (cart.id && cart.id !== prevProps.cart.id) {
       getLineItems(cart.id);
@@ -100,6 +109,8 @@ const mapDispatchToProps = dispatch => {
     getCategories: () => dispatch(getCategories()),
     getUserAddresses: userId => dispatch(getUserAddresses(userId)),
     lineItemsSession: () => dispatch(lineItemsSession()),
+    getCurrentOrders: userId => dispatch(getCurrentOrders(userId)),
+    getPastOrders: userId => dispatch(getPastOrders(userId)),
   };
 };
 
