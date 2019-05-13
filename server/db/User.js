@@ -46,6 +46,12 @@ const User = db.define('user', {
     allowNull: false,
     defaultValue: false,
   },
+    fullName: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
+    },
+  },
 });
 
 module.exports = User;

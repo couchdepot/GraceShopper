@@ -7,6 +7,8 @@ import EditCategory from './EditCategory';
 import EditProduct from './EditProduct';
 import AccessDenied from './AccessDenied';
 import Orders from './Orders/Orders';
+import ManageUsers from './ManageUsers';
+import EditUser from './EditUser';
 
 export {
   ProductsList,
@@ -18,4 +20,6 @@ export {
   EditProduct,
   AccessDenied,
   Orders,
+  ManageUsers,
+  EditUser,
 };

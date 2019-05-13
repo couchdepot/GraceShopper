@@ -97,6 +97,15 @@ const Sidelist = ({ classes, user }) => {
                   <ListItemText inset primary="Categories" />
                 </ListItem>
               </List>
+              
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/admin/users">
+                  <ListItemIcon>
+                    <ListIcon />
+                  </ListItemIcon>
+                  <ListItemText inset primary="Users" />
+                </ListItem>
+              </List>
             </Collapse>
           </Fragment>
         )}

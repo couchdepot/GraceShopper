@@ -11,6 +11,8 @@ import {
   ManageCategories,
   EditCategory,
   Orders,
+  ManageUsers,
+  EditUser,
 } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
@@ -26,6 +28,7 @@ import {
   getUserAddresses,
   getCurrentOrders,
   getPastOrders,
+  getAllUsers,
 } from '../reducers';
 
 class App extends Component {
@@ -35,13 +38,17 @@ class App extends Component {
       getProducts,
       getCategories,
       lineItemsSession,
+      getAllUsers,
     } = this.props;
+    
     Promise.all([
       getProducts(),
       loginSession(),
       getCategories(),
       lineItemsSession(),
+      getAllUsers(),
     ]);
+    
   }
 
   componentDidUpdate(prevProps) {
@@ -98,6 +105,8 @@ class App extends Component {
               path="/admin/categories/edit/:id?"
               component={EditCategory}
             />
+            <Route path="/admin/users" exact component={ManageUsers} />
+            <Route path="/admin/users/edit/:id?" component={EditUser} />
           </Fragment>
         ) : (
           <Route path="/admin" component={AccessDenied} />
@@ -126,6 +135,7 @@ const mapDispatchToProps = dispatch => {
     lineItemsSession: () => dispatch(lineItemsSession()),
     getCurrentOrders: userId => dispatch(getCurrentOrders(userId)),
     getPastOrders: userId => dispatch(getPastOrders(userId)),
+    getAllUsers: () => dispatch(getAllUsers()),
   };
 };
 
