@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import { updateUserCart, createUserCart, getLineItems } from '../../reducers';
 
@@ -12,11 +13,13 @@ const PlaceOrder = ({
   cartId,
   userId,
   cart,
+  history,
 }) => {
   const submitOrder = () => {
     if (selectedAddressId) {
       updateCart(cartId, 'processing', selectedAddressId);
       createCart(userId);
+      history.push('/orders');
       console.log('order submitted!');
     }
   };
@@ -57,7 +60,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlaceOrder);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PlaceOrder)
+);
