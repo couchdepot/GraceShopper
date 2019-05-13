@@ -5,7 +5,7 @@ const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
 
 const initialState = {
   userAddresses: [],
-  selectedAddress: {},
+  selectedAddressId: '',
 };
 
 // Reducer
@@ -14,7 +14,7 @@ export const addressReducer = (state = initialState, action) => {
     case GOT_ALL_ADDRESSES:
       return { ...state, userAddresses: action.addresses };
     case UPDATE_ADDRESS: {
-      return { ...state, selectedAddress: action.address };
+      return { ...state, selectedAddressId: action.addressId };
     }
     default:
       return state;
@@ -26,9 +26,9 @@ export const gotAddresses = addresses => ({
   addresses,
 });
 
-export const updateSelectedAddress = address => ({
+export const updateSelectedAddress = addressId => ({
   type: UPDATE_ADDRESS,
-  address,
+  addressId,
 });
 
 export const getUserAddresses = userId => {

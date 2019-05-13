@@ -9,7 +9,7 @@ module.exports = router;
 router.get('/:userId', (req, res, next) => {
   const { userId } = req.params;
 
-  Address.findAll({ where: { userId } })
+  Address.findAll({ where: { userId }, order: [['createdAt']] })
     .then(addresses => res.status(200).json(addresses))
     .catch(next);
 });

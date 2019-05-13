@@ -33,9 +33,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { classes, user, lineItems } = this.props;
-    // console.log('user:', user);
-    // console.log('lineItems:', lineItems);
+    const { classes, user } = this.props;
     return (
       <div className={classes.root}>
         <AppBar
