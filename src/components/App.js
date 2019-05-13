@@ -65,6 +65,8 @@ class App extends Component {
     }
     if (cart.id && cart.id !== prevProps.cart.id) {
       getLineItems(cart.id);
+      getCurrentOrders(user.id);
+      getPastOrders(user.id);
     }
   }
 
@@ -85,8 +87,15 @@ class App extends Component {
           <Fragment>
             <Route path="/admin/products" exact component={ManageProducts} />
             <Route path="/admin/products/edit/:id?" component={EditProduct} />
-            <Route path="/admin/categories" exact component={ManageCategories} />
-            <Route path="/admin/categories/edit/:id?" component={EditCategory} />
+            <Route
+              path="/admin/categories"
+              exact
+              component={ManageCategories}
+            />
+            <Route
+              path="/admin/categories/edit/:id?"
+              component={EditCategory}
+            />
           </Fragment>
         ) : (
           <Route path="/admin" component={AccessDenied} />
