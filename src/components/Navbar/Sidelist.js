@@ -20,10 +20,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-
-
 const Sidelist = ({ classes, user }) => {
-
   const [open, setOpen] = useState(false);
 
   return (
@@ -54,7 +51,10 @@ const Sidelist = ({ classes, user }) => {
           </a>
         </ListItem>
         <ListItem button>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <a
+            href="/#/orders"
+            style={{ textDecoration: 'none', display: 'flex' }}
+          >
             <ListItemIcon>
               <History />
             </ListItemIcon>
@@ -70,36 +70,36 @@ const Sidelist = ({ classes, user }) => {
           </a>
         </ListItem>
 
-        {user.admin &&
-        <Fragment>
-          <ListItem button onClick={()=> setOpen(!open)}>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText inset primary="Manage Store" />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button component={Link} to='/admin/products'>
-                <ListItemIcon>
-                  <ListIcon />
-                </ListItemIcon>
-                <ListItemText inset primary="Products" />
-              </ListItem>
-            </List>
+        {user.admin && (
+          <Fragment>
+            <ListItem button onClick={() => setOpen(!open)}>
+              <ListItemIcon>
+                <Settings />
+              </ListItemIcon>
+              <ListItemText inset primary="Manage Store" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/admin/products">
+                  <ListItemIcon>
+                    <ListIcon />
+                  </ListItemIcon>
+                  <ListItemText inset primary="Products" />
+                </ListItem>
+              </List>
 
-            <List component="div" disablePadding>
-              <ListItem button component={Link} to='/admin/categories'>
-                <ListItemIcon>
-                  <ListIcon />
-                </ListItemIcon>
-                <ListItemText inset primary="Categories" />
-              </ListItem>
-            </List>
-          </Collapse>
-        </Fragment>
-        }
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/admin/categories">
+                  <ListItemIcon>
+                    <ListIcon />
+                  </ListItemIcon>
+                  <ListItemText inset primary="Categories" />
+                </ListItem>
+              </List>
+            </Collapse>
+          </Fragment>
+        )}
       </List>
     </div>
   );
@@ -108,7 +108,7 @@ const Sidelist = ({ classes, user }) => {
 const mapStateToProps = state => {
   return {
     user: state.user,
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Sidelist);

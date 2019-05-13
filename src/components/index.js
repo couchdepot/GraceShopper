@@ -6,7 +6,7 @@ import ManageCategories from './ManageCategories';
 import EditCategory from './EditCategory';
 import EditProduct from './EditProduct';
 import AccessDenied from './AccessDenied';
-import Orders from './Orders';
+import Orders from './Orders/Orders';
 
 export {
   ProductsList,
