@@ -1,43 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
-import { updateUserCart, createUserCart, getLineItems } from '../../reducers';
+import { updateUserCart, createUserCart } from '../../reducers';
 
 import { Button } from '@material-ui/core';
 
-const PlaceOrder = ({
-  updateCart,
-  createCart,
-  selectedAddressId,
-  cartId,
-  userId,
-  cart,
-}) => {
-  const submitOrder = () => {
+class PlaceOrder extends Component {
+  submitOrder = () => {
+    const {
+      selectedAddressId,
+      updateCart,
+      createCart,
+      history,
+      userId,
+      cartId,
+    } = this.props;
+
     if (selectedAddressId) {
       updateCart(cartId, 'processing', selectedAddressId);
       createCart(userId);
+      history.push('/orders');
       console.log('order submitted!');
     }
   };
 
-  console.log(cart);
-
-  return (
-    <div style={{ width: '100%' }}>
-      <Button
-        onClick={() => {
-          submitOrder();
-        }}
-        variant="contained"
-        color="primary"
-        style={{ width: '100%' }}
-      >
-        Place order
-      </Button>
-    </div>
-  );
-};
+  render() {
+    const { submitOrder } = this;
+    return (
+      <div style={{ width: '100%' }}>
+        <Button
+          onClick={() => {
+            submitOrder();
+          }}
+          variant="contained"
+          color="primary"
+          style={{ width: '100%' }}
+        >
+          Place order
+        </Button>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = ({ addresses, cart, user }) => {
   return {
@@ -53,11 +58,12 @@ const mapDispatchToProps = dispatch => {
     updateCart: (cartId, status, addressId) =>
       dispatch(updateUserCart(cartId, status, addressId)),
     createCart: userId => dispatch(createUserCart(userId, 'inCart')),
-    getLineItems: cartId => dispatch(getLineItems(cartId)),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlaceOrder);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PlaceOrder)
+);
