@@ -48,5 +48,6 @@ export const updateUserCart = (cartId, status, addressId) => dispatch => {
 export const createUserCart = (userId, status) => dispatch => {
   return axios
     .post(`/api/carts/`, { userId, status })
-    .then(newCart => dispatch(gotCart(newCart)));
+    .then(response => response.data)
+    .then(newCart => dispatch(gotCart(newCart)))
 };

@@ -64,9 +64,11 @@ class App extends Component {
       ]);
     }
     if (cart.id && cart.id !== prevProps.cart.id) {
-      getLineItems(cart.id);
-      getCurrentOrders(user.id);
-      getPastOrders(user.id);
+      Promise.all([
+      getLineItems(cart.id),
+      getCurrentOrders(user.id),
+      getPastOrders(user.id),
+      ]);
     }
   }
 
