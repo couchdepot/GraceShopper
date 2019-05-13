@@ -1,24 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { updateUserCart, createUserCart } from '../../reducers';
+import { updateUserCart, createUserCart, getLineItems } from '../../reducers';
 
 import { Button } from '@material-ui/core';
 
-const PlaceOrder = state => {
-  // Make a put request to cart
-  // add the address Id
-  // change status to processing
-  // Create a new cart
+const PlaceOrder = ({
+  updateCart,
+  createCart,
+  selectedAddressId,
+  cartId,
+  userId,
+  cart,
+}) => {
+  const submitOrder = () => {
+    if (selectedAddressId) {
+      updateCart(cartId, 'processing', selectedAddressId);
+      createCart(userId);
+      console.log('order submitted!');
+    }
+  };
 
-  console.log(state);
-
-  const onClick = () => {};
+  console.log(cart);
 
   return (
     <div style={{ width: '100%' }}>
       <Button
-        onClick={onClick}
+        onClick={() => {
+          submitOrder();
+        }}
         variant="contained"
         color="primary"
         style={{ width: '100%' }}
@@ -29,14 +39,21 @@ const PlaceOrder = state => {
   );
 };
 
-const mapStateToProps = state => {
-  return state;
+const mapStateToProps = ({ addresses, cart, user }) => {
+  return {
+    selectedAddressId: addresses.selectedAddressId,
+    cartId: cart.id,
+    userId: user.id,
+    cart,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateCart: () => dispatch(updateUserCart()),
-    createCart: () => dispatch(createUserCart()),
+    updateCart: (cartId, status, addressId) =>
+      dispatch(updateUserCart(cartId, status, addressId)),
+    createCart: userId => dispatch(createUserCart(userId, 'inCart')),
+    getLineItems: cartId => dispatch(getLineItems(cartId)),
   };
 };
 

@@ -1,17 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  Button,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Typography,
-} from '@material-ui/core';
+import { Button, Radio, RadioGroup, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import RemoveIcon from '@material-ui/icons/RemoveCircleOutline';
 
-import { updateAddress, removeAddress } from '../../reducers';
+import { removeAddress, updateSelectedAddress } from '../../reducers';
 
 class AddAddress extends Component {
   state = {
@@ -19,7 +13,12 @@ class AddAddress extends Component {
   };
 
   handleRadioChange = event => {
-    this.setState({ ...this.state, [event.target.name]: event.target.value });
+    this.setState(
+      { ...this.state, [event.target.name]: event.target.value },
+      () => {
+        this.props.updateSelectedAddress(this.state.selectedAddressId);
+      }
+    );
   };
 
   render() {
@@ -73,7 +72,7 @@ class AddAddress extends Component {
                     name="selectedAddressId"
                   />
                   <Typography variant="subtitle1">{`${streetAddress}${
-                    streetAddress2 ? ' ' + streetAddress : ''
+                    streetAddress2 ? ' ' + streetAddress2 : ''
                   }, ${city}, ${state} ${zipCode}`}</Typography>
                 </div>
                 <EditIcon
@@ -123,6 +122,8 @@ const mapDispatchToProps = dispatch => {
   return {
     removeAddress: (addressId, userId) =>
       dispatch(removeAddress(addressId, userId)),
+    updateSelectedAddress: addressId =>
+      dispatch(updateSelectedAddress(addressId)),
   };
 };
 
