@@ -67,7 +67,9 @@ Product.createFakeProduct = function(categoryId) {
     description: faker.lorem.paragraphs(5),
     price: faker.finance.amount(50, 150, 2),
     quantity: 10,
-    imageUrl: `${faker.image.abstract()}/${Math.ceil(Math.random() * 10)}`,
+    imageUrl: `https://picsum.photos/id/${Math.round(
+      Math.random() * 100
+    )}/640/480`,
     rating: Math.round(Math.random() * 50) / 10,
     categoryId,
   });
