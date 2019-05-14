@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -9,7 +10,6 @@ import EmptyCart from './EmptyCart';
 const Title = ({ numberOfItemsInCart, subTotal, user }) => {
   if (!numberOfItemsInCart) return <EmptyCart />;
 
-  console.log(user);
   return (
     <div
       style={{
@@ -24,7 +24,13 @@ const Title = ({ numberOfItemsInCart, subTotal, user }) => {
         <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
           ${subTotal}
         </Typography>
-        <a href="#/checkout" style={{ textDecoration: 'none' }}>
+        <Link
+          to={{
+            pathname: user.id ? '/checkout' : '/login',
+            state: { from: location.pathname },
+          }}
+          style={{ textDecoration: 'none' }}
+        >
           <Button
             variant="contained"
             color="secondary"
@@ -32,7 +38,7 @@ const Title = ({ numberOfItemsInCart, subTotal, user }) => {
           >
             Checkout
           </Button>
-        </a>
+        </Link>
       </div>
     </div>
   );
