@@ -52,6 +52,14 @@ const User = db.define('user', {
       return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
     },
   },
+}, {
+  hooks: {
+    beforeValidate: user => {
+      if (!user.imageUrl)
+        user.imageUrl =
+          'https://images.dailykos.com/images/479822/story_image/unnamed.jpg?1512326578';
+    },
+  },
 });
 
 module.exports = User;

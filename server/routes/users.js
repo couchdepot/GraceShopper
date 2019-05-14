@@ -23,4 +23,17 @@ router.delete('/:userId', (req, res, next) => {
     .catch(next)
 })
 
-// PUT :/api/user
+// PUT :/api/users/
+router.put('/:userId', (req, res, next) => {
+  User.findByPk(req.params.userId)
+  .then(user => user.update(req.body))
+  .then(user => res.status(201).send(user))
+  .catch(next)
+})
+
+// POST :/api/users/
+router.post('/', (req, res, next) => {
+  User.create(req.body)
+  .then(user => res.status(201).send(user))
+  .catch(next)
+})
