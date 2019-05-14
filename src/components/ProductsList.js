@@ -22,6 +22,12 @@ const ProductsList = ({
         product => product.categoryId === match.params.categoryId * 1
       )
     : products;
+
+  products = match.params.search
+    ? products.filter(product =>
+        product.name.toLowerCase().includes(match.params.search.toLowerCase())
+      )
+    : products;
   return (
     <div style={{ marginTop: '80px' }}>
       <Drawer variant="permanent">
