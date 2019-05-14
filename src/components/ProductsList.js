@@ -16,174 +16,195 @@ import Rating from 'react-rating';
 
 class ProductsList extends Component {
   constructor() {
-    super()
-    this.state = {rating: 0}
+    super();
+    this.state = { rating: 0 };
   }
-  
-  filter = (num) => {
-    this.setState({rating: num})
-  }
-  
-  render() {
-    const {   
-  manageLineItemQty,
-  lineItems,
-  cart,
-  categories,
-  match,
-  } = this.props
-  let products = this.props.products
-  
-  products = match.params.categoryId
-    ? products.filter(
-        product => product.categoryId === match.params.categoryId * 1
-      )
-    : products;
 
-  products = match.params.search
-    ? products.filter(product =>
-        product.name.toLowerCase().includes(match.params.search.toLowerCase())
-      )
-    : products;
-  return (
-    <div style={{ marginTop: '80px' }}>
-      <Drawer variant="permanent">
-        <Typography
-          variant="h5"
-          color="textPrimary"
-          style={{ marginTop: '3em' }}
-        >
-          Filters:
-        </Typography>
-        <Button 
-        variant='contained' 
-        onClick={()=> this.filter(0)}
-        component={Link} 
-        to='/products'
-        color="primary"
-        size="small"
-        fullWidth={false}
-        >
-          clear
-        </Button>
-        <Typography
-          variant="h6"
-          color="textPrimary"
-          style={{ marginTop: '1em' }}
-        >
-          Category
-        </Typography>
-        <List style={{ width: 240 }}>
-          {categories.map(category => (
+  filter = num => {
+    this.setState({ rating: num });
+  };
+
+  render() {
+    const {
+      manageLineItemQty,
+      lineItems,
+      cart,
+      categories,
+      match,
+    } = this.props;
+    let products = this.props.products;
+
+    products = match.params.categoryId
+      ? products.filter(
+          product => product.categoryId === match.params.categoryId * 1
+        )
+      : products;
+
+    products = match.params.search
+      ? products.filter(product =>
+          product.name.toLowerCase().includes(match.params.search.toLowerCase())
+        )
+      : products;
+    return (
+      <div style={{ transform: 'translateY(8px)' }}>
+        <Drawer variant="permanent" style={{ padding: '1rem' }}>
+          <Typography
+            variant="h6"
+            color="textPrimary"
+            style={{ marginTop: '1em' }}
+          >
+            Category
+          </Typography>
+          <Button
+            onClick={() => this.filter(0)}
+            component={Link}
+            to="/products"
+            color="primary"
+            size="small"
+            fullWidth={false}
+          >
+            clear
+          </Button>
+          <List style={{ width: 240 }}>
+            {categories.map(category => (
+              <ListItem
+                button={true}
+                component={Link}
+                to={`/category/${category.id}`}
+                key={category.id}
+                selected={match.params.categoryId * 1 === category.id}
+              >
+                {category.name}
+              </ListItem>
+            ))}
+          </List>
+          <Typography
+            variant="h6"
+            color="textPrimary"
+            style={{ marginTop: '1em' }}
+          >
+            Rating
+          </Typography>
+          <Button
+            onClick={() => this.filter(0)}
+            component={Link}
+            to="/products"
+            color="primary"
+            size="small"
+            fullWidth={false}
+          >
+            clear
+          </Button>
+          <List>
             <ListItem
               button={true}
-              component={Link}
-              to={`/category/${category.id}`}
-              key={category.id}
-              selected={match.params.categoryId * 1 === category.id}
+              onClick={() => this.filter(4)}
+              selected={this.state.rating === 4}
             >
-              {category.name}
-            </ListItem>
-          ))}
-        </List>
-        <Typography variant="h6" color="textPrimary" style={{ marginTop: '1em' }}>
-          Rating
-        </Typography>
-        <List>
-            <ListItem
-            button={true}
-            onClick={() => this.filter(1)}
-            selected={this.state.rating === 1}
-            >
-              <Star/> & Up
+              <Star style={{ color: 'gold' }} />{' '}
+              <Star style={{ color: 'gold' }} />{' '}
+              <Star style={{ color: 'gold' }} />{' '}
+              <Star style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} /> & Up
             </ListItem>
             <ListItem
-            button={true}
-            onClick={() => this.filter(2)}
-            selected={this.state.rating === 2}
+              button={true}
+              onClick={() => this.filter(3)}
+              selected={this.state.rating === 3}
             >
-              <Star/> <Star/> & Up
+              <Star style={{ color: 'gold' }} />{' '}
+              <Star style={{ color: 'gold' }} />{' '}
+              <Star style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} /> & Up
+            </ListItem>
+
+            <ListItem
+              button={true}
+              onClick={() => this.filter(2)}
+              selected={this.state.rating === 2}
+            >
+              <Star style={{ color: 'gold' }} />{' '}
+              <Star style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} /> & Up
             </ListItem>
             <ListItem
-            button={true}
-            onClick={() => this.filter(3)}
-            selected={this.state.rating === 3}
+              button={true}
+              onClick={() => this.filter(1)}
+              selected={this.state.rating === 1}
             >
-              <Star/> <Star/> <Star/> & Up
+              <Star style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} />{' '}
+              <StarBorder style={{ color: 'gold' }} /> & Up
             </ListItem>
-            <ListItem
-            button={true}
-            onClick={() => this.filter(4)}
-            selected={this.state.rating === 4}
-            >
-              <Star/> <Star/> <Star/> <Star/> & Up
-            </ListItem>
-        </List>
-      </Drawer>
-      <Grid
-        container
-        spacing={40}
-        style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
-      >
-        {products.map(product => {
-          const lineItem = lineItems.find(
-            item => item.productId === product.id
-          );
-          if (product.available && product.rating >= this.state.rating) {
-          return (
-            <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
-              <Link to={`/products/${product.id}`}>
-                <img
-                  src={product.imageUrl}
-                  style={{
-                    width: 'auto',
-                    height: 240,
-                    margin: 'auto',
-                    display: 'block',
-                  }}
-                />
-              </Link>
-              <Typography
-                variant="headline"
-                color="textPrimary"
-                style={{ textAlign: 'justify' }}
-              >
-                ${product.price}
-              </Typography>
-              <Typography
-                variant="subheading"
-                color="textSecondary"
-                style={{ textAlign: 'justify' }}
-              >
-                {product.name}
-              </Typography>
-              <Rating
-                initialRating={product.rating}
-                emptySymbol={<StarBorder style={{ color: '#ffc116' }} />}
-                fullSymbol={<Star style={{ color: '#ffc116' }} />}
-                readonly={true}
-              />
-              <Button
-                variant={lineItem ? 'contained' : 'outlined'}
-                color="primary"
-                size="large"
-                fullWidth={true}
-                onClick={() =>
-                  manageLineItemQty(product.id, 1, cart.id, lineItem)
-                }
-              >
-                {lineItem ? 'Add More' : 'Add To Cart'}
-              </Button>
-            </Grid>
-          )} else {
-            return null;
-          }
-        })}
-      </Grid>
-    </div>
-  );
+          </List>
+        </Drawer>
+        <Grid
+          container
+          spacing={40}
+          style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
+        >
+          {products.map(product => {
+            const lineItem = lineItems.find(
+              item => item.productId === product.id
+            );
+            if (product.available && product.rating >= this.state.rating) {
+              return (
+                <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
+                  <Link to={`/products/${product.id}`}>
+                    <img
+                      src={product.imageUrl}
+                      style={{
+                        width: '100%',
+                      }}
+                    />
+                  </Link>
+                  <Typography
+                    variant="headline"
+                    color="textPrimary"
+                    style={{ textAlign: 'justify' }}
+                  >
+                    ${product.price}
+                  </Typography>
+                  <Typography
+                    variant="subheading"
+                    color="textSecondary"
+                    style={{ textAlign: 'justify' }}
+                  >
+                    {product.name}
+                  </Typography>
+                  <Rating
+                    initialRating={product.rating}
+                    emptySymbol={<StarBorder style={{ color: 'gold' }} />}
+                    fullSymbol={<Star style={{ color: 'gold' }} />}
+                    readonly={true}
+                  />
+                  <Button
+                    variant={lineItem ? 'contained' : 'outlined'}
+                    color="primary"
+                    size="large"
+                    fullWidth={true}
+                    onClick={() =>
+                      manageLineItemQty(product.id, 1, cart.id, lineItem)
+                    }
+                  >
+                    {lineItem ? 'Add More' : 'Add To Cart'}
+                  </Button>
+                </Grid>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </Grid>
+      </div>
+    );
   }
-};
+}
 
 const mapStateToProps = state => ({
   products: state.products,
