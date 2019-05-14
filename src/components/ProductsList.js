@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { manageLineItemQty } from '../reducers';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Drawer from '@material-ui/core/Drawer';
-import { manageLineItemQty } from '../reducers';
+import Star from '@material-ui/icons/Star';
+import StarBorder from '@material-ui/icons/StarBorder';
+
+import Rating from 'react-rating';
 
 const ProductsList = ({
   manageLineItemQty,
@@ -90,6 +95,12 @@ const ProductsList = ({
               >
                 {product.name}
               </Typography>
+              <Rating
+                initialRating={product.rating}
+                emptySymbol={<StarBorder style={{ color: '#ffc116' }} />}
+                fullSymbol={<Star style={{ color: '#ffc116' }} />}
+                readonly={true}
+              />
               <Button
                 variant={lineItem ? 'contained' : 'outlined'}
                 color="primary"
