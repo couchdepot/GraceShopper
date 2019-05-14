@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { manageLineItemQty } from '../reducers';
@@ -14,14 +14,26 @@ import StarBorder from '@material-ui/icons/StarBorder';
 
 import Rating from 'react-rating';
 
-const ProductsList = ({
+class ProductsList extends Component {
+  constructor() {
+    super()
+    this.state = {rating: 0}
+  }
+  
+  filter = (num) => {
+    this.setState({rating: num})
+  }
+  
+  render() {
+    const {   
   manageLineItemQty,
   lineItems,
   cart,
-  products,
   categories,
   match,
-}) => {
+  } = this.props
+  let products = this.props.products
+  
   products = match.params.categoryId
     ? products.filter(
         product => product.categoryId === match.params.categoryId * 1
@@ -37,9 +49,27 @@ const ProductsList = ({
     <div style={{ marginTop: '80px' }}>
       <Drawer variant="permanent">
         <Typography
-          variant="headline"
+          variant="h5"
           color="textPrimary"
           style={{ marginTop: '3em' }}
+        >
+          Filters:
+        </Typography>
+        <Button 
+        variant='contained' 
+        onClick={()=> this.filter(0)}
+        component={Link} 
+        to='/products'
+        color="primary"
+        size="small"
+        fullWidth={false}
+        >
+          clear
+        </Button>
+        <Typography
+          variant="h6"
+          color="textPrimary"
+          style={{ marginTop: '1em' }}
         >
           Category
         </Typography>
@@ -50,32 +80,41 @@ const ProductsList = ({
               component={Link}
               to={`/category/${category.id}`}
               key={category.id}
+              selected={match.params.categoryId * 1 === category.id}
             >
               {category.name}
             </ListItem>
           ))}
         </List>
-        <Typography variant="headline" color="textPrimary">
-          Filters
+        <Typography variant="h6" color="textPrimary" style={{ marginTop: '1em' }}>
+          Rating
         </Typography>
         <List>
             <ListItem
             button={true}
+            onClick={() => this.filter(1)}
+            selected={this.state.rating === 1}
             >
               <Star/> & Up
             </ListItem>
             <ListItem
             button={true}
+            onClick={() => this.filter(2)}
+            selected={this.state.rating === 2}
             >
               <Star/> <Star/> & Up
             </ListItem>
             <ListItem
             button={true}
+            onClick={() => this.filter(3)}
+            selected={this.state.rating === 3}
             >
               <Star/> <Star/> <Star/> & Up
             </ListItem>
             <ListItem
             button={true}
+            onClick={() => this.filter(4)}
+            selected={this.state.rating === 4}
             >
               <Star/> <Star/> <Star/> <Star/> & Up
             </ListItem>
@@ -90,7 +129,7 @@ const ProductsList = ({
           const lineItem = lineItems.find(
             item => item.productId === product.id
           );
-          if (product.available) {
+          if (product.available && product.rating >= this.state.rating) {
           return (
             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
               <Link to={`/products/${product.id}`}>
@@ -143,6 +182,7 @@ const ProductsList = ({
       </Grid>
     </div>
   );
+  }
 };
 
 const mapStateToProps = state => ({
