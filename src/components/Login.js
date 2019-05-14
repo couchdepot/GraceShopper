@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -9,7 +10,7 @@ import LockOutlined from '@material-ui/icons/LockOutlined';
 import Button from '@material-ui/core/Button';
 import { loginUser, getLineItems } from '../reducers';
 
-const Login = ({ loginUser, history }) => {
+const Login = ({ loginUser, history, location, state }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,7 +22,8 @@ const Login = ({ loginUser, history }) => {
     event.preventDefault();
     loginUser(email, password)
       .then(() => {
-        history.push('/');
+        if (location.state.from) history.push('/checkout');
+        else history.push('/');
       })
       .catch(ex => setErrorMessage(ex.response.data));
   };
@@ -104,7 +106,11 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+const mapStateToProps = state => ({
+  state,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);
