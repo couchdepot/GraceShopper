@@ -68,6 +68,7 @@ const ProductsList = ({
           const lineItem = lineItems.find(
             item => item.productId === product.id
           );
+          if (product.available) {
           return (
             <Grid item xs={12} sm={6} lg={4} xl={3} key={product.id}>
               <Link to={`/products/${product.id}`}>
@@ -110,7 +111,9 @@ const ProductsList = ({
                 {lineItem ? 'Add More' : 'Add To Cart'}
               </Button>
             </Grid>
-          );
+          )} else {
+            return null;
+          }
         })}
       </Grid>
     </div>
