@@ -87,19 +87,20 @@ class App extends Component {
     return (
       <Router>
         <Navbar />
-        <Switch>
           <Route path="/" exact render={() => <Redirect to="/products" />} />
           <Route path="/orders" component={Orders} />
           <Route path="/login" exact component={Login} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/products" component={ProductsList} />
+        <Switch>
           <Route path="/products/search/:search" component={ProductsList} />
           <Route
             path="/category/:categoryId/search/:search"
             component={ProductsList}
           />
+          </Switch>
           <Route exact path="/category/:categoryId" component={ProductsList} />
-          <Route path="/products/:productId" component={SingleProduct} />
+          <Route path="/products/:productId" exact component={SingleProduct} />
           {user.admin ? (
             <Fragment>
               <Route path="/admin/products" exact component={ManageProducts} />
@@ -120,7 +121,6 @@ class App extends Component {
             <Route path="/admin" component={AccessDenied} />
           )}
           <Route path="/checkout" component={Checkout} />
-        </Switch>
       </Router>
     );
   }
