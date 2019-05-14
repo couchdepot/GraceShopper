@@ -60,7 +60,15 @@ import {
   getAllOrdersAdmin,
 } from './ordersReducer';
 
-import {usersReducer, getAllUsers, deleteUser, updateUser, createUser} from './usersReducer';
+import { ratingsReducer, getRatings, addRating } from './ratingReducer';
+
+import {
+  usersReducer,
+  getAllUsers,
+  deleteUser,
+  updateUser,
+  createUser,
+} from './usersReducer';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -73,6 +81,7 @@ const rootReducer = combineReducers({
   addresses: addressReducer,
   users: usersReducer,
   allOrdersAdmin: allOrdersAdminReducer,
+  ratings: ratingsReducer,
 });
 
 export {
@@ -111,4 +120,6 @@ export {
   updateUser,
   createUser,
   getAllOrdersAdmin,
+  getRatings,
+  addRating,
 };
