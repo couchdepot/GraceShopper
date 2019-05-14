@@ -21,7 +21,9 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import GroupOutlined from '@material-ui/icons/GroupOutlined';
 
-const Sidelist = ({ classes, user }) => {
+import { logOutUser, emptyLineItem, gotCart } from '../../reducers';
+
+const Sidelist = ({ classes, user, logOutUser, emptyLineItem, emptyCart }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -71,8 +73,23 @@ const Sidelist = ({ classes, user }) => {
               <ListItemIcon>
                 <AccountCircle />
               </ListItemIcon>
-              <ListItemText primary="Login" />
+              <ListItemText primary="Sign In" />
             </a>
+          </ListItem>
+        )}
+        {user.id && (
+          <ListItem
+            button
+            onClick={() => {
+              logOutUser();
+              emptyLineItem();
+              emptyCart();
+            }}
+          >
+            <ListItemIcon>
+              <AccountCircle />
+            </ListItemIcon>
+            <ListItemText primary="Sign Out" />
           </ListItem>
         )}
         {user.admin && (
@@ -125,4 +142,15 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Sidelist);
+const mapDispatchToProps = dispatch => {
+  return {
+    logOutUser: () => dispatch(logOutUser()),
+    emptyLineItem: () => dispatch(emptyLineItem()),
+    emptyCart: () => dispatch(gotCart({})),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sidelist);
