@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import { updateUser, createUser } from '../reducers';
+import { updateUser, createUser } from '../../reducers';
 
 // Custom hook for form input field
 // Sets input field value creates setValue and handleChage methods

@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { updateProduct, createProduct } from '../reducers';
+import { updateProduct, createProduct } from '../../reducers';
 
 // Custom hook for form input field
 // Sets input field value creates setValue and handleChage methods
@@ -62,7 +62,7 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
         .catch(ex => setErrorMessage(ex.response.data));
     }
   };
-  
+
   const handleErrorMessage = (errorMessage) => {
     return errorMessage.split(',')
       .map((msg,idx) => (
@@ -83,13 +83,13 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
           paddingRight: '40px',
         }}
       >
-      
+
       {errorMessage && (
         <Grid item xs={12}>
           {handleErrorMessage(errorMessage)}
         </Grid>
       )}
-            
+
         <Grid item xs={12}>
           <FormControl fullWidth>
             <TextField
@@ -101,7 +101,7 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
             />
           </FormControl>
         </Grid>
-        
+
         <Grid item xs={12} sm={3}>
           <FormControl fullWidth>
             <TextField
@@ -169,7 +169,7 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
             />
           </FormControl>
         </Grid>
-        
+
         <Grid item>
           <FormGroup row>
             <Button

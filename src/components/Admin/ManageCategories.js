@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -12,11 +12,9 @@ import {
   Paper,
   Button,
   IconButton,
-  Avatar,
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
-
-import { deleteUser, getAllUsers } from '../reducers';
+import { deleteCategory } from '../../reducers';
 
 const styles = theme => ({
   root: {
@@ -32,10 +30,14 @@ const styles = theme => ({
   },
 });
 
-const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
-  useEffect(() => {
-    getAllUsers();
-  }, []);
+const ManageCategories = ({
+  classes,
+  categories,
+  products,
+  deleteCategory,
+}) => {
+  const getProdInCtg = (id, products) =>
+    products.filter(p => p.categoryId === id);
 
   return (
     <Grid container direction="column" spacing={24} className={classes.root}>
@@ -45,9 +47,9 @@ const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
           variant="contained"
           color="primary"
           component={Link}
-          to={'/admin/users/edit'}
+          to={'/admin/categories/edit'}
         >
-          Add New User
+          Add New Category
         </Button>
       </Grid>
 
@@ -56,35 +58,28 @@ const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell />
-                <TableCell>Name</TableCell>
+                <TableCell>Category Name</TableCell>
                 <TableCell align="center">ID</TableCell>
-                <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Role</TableCell>
+                <TableCell align="center"># Products</TableCell>
                 <TableCell align="center">Edit</TableCell>
                 <TableCell align="center">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map(user => {
+              {categories.map(category => {
+                const prodBelongTo = getProdInCtg(category.id, products);
                 return (
-                  <TableRow key={user.id}>
-                    <TableCell align="right">
-                      <Avatar src={user.imageUrl} />
-                    </TableCell>
+                  <TableRow key={category.id}>
                     <TableCell component="th" scope="row">
-                      {user.fullName}
+                      {category.name}
                     </TableCell>
-                    <TableCell align="center">{user.id}</TableCell>
-                    <TableCell align="center">{user.email}</TableCell>
-                    <TableCell align="center">
-                      {user.admin ? 'Admin' : 'User'}
-                    </TableCell>
+                    <TableCell align="center">{category.id}</TableCell>
+                    <TableCell align="center">{prodBelongTo.length}</TableCell>
                     <TableCell align="center">
                       <IconButton
                         aria-label="EditIcon"
                         component={Link}
-                        to={`/admin/users/edit/${user.id}`}
+                        to={`/admin/categories/edit/${category.id}`}
                       >
                         <Edit />
                       </IconButton>
@@ -92,7 +87,7 @@ const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
                     <TableCell align="center">
                       <IconButton
                         aria-label="Delete"
-                        onClick={() => deleteUser(user.id)}
+                        onClick={() => deleteCategory(category.id)}
                       >
                         <Delete />
                       </IconButton>
@@ -108,20 +103,20 @@ const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
   );
 };
 
-const mapStateToProps = ({ users }) => {
+const mapStateToProps = ({ categories, products }) => {
   return {
-    users,
+    categories,
+    products,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteUser: userId => dispatch(deleteUser(userId)),
-    getAllUsers: () => dispatch(getAllUsers()),
+    deleteCategory: categoryId => dispatch(deleteCategory(categoryId)),
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ManageUsers));
+)(withStyles(styles)(ManageCategories));
