@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import {Paper, Grid, TextField, MenuItem, FormControl, FormGroup, Button, Typography} from '@material-ui/core';
+import {
+  Grid,
+  TextField,
+  FormControl,
+  FormGroup,
+  Button,
+  Typography,
+} from '@material-ui/core';
 
 import { updateUser, createUser } from '../reducers';
-
 
 // Custom hook for form input field
 // Sets input field value creates setValue and handleChage methods
@@ -19,8 +25,6 @@ const useFormInput = initialValue => {
   };
 };
 
-  
-  
 const EditUser = ({ user, updateUser, createUser, history }) => {
   const firstName = useFormInput('');
   const lastName = useFormInput('');
@@ -37,37 +41,36 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
     imageUrl.setValue(user.imageUrl);
   }, [user]);
 
-//   const handleOnSubmit = event => {
-//     event.preventDefault();
-//     const newProduct = {
-//       name: name.value,
-//       price: price.value,
-//       quantity: quantity.value,
-//       categoryId: categoryId.value,
-//       description: description.value,
-//       imageUrl: imageUrl.value,
-//     };
-//     if (product.id) {
-//       updateProduct(product.id, newProduct)
-//         .then(() => history.push('/admin/products'))
-//         .catch(ex => setErrorMessage(ex.response.data));
-//     } else {
-//       createProduct(newProduct)
-//         .then(() => history.push('/admin/products'))
-//         .catch(ex => setErrorMessage(ex.response.data));
-//     }
-//   };
-  
-  const handleErrorMessage = (errorMessage) => {
-    return errorMessage.split(',')
-      .map((msg,idx) => (
-        <Typography key={idx} variant="subtitle1" color="error">
-          {msg}
-        </Typography>))
-  }
+    const handleOnSubmit = event => {
+      event.preventDefault();
+      const newUser = {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        email: email.value,
+        password: password.value,
+        imageUrl: imageUrl.value,
+      };
+      if (user.id) {
+        updateUser(user.id, newUser)
+          .then(() => history.push('/admin/users'))
+          .catch(ex => setErrorMessage(ex.response.data));
+      } else {
+        createUser(newUser)
+          .then(() => history.push('/admin/users'))
+          .catch(ex => setErrorMessage(ex.response.data));
+      }
+    };
+
+  const handleErrorMessage = errorMessage => {
+    return errorMessage.split(',').map((msg, idx) => (
+      <Typography key={idx} variant="subtitle1" color="error">
+        {msg}
+      </Typography>
+    ));
+  };
 
   return (
-    <form >
+    <form onSubmit={handleOnSubmit}>
       <Grid
         container
         spacing={24}
@@ -78,13 +81,12 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
           paddingRight: '40px',
         }}
       >
-      
-      {errorMessage && (
-        <Grid item xs={12}>
-          {handleErrorMessage(errorMessage)}
-        </Grid>
-      )}
-            
+        {errorMessage && (
+          <Grid item xs={12}>
+            {handleErrorMessage(errorMessage)}
+          </Grid>
+        )}
+
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <TextField
@@ -96,7 +98,7 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
             />
           </FormControl>
         </Grid>
-        
+
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <TextField
@@ -108,7 +110,7 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
             />
           </FormControl>
         </Grid>
-        
+
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <TextField
@@ -146,21 +148,17 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
             />
           </FormControl>
         </Grid>
-        
+
         <Grid item>
           <FormGroup row>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              {user.id ? "Update" : "Create"}
+            <Button type="submit" variant="contained" color="primary">
+              {user.id ? 'Update' : 'Create'}
             </Button>
             <Button
               type="button"
               variant="contained"
               color="default"
-              style={{marginLeft: "10px"}}
+              style={{ marginLeft: '10px' }}
               onClick={() => history.push('/admin/users')}
             >
               Cancel
@@ -182,7 +180,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     updateUser: (id, user) => dispatch(updateUser(id, user)),
-    createUser: (user) => dispatch(createUser(user)),
+    createUser: user => dispatch(createUser(user)),
   };
 };
 

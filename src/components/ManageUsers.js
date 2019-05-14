@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 
-import { deleteUser } from '../reducers';
+import { deleteUser, getAllUsers } from '../reducers';
 
 const styles = theme => ({
   root: {
@@ -32,8 +32,10 @@ const styles = theme => ({
   },
 });
 
-
-const ManageUsers = ({classes, users, getAllUsers, deleteUser}) => {
+const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <Grid container direction="column" spacing={24} className={classes.root}>
@@ -54,7 +56,7 @@ const ManageUsers = ({classes, users, getAllUsers, deleteUser}) => {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell/>
+                <TableCell />
                 <TableCell>Name</TableCell>
                 <TableCell align="center">ID</TableCell>
                 <TableCell align="center">Email</TableCell>
@@ -67,11 +69,17 @@ const ManageUsers = ({classes, users, getAllUsers, deleteUser}) => {
               {users.map(user => {
                 return (
                   <TableRow key={user.id}>
-                    <TableCell align="right"><Avatar src={user.imageUrl}/></TableCell>
-                    <TableCell component="th" scope="row">{user.fullName}</TableCell>
+                    <TableCell align="right">
+                      <Avatar src={user.imageUrl} />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {user.fullName}
+                    </TableCell>
                     <TableCell align="center">{user.id}</TableCell>
                     <TableCell align="center">{user.email}</TableCell>
-                    <TableCell align="center">{user.admin ? 'Admin' : 'User'}</TableCell>
+                    <TableCell align="center">
+                      {user.admin ? 'Admin' : 'User'}
+                    </TableCell>
                     <TableCell align="center">
                       <IconButton
                         aria-label="EditIcon"
@@ -102,13 +110,14 @@ const ManageUsers = ({classes, users, getAllUsers, deleteUser}) => {
 
 const mapStateToProps = ({ users }) => {
   return {
-    users
+    users,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteUser: (userId) => dispatch(deleteUser(userId)),
+    deleteUser: userId => dispatch(deleteUser(userId)),
+    getAllUsers: () => dispatch(getAllUsers()),
   };
 };
 
@@ -116,4 +125,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(ManageUsers));
-

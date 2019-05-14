@@ -22,3 +22,5 @@ router.delete('/:userId', (req, res, next) => {
     .then(() => res.sendStatus(204))
     .catch(next)
 })
+
+// PUT :/api/user

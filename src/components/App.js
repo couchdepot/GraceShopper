@@ -28,7 +28,6 @@ import {
   getUserAddresses,
   getCurrentOrders,
   getPastOrders,
-  getAllUsers,
 } from '../reducers';
 
 class App extends Component {
@@ -38,17 +37,15 @@ class App extends Component {
       getProducts,
       getCategories,
       lineItemsSession,
-      getAllUsers,
     } = this.props;
-    
+
     Promise.all([
       getProducts(),
       loginSession(),
       getCategories(),
       lineItemsSession(),
-      getAllUsers(),
     ]);
-    
+
   }
 
   componentDidUpdate(prevProps) {
@@ -135,7 +132,6 @@ const mapDispatchToProps = dispatch => {
     lineItemsSession: () => dispatch(lineItemsSession()),
     getCurrentOrders: userId => dispatch(getCurrentOrders(userId)),
     getPastOrders: userId => dispatch(getPastOrders(userId)),
-    getAllUsers: () => dispatch(getAllUsers()),
   };
 };
 

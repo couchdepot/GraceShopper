@@ -19,6 +19,7 @@ import ListIcon from '@material-ui/icons/ListOutlined';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import GroupOutlined from '@material-ui/icons/GroupOutlined';
 
 const Sidelist = ({ classes, user }) => {
   const [open, setOpen] = useState(false);
@@ -35,7 +36,7 @@ const Sidelist = ({ classes, user }) => {
           </a>
         </ListItem>
         <ListItem button>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <a href="#/" style={{ textDecoration: 'none', display: 'flex' }}>
             <ListItemIcon>
               <Store />
             </ListItemIcon>
@@ -43,7 +44,7 @@ const Sidelist = ({ classes, user }) => {
           </a>
         </ListItem>
         <ListItem button>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <a href="#/" style={{ textDecoration: 'none', display: 'flex' }}>
             <ListItemIcon>
               <Departments />
             </ListItemIcon>
@@ -97,11 +98,11 @@ const Sidelist = ({ classes, user }) => {
                   <ListItemText inset primary="Categories" />
                 </ListItem>
               </List>
-              
+
               <List component="div" disablePadding>
                 <ListItem button component={Link} to="/admin/users">
                   <ListItemIcon>
-                    <ListIcon />
+                    <GroupOutlined />
                   </ListItemIcon>
                   <ListItemText inset primary="Users" />
                 </ListItem>
