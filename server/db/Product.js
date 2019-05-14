@@ -2,34 +2,38 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 const Product = db.define('product', {
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validation: {
-            notEmpty: true
-        }
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validation: {
+      notEmpty: true,
     },
-    description: Sequelize.TEXT,
-    price: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false,
-        validation: {
-            notEmpty: true,
-            min: 0.00
-        }
+  },
+  description: Sequelize.TEXT,
+  price: {
+    type: Sequelize.DECIMAL(10, 2),
+    allowNull: false,
+    validation: {
+      notEmpty: true,
+      min: 0.0,
     },
-    quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        validation: {
-            notEmpty: true,
-            min: 0
-        }
+  },
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validation: {
+      notEmpty: true,
+      min: 0,
     },
-    imageUrl: {
-        type: Sequelize.STRING,
-        defaultValue: 'http://lorempixel.com/640/480/abstract/1'
-    }
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    defaultValue: 'http://lorempixel.com/640/480/abstract/1',
+  },
+  rating: {
+    type: Sequelize.DECIMAL(10, 1),
+    defaultValue: 3.0,
+  },
 });
 
 module.exports = Product;
