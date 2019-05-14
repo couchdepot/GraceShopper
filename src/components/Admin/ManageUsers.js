@@ -13,7 +13,6 @@ import {
   Button,
   IconButton,
   Avatar,
-  Switch,
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
 
@@ -61,7 +60,7 @@ const ManageUsers = ({ classes, users, getAllUsers, deleteUser }) => {
                 <TableCell>Name</TableCell>
                 <TableCell align="center">ID</TableCell>
                 <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Admin</TableCell>
+                <TableCell align="center">Role</TableCell>
                 <TableCell align="center">Edit</TableCell>
                 <TableCell align="center">Delete</TableCell>
               </TableRow>

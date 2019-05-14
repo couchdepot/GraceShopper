@@ -5,11 +5,13 @@ import {
   TextField,
   FormControl,
   FormGroup,
+  FormControlLabel,
   Button,
   Typography,
+  Switch,
 } from '@material-ui/core';
 
-import { updateUser, createUser } from '../../reducers';
+import { updateUser, createUser, getAllUsers } from '../../reducers';
 
 // Custom hook for form input field
 // Sets input field value creates setValue and handleChage methods
@@ -25,12 +27,20 @@ const useFormInput = initialValue => {
   };
 };
 
-const EditUser = ({ user, updateUser, createUser, history }) => {
+const EditUser = ({
+  user,
+  currentUser,
+  updateUser,
+  createUser,
+  getAllUsers,
+  history,
+}) => {
   const firstName = useFormInput('');
   const lastName = useFormInput('');
   const email = useFormInput('');
   const password = useFormInput('');
   const imageUrl = useFormInput('');
+  const [admin, setAdmin] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -39,27 +49,37 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
     email.setValue(user.email);
     password.setValue(user.password);
     imageUrl.setValue(user.imageUrl);
+    setAdmin(user.admin);
   }, [user]);
 
-    const handleOnSubmit = event => {
-      event.preventDefault();
-      const newUser = {
-        firstName: firstName.value,
-        lastName: lastName.value,
-        email: email.value,
-        password: password.value,
-        imageUrl: imageUrl.value,
-      };
-      if (user.id) {
-        updateUser(user.id, newUser)
-          .then(() => history.push('/admin/users'))
-          .catch(ex => setErrorMessage(ex.response.data));
-      } else {
-        createUser(newUser)
-          .then(() => history.push('/admin/users'))
-          .catch(ex => setErrorMessage(ex.response.data));
-      }
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  const handleAdminChange = event => {
+    setAdmin(event.target.checked);
+  };
+
+  const handleOnSubmit = event => {
+    event.preventDefault();
+    const newUser = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value,
+      imageUrl: imageUrl.value,
+      admin,
     };
+    if (user.id) {
+      updateUser(user.id, newUser)
+        .then(() => history.push('/admin/users'))
+        .catch(ex => setErrorMessage(ex.response.data));
+    } else {
+      createUser(newUser)
+        .then(() => history.push('/admin/users'))
+        .catch(ex => setErrorMessage(ex.response.data));
+    }
+  };
 
   const handleErrorMessage = errorMessage => {
     return errorMessage.split(',').map((msg, idx) => (
@@ -85,6 +105,23 @@ const EditUser = ({ user, updateUser, createUser, history }) => {
           <Grid item xs={12}>
             {handleErrorMessage(errorMessage)}
           </Grid>
+        )}
+
+        {currentUser.admin && (
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={admin}
+                  onChange={handleAdminChange}
+                  color="primary"
+                />
+              }
+              label="Admin Permissions"
+            />
+          </FormControl>
+        </Grid>
         )}
 
         <Grid item xs={12} sm={6}>
@@ -174,6 +211,7 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id * 1;
   return {
     user: state.users.find(user => user.id === id) || {},
+    currentUser: state.user,
   };
 };
 
@@ -181,6 +219,7 @@ const mapDispatchToProps = dispatch => {
   return {
     updateUser: (id, user) => dispatch(updateUser(id, user)),
     createUser: user => dispatch(createUser(user)),
+    getAllUsers: () => dispatch(getAllUsers()),
   };
 };
 
