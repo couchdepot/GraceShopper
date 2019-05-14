@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 
@@ -25,9 +26,10 @@ const Orders = ({
       <Typography variant="h3" align="center">
         Your Orders
       </Typography>
-      <Typography variant="h4">Open Orders</Typography>
       {user.id ? (
-        currentOrders.map(order => {
+      <Fragment>
+        <Typography variant="h4">Open Orders</Typography>
+        {currentOrders.map(order => {
           const address = userAddresses.find(
             addy => addy.id === order.addressId
           );
@@ -41,12 +43,8 @@ const Orders = ({
             />
           );
         })
-      ) : (
-        <Typography varient="h5">
-          Please login to view your open orders
-        </Typography>
-      )}
-      <Typography variant="h4">past Orders</Typography>
+       }
+      <Typography variant="h4">Past Orders</Typography>
       {pastOrders.map(order => {
         const address = userAddresses.find(addy => addy.id === order.addressId);
         return (
@@ -59,6 +57,13 @@ const Orders = ({
           />
         );
       })}
+      </Fragment> 
+      ) : (
+        <Typography variant="subtitle2" style={{textAlign: 'center'}}>
+          Please <Link to='/login'>login</Link> to view your orders
+        </Typography>
+      )
+      }
     </div>
   );
 };

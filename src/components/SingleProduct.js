@@ -15,6 +15,9 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 import { manageLineItemQty } from '../reducers';
+import Rating from 'react-rating';
+import Star from '@material-ui/icons/Star';
+import StarBorder from '@material-ui/icons/StarBorder';
 
 const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
   const [itemQty, setItemQty] = useState(1);
@@ -29,7 +32,8 @@ const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
         item
         xs={12}
         sm={12}
-        lg={8}
+        md={8}
+        lg={7}
         xl={7}
         style={{ paddingLeft: '3vw', paddingRight: '3vw' }}
       >
@@ -44,24 +48,27 @@ const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
           src={product.imageUrl}
           style={{
             width: '100%',
-            maxWidth: '900px',
+            maxWidth: '700px',
             height: 'auto',
             margin: 'auto',
             display: 'block',
           }}
         />
       </Grid>
-      <Hidden lgDown>
-        <Grid item xl={2} style={{ marginTop: '6vh' }}>
+      <Hidden mdDown>
+        <Grid item lg={2} xl={2} style={{ marginTop: '6vh' }}>
           <Typography variant="headline">Product Description</Typography>
-          <Typography variant="subheading">{product.description}</Typography>
+          <ul>
+          <Typography variant="subheading">{product.description.slice(0, 200).split('.').map(line => <li>{line}</li>)}</Typography>
+          </ul>
         </Grid>
       </Hidden>
       <Grid
         item
         xs={12}
         sm={12}
-        lg={4}
+        md={4}
+        lg={3}
         xl={3}
         style={{
           paddingTop: '3vh',
@@ -73,6 +80,12 @@ const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
           <Typography variant="headline" style={{ fontSize: '2em' }}>
             ${product.price}
           </Typography>
+          <Rating
+            initialRating={product.rating}
+            emptySymbol={<StarBorder style={{ color: '#ffc116' }} />}
+            fullSymbol={<Star style={{ color: '#ffc116' }} />}
+            readonly={true}
+          />
 
           <Grid container justify="flex-start" alignItems="center">
             <TextField
@@ -85,7 +98,7 @@ const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
               margin="normal"
               variant="outlined"
             />
-
+            <div>
             <Fab
               color="primary"
               component={IconButton}
@@ -104,6 +117,7 @@ const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
             >
               <RemoveIcon />
             </Fab>
+            </div>
           </Grid>
 
           <Button
@@ -130,7 +144,7 @@ const SingleProduct = ({ manageLineItemQty, lineItem, cart, product }) => {
       >
         <ExpansionPanel style={{ marginTop: '3em' }}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="headline">Product Description</Typography>
+            <Typography variant="headline">Product Details</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography variant="subheading">{product.description}</Typography>
