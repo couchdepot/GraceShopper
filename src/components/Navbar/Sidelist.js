@@ -66,17 +66,31 @@ const Sidelist = ({ classes, user, logOutUser, emptyLineItem, emptyCart }) => {
           </a>
         </ListItem>
         {!user.id && (
-          <ListItem button>
-            <a
-              href="#/login"
-              style={{ textDecoration: 'none', display: 'flex' }}
-            >
-              <ListItemIcon>
-                <AccountCircle />
-              </ListItemIcon>
-              <ListItemText primary="Sign In" />
-            </a>
-          </ListItem>
+          <Fragment>
+            <ListItem button>
+              <a
+                href="#/login"
+                style={{ textDecoration: 'none', display: 'flex' }}
+              >
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary="Sign In" />
+              </a>
+            </ListItem>
+
+            <ListItem button>
+              <a
+                href="#/signup"
+                style={{ textDecoration: 'none', display: 'flex' }}
+              >
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary="Sign Up" />
+              </a>
+            </ListItem>
+          </Fragment>
         )}
         {user.id && (
           <ListItem
@@ -129,7 +143,7 @@ const Sidelist = ({ classes, user, logOutUser, emptyLineItem, emptyCart }) => {
                   <ListItemText inset primary="Users" />
                 </ListItem>
               </List>
-              
+
               <List component="div" disablePadding>
                 <ListItem button component={Link} to="/admin/orders">
                   <ListItemIcon>

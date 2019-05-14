@@ -42,6 +42,7 @@ const EditUser = ({
   const imageUrl = useFormInput('');
   const [admin, setAdmin] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const path = currentUser.admin ? '/admin/users' : '/login';
 
   useEffect(() => {
     firstName.setValue(user.firstName);
@@ -72,11 +73,11 @@ const EditUser = ({
     };
     if (user.id) {
       updateUser(user.id, newUser)
-        .then(() => history.push('/admin/users'))
+        .then(() => history.push(path))
         .catch(ex => setErrorMessage(ex.response.data));
     } else {
       createUser(newUser)
-        .then(() => history.push('/admin/users'))
+        .then(() => history.push(path))
         .catch(ex => setErrorMessage(ex.response.data));
     }
   };
@@ -196,7 +197,7 @@ const EditUser = ({
               variant="contained"
               color="default"
               style={{ marginLeft: '10px' }}
-              onClick={() => history.push('/admin/users')}
+              onClick={() => history.push(path)}
             >
               Cancel
             </Button>
