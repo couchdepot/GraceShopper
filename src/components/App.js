@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
 import {
   ProductsList,
   Login,
@@ -69,9 +74,9 @@ class App extends Component {
     }
     if (cart.id && cart.id !== prevProps.cart.id) {
       Promise.all([
-      getLineItems(cart.id),
-      getCurrentOrders(user.id),
-      getPastOrders(user.id),
+        getLineItems(cart.id),
+        getCurrentOrders(user.id),
+        getPastOrders(user.id),
       ]);
     }
   }
@@ -82,33 +87,40 @@ class App extends Component {
     return (
       <Router>
         <Navbar />
-        <Route path="/" exact render={() => <Redirect to="/products" />} />
-        <Route path="/orders" component={Orders} />
-        <Route path="/login" exact component={Login} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/products" component={ProductsList} />
-        <Route exact path="/category/:categoryId" component={ProductsList} />
-        <Route path="/products/:productId" component={SingleProduct} />
-        {user.admin ? (
-          <Fragment>
-            <Route path="/admin/products" exact component={ManageProducts} />
-            <Route path="/admin/products/edit/:id?" component={EditProduct} />
-            <Route
-              path="/admin/categories"
-              exact
-              component={ManageCategories}
-            />
-            <Route
-              path="/admin/categories/edit/:id?"
-              component={EditCategory}
-            />
-            <Route path="/admin/users" exact component={ManageUsers} />
-            <Route path="/admin/users/edit/:id?" component={EditUser} />
-          </Fragment>
-        ) : (
-          <Route path="/admin" component={AccessDenied} />
-        )}
-        <Route path="/checkout" component={Checkout} />
+        <Switch>
+          <Route path="/" exact render={() => <Redirect to="/products" />} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/login" exact component={Login} />
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/products" component={ProductsList} />
+          <Route path="/products/search/:search" component={ProductsList} />
+          <Route
+            path="/category/:categoryId/search/:search"
+            component={ProductsList}
+          />
+          <Route exact path="/category/:categoryId" component={ProductsList} />
+          <Route path="/products/:productId" component={SingleProduct} />
+          {user.admin ? (
+            <Fragment>
+              <Route path="/admin/products" exact component={ManageProducts} />
+              <Route path="/admin/products/edit/:id?" component={EditProduct} />
+              <Route
+                path="/admin/categories"
+                exact
+                component={ManageCategories}
+              />
+              <Route
+                path="/admin/categories/edit/:id?"
+                component={EditCategory}
+              />
+              <Route path="/admin/users" exact component={ManageUsers} />
+              <Route path="/admin/users/edit/:id?" component={EditUser} />
+            </Fragment>
+          ) : (
+            <Route path="/admin" component={AccessDenied} />
+          )}
+          <Route path="/checkout" component={Checkout} />
+        </Switch>
       </Router>
     );
   }
