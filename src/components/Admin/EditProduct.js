@@ -5,9 +5,11 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Switch from '@material-ui/core/Switch';
 import { updateProduct, createProduct } from '../../reducers';
 
 // Custom hook for form input field
@@ -31,8 +33,9 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
   const categoryId = useFormInput('');
   const description = useFormInput('');
   const imageUrl = useFormInput('');
+  const [available, setAvailable] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
-
+  
   useEffect(() => {
     name.setValue(product.name);
     price.setValue(product.price);
@@ -40,7 +43,12 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
     categoryId.setValue(product.categoryId);
     description.setValue(product.description);
     imageUrl.setValue(product.imageUrl);
+    setAvailable(product.available);
   }, [product]);
+  
+   const handleAvailableChange = event => {
+    setAvailable(event.target.checked);
+  };
 
   const handleOnSubmit = event => {
     event.preventDefault();
@@ -51,6 +59,7 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
       categoryId: categoryId.value,
       description: description.value,
       imageUrl: imageUrl.value,
+      available,
     };
     if (product.id) {
       updateProduct(product.id, newProduct)
@@ -89,6 +98,21 @@ const EditProduct = ({ product, categories, updateProduct, createProduct, histor
           {handleErrorMessage(errorMessage)}
         </Grid>
       )}
+      
+        <Grid item xs={12}>
+          <FormControl fullWidth>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={available}
+                  onChange={handleAvailableChange}
+                  color="primary"
+                />
+              }
+              label="Availability"
+            />
+          </FormControl>
+        </Grid>
 
         <Grid item xs={12}>
           <FormControl fullWidth>

@@ -34,6 +34,11 @@ const Product = db.define('product', {
     type: Sequelize.DECIMAL(10, 1),
     defaultValue: 3.0,
   },
+  available: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  }
 });
 
 module.exports = Product;
