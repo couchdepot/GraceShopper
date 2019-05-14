@@ -20,6 +20,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import GroupOutlined from '@material-ui/icons/GroupOutlined';
+import LocalOfferOutlined from '@material-ui/icons/LocalOfferOutlined';
 
 import { logOutUser, emptyLineItem, gotCart } from '../../reducers';
 
@@ -126,6 +127,15 @@ const Sidelist = ({ classes, user, logOutUser, emptyLineItem, emptyCart }) => {
                     <GroupOutlined />
                   </ListItemIcon>
                   <ListItemText inset primary="Users" />
+                </ListItem>
+              </List>
+              
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/admin/orders">
+                  <ListItemIcon>
+                    <LocalOfferOutlined />
+                  </ListItemIcon>
+                  <ListItemText inset primary="Orders" />
                 </ListItem>
               </List>
             </Collapse>
