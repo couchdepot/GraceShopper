@@ -53,9 +53,11 @@ import {
 
 import {
   currentOrdersReducer,
+  allOrdersAdminReducer,
   pastOrdersReducer,
   getCurrentOrders,
   getPastOrders,
+  getAllOrdersAdmin,
 } from './ordersReducer';
 
 import {usersReducer, getAllUsers, deleteUser, updateUser, createUser} from './usersReducer';
@@ -70,6 +72,7 @@ const rootReducer = combineReducers({
   pastOrders: pastOrdersReducer,
   addresses: addressReducer,
   users: usersReducer,
+  allOrdersAdmin: allOrdersAdminReducer,
 });
 
 export {
@@ -106,5 +109,6 @@ export {
   getAllUsers,
   deleteUser,
   updateUser,
-  createUser
+  createUser,
+  getAllOrdersAdmin,
 };

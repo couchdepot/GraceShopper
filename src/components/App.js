@@ -18,6 +18,7 @@ import {
   Orders,
   ManageUsers,
   EditUser,
+  ManageOrders,
 } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
@@ -116,6 +117,7 @@ class App extends Component {
               />
               <Route path="/admin/users" exact component={ManageUsers} />
               <Route path="/admin/users/edit/:id?" component={EditUser} />
+              <Route path="/admin/orders" exact component={ManageOrders} />
             </Fragment>
           ) : (
             <Route path="/admin" component={AccessDenied} />

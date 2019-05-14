@@ -26,9 +26,10 @@ const Product = db.define('product', {
       min: 0,
     },
   },
+  
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'http://lorempixel.com/640/480/abstract/1',
+    defaultValue: 'src="https://picsum.photos/id/12/640/480',
   },
   rating: {
     type: Sequelize.DECIMAL(10, 1),

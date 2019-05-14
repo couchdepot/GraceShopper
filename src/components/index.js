@@ -9,6 +9,9 @@ import AccessDenied from './AccessDenied';
 import Orders from './Orders/Orders';
 import ManageUsers from './Admin/ManageUsers';
 import EditUser from './Admin/EditUser';
+import ManageOrders from './Admin/ManageOrders';
+import SingleOrder from './Orders/SingleOrder';
+
 
 export {
   ProductsList,
@@ -22,4 +25,6 @@ export {
   Orders,
   ManageUsers,
   EditUser,
+  ManageOrders,
+  SingleOrder,
 };

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const GOT_CURRENT_ORDERS = 'GOT_CURRENT_ORDERS';
 const GOT_PAST_ORDERS = 'GOT_PAST_ORDERS';
+const GOT_ALL_ORDERS_FOR_ADMIN = 'GOT_ALL_ORDERS_FOR_ADMIN';
 
 const gotCurrentOrders = orders => ({
   type: GOT_CURRENT_ORDERS,
@@ -11,6 +12,11 @@ const gotCurrentOrders = orders => ({
 const gotPastOrders = orders => ({
   type: GOT_PAST_ORDERS,
   orders,
+});
+
+const gotAllOrdersForAdmin = allOrders => ({
+  type: GOT_ALL_ORDERS_FOR_ADMIN,
+  allOrders,
 });
 
 export const currentOrdersReducer = (state = [], action) => {
@@ -31,6 +37,15 @@ export const pastOrdersReducer = (state = [], action) => {
   }
 };
 
+export const allOrdersAdminReducer = (state = [], action) => {
+  switch (action.type) {
+    case GOT_ALL_ORDERS_FOR_ADMIN:
+      return action.allOrders;
+    default:
+      return state;
+  }
+}
+
 export const getCurrentOrders = userId => {
   return dispatch => {
     return axios
@@ -48,3 +63,12 @@ export const getPastOrders = userId => {
       .then(action => dispatch(action));
   };
 };
+
+export const getAllOrdersAdmin = () => {
+  return dispatch => {
+    return axios
+    .get('/api/orders')
+    .then(response => response.data)
+    .then(orders => dispatch(gotAllOrdersForAdmin(orders)))
+  };
+}
