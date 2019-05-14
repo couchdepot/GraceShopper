@@ -47,101 +47,107 @@ class ProductsList extends Component {
       : products;
     return (
       <div style={{ transform: 'translateY(8px)' }}>
-        <Drawer variant="permanent" style={{ padding: '1rem' }}>
-          <Typography
-            variant="h6"
-            color="textPrimary"
-            style={{ marginTop: '1em' }}
-          >
-            Category
-          </Typography>
-          <Button
-            onClick={() => this.filter(0)}
-            component={Link}
-            to="/products"
-            color="primary"
-            size="small"
-            fullWidth={false}
-          >
-            clear
-          </Button>
-          <List style={{ width: 240 }}>
-            {categories.map(category => (
+        <Drawer variant="permanent">
+          <div style={{ padding: '1rem 1.5rem' }}>
+            <Typography
+              variant="h6"
+              color="textPrimary"
+              style={{ marginTop: '1em' }}
+            >
+              Category
+              <Button
+                onClick={() => this.filter(0)}
+                component={Link}
+                to="/products"
+                color="primary"
+                size="small"
+                fullWidth={false}
+              >
+                clear
+              </Button>
+            </Typography>
+            <List style={{ width: 240 }}>
+              {categories.map(category => (
+                <ListItem
+                  button={true}
+                  component={Link}
+                  to={`/category/${category.id}`}
+                  key={category.id}
+                  selected={match.params.categoryId * 1 === category.id}
+                >
+                  <Typography variant="subtitle1">{category.name}</Typography>
+                </ListItem>
+              ))}
+            </List>
+            <Typography
+              variant="h6"
+              color="textPrimary"
+              style={{ marginTop: '1em' }}
+            >
+              Rating
+              <Button
+                onClick={() => this.filter(0)}
+                component={Link}
+                to="/products"
+                color="primary"
+                size="small"
+                fullWidth={false}
+              >
+                clear
+              </Button>
+            </Typography>
+            <List>
               <ListItem
                 button={true}
-                component={Link}
-                to={`/category/${category.id}`}
-                key={category.id}
-                selected={match.params.categoryId * 1 === category.id}
+                onClick={() => this.filter(4)}
+                selected={this.state.rating === 4}
               >
-                {category.name}
+                <Star style={{ color: 'gold' }} />{' '}
+                <Star style={{ color: 'gold' }} />{' '}
+                <Star style={{ color: 'gold' }} />{' '}
+                <Star style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <Typography variant="subtitle1">& Up</Typography>
               </ListItem>
-            ))}
-          </List>
-          <Typography
-            variant="h6"
-            color="textPrimary"
-            style={{ marginTop: '1em' }}
-          >
-            Rating
-          </Typography>
-          <Button
-            onClick={() => this.filter(0)}
-            component={Link}
-            to="/products"
-            color="primary"
-            size="small"
-            fullWidth={false}
-          >
-            clear
-          </Button>
-          <List>
-            <ListItem
-              button={true}
-              onClick={() => this.filter(4)}
-              selected={this.state.rating === 4}
-            >
-              <Star style={{ color: 'gold' }} />{' '}
-              <Star style={{ color: 'gold' }} />{' '}
-              <Star style={{ color: 'gold' }} />{' '}
-              <Star style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} /> & Up
-            </ListItem>
-            <ListItem
-              button={true}
-              onClick={() => this.filter(3)}
-              selected={this.state.rating === 3}
-            >
-              <Star style={{ color: 'gold' }} />{' '}
-              <Star style={{ color: 'gold' }} />{' '}
-              <Star style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} /> & Up
-            </ListItem>
+              <ListItem
+                button={true}
+                onClick={() => this.filter(3)}
+                selected={this.state.rating === 3}
+              >
+                <Star style={{ color: 'gold' }} />{' '}
+                <Star style={{ color: 'gold' }} />{' '}
+                <Star style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <Typography variant="subtitle1">& Up</Typography>
+              </ListItem>
 
-            <ListItem
-              button={true}
-              onClick={() => this.filter(2)}
-              selected={this.state.rating === 2}
-            >
-              <Star style={{ color: 'gold' }} />{' '}
-              <Star style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} /> & Up
-            </ListItem>
-            <ListItem
-              button={true}
-              onClick={() => this.filter(1)}
-              selected={this.state.rating === 1}
-            >
-              <Star style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} />{' '}
-              <StarBorder style={{ color: 'gold' }} /> & Up
-            </ListItem>
-          </List>
+              <ListItem
+                button={true}
+                onClick={() => this.filter(2)}
+                selected={this.state.rating === 2}
+              >
+                <Star style={{ color: 'gold' }} />{' '}
+                <Star style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <Typography variant="subtitle1">& Up</Typography>
+              </ListItem>
+              <ListItem
+                button={true}
+                onClick={() => this.filter(1)}
+                selected={this.state.rating === 1}
+              >
+                <Star style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <StarBorder style={{ color: 'gold' }} />{' '}
+                <Typography variant="subtitle1">& Up</Typography>
+              </ListItem>
+            </List>
+          </div>
         </Drawer>
         <Grid
           container
