@@ -11,9 +11,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { deleteProduct } from '../../reducers';
+import {Edit, Visibility, VisibilityOff } from '@material-ui/icons';
+import { updateProduct } from '../../reducers';
 
 const styles = theme => ({
   root: {
@@ -29,7 +28,8 @@ const styles = theme => ({
   },
 });
 
-const ManageProducts = ({ classes, products, deleteProduct }) => {
+const ManageProducts = ({ classes, products, updateProduct }) => {
+  
   return (
     <Grid container direction="column" spacing={24} className={classes.root}>
       <Grid item>
@@ -54,7 +54,7 @@ const ManageProducts = ({ classes, products, deleteProduct }) => {
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="center">Edit</TableCell>
-                <TableCell align="center">Delete</TableCell>
+                <TableCell align="center">Available</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -72,15 +72,15 @@ const ManageProducts = ({ classes, products, deleteProduct }) => {
                       component={Link}
                       to={`/admin/products/edit/${product.id}`}
                     >
-                      <EditIcon />
+                      <Edit />
                     </IconButton>
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
                       aria-label="Delete"
-                      onClick={() => deleteProduct(product.id)}
+                      onClick={() => updateProduct(product.id, {available: !product.available})}
                     >
-                      <DeleteIcon />
+                      {product.available ? <Visibility/> : <VisibilityOff/>}
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -101,7 +101,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteProduct: productId => dispatch(deleteProduct(productId)),
+    updateProduct: (productId, product) => dispatch(updateProduct(productId, product)),
   };
 };
 
