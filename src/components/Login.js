@@ -22,8 +22,9 @@ const Login = ({ loginUser, history, location, state }) => {
     event.preventDefault();
     loginUser(email, password)
       .then(() => {
-        if (location.state.from) history.push('/checkout');
-        else history.push('/');
+        console.log(location);
+        if (location.state && location.state.from) history.push('/checkout');
+        else history.push('/products');
       })
       .catch(ex => setErrorMessage(ex.response.data));
   };
