@@ -19,8 +19,11 @@ import ListIcon from '@material-ui/icons/ListOutlined';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import GroupOutlined from '@material-ui/icons/GroupOutlined';
 
-const Sidelist = ({ classes, user }) => {
+import { logOutUser, emptyLineItem, gotCart } from '../../reducers';
+
+const Sidelist = ({ classes, user, logOutUser, emptyLineItem, emptyCart }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,7 +38,7 @@ const Sidelist = ({ classes, user }) => {
           </a>
         </ListItem>
         <ListItem button>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <a href="#/" style={{ textDecoration: 'none', display: 'flex' }}>
             <ListItemIcon>
               <Store />
             </ListItemIcon>
@@ -43,7 +46,7 @@ const Sidelist = ({ classes, user }) => {
           </a>
         </ListItem>
         <ListItem button>
-          <a href="/" style={{ textDecoration: 'none', display: 'flex' }}>
+          <a href="#/" style={{ textDecoration: 'none', display: 'flex' }}>
             <ListItemIcon>
               <Departments />
             </ListItemIcon>
@@ -61,15 +64,34 @@ const Sidelist = ({ classes, user }) => {
             <ListItemText primary="Orders" />
           </a>
         </ListItem>
-        <ListItem button>
-          <a href="#/login" style={{ textDecoration: 'none', display: 'flex' }}>
+        {!user.id && (
+          <ListItem button>
+            <a
+              href="#/login"
+              style={{ textDecoration: 'none', display: 'flex' }}
+            >
+              <ListItemIcon>
+                <AccountCircle />
+              </ListItemIcon>
+              <ListItemText primary="Sign In" />
+            </a>
+          </ListItem>
+        )}
+        {user.id && (
+          <ListItem
+            button
+            onClick={() => {
+              logOutUser();
+              emptyLineItem();
+              emptyCart();
+            }}
+          >
             <ListItemIcon>
               <AccountCircle />
             </ListItemIcon>
-            <ListItemText primary="Login" />
-          </a>
-        </ListItem>
-
+            <ListItemText primary="Sign Out" />
+          </ListItem>
+        )}
         {user.admin && (
           <Fragment>
             <ListItem button onClick={() => setOpen(!open)}>
@@ -97,6 +119,15 @@ const Sidelist = ({ classes, user }) => {
                   <ListItemText inset primary="Categories" />
                 </ListItem>
               </List>
+
+              <List component="div" disablePadding>
+                <ListItem button component={Link} to="/admin/users">
+                  <ListItemIcon>
+                    <GroupOutlined />
+                  </ListItemIcon>
+                  <ListItemText inset primary="Users" />
+                </ListItem>
+              </List>
             </Collapse>
           </Fragment>
         )}
@@ -111,4 +142,15 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Sidelist);
+const mapDispatchToProps = dispatch => {
+  return {
+    logOutUser: () => dispatch(logOutUser()),
+    emptyLineItem: () => dispatch(emptyLineItem()),
+    emptyCart: () => dispatch(gotCart({})),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sidelist);

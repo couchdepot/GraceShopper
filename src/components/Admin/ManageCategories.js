@@ -14,7 +14,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
-import { deleteCategory } from '../reducers';
+import { deleteCategory } from '../../reducers';
 
 const styles = theme => ({
   root: {
