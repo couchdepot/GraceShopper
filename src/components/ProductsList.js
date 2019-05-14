@@ -48,7 +48,7 @@ class ProductsList extends Component {
     return (
       <div style={{ transform: 'translateY(8px)' }}>
         <Drawer variant="permanent">
-          <div style={{ padding: '1rem 1.5rem' }}>
+          <div style={{ padding: '1rem 0 0 1rem' }}>
             <Typography
               variant="h6"
               color="textPrimary"
@@ -152,7 +152,7 @@ class ProductsList extends Component {
         <Grid
           container
           spacing={40}
-          style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 250 }}
+          style={{ marginTop: '60px', paddingRight: '1vw', paddingLeft: 280 }}
         >
           {products.map(product => {
             const lineItem = lineItems.find(
