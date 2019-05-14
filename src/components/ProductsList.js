@@ -58,6 +58,28 @@ const ProductsList = ({
         <Typography variant="headline" color="textPrimary">
           Filters
         </Typography>
+        <List>
+            <ListItem
+            button={true}
+            >
+              <Star/> & Up
+            </ListItem>
+            <ListItem
+            button={true}
+            >
+              <Star/> <Star/> & Up
+            </ListItem>
+            <ListItem
+            button={true}
+            >
+              <Star/> <Star/> <Star/> & Up
+            </ListItem>
+            <ListItem
+            button={true}
+            >
+              <Star/> <Star/> <Star/> <Star/> & Up
+            </ListItem>
+        </List>
       </Drawer>
       <Grid
         container
@@ -74,14 +96,17 @@ const ProductsList = ({
                 <img
                   src={product.imageUrl}
                   style={{
-                    width: '100%',
+                    width: 'auto',
+                    height: 240,
+                    margin: 'auto',
+                    display: 'block',
                   }}
                 />
               </Link>
               <Typography
                 variant="headline"
                 color="textPrimary"
-                style={{ textAlign: 'justify', fontWeight: 'bold' }}
+                style={{ textAlign: 'justify' }}
               >
                 ${product.price}
               </Typography>
