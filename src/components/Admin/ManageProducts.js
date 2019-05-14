@@ -54,7 +54,7 @@ const ManageProducts = ({ classes, products, updateProduct }) => {
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="center">Edit</TableCell>
-                <TableCell align="center">Available</TableCell>
+                <TableCell align="center">Availability</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
