@@ -74,17 +74,14 @@ const ProductsList = ({
                 <img
                   src={product.imageUrl}
                   style={{
-                    width: 'auto',
-                    height: 240,
-                    margin: 'auto',
-                    display: 'block',
+                    width: '100%',
                   }}
                 />
               </Link>
               <Typography
                 variant="headline"
                 color="textPrimary"
-                style={{ textAlign: 'justify' }}
+                style={{ textAlign: 'justify', fontWeight: 'bold' }}
               >
                 ${product.price}
               </Typography>

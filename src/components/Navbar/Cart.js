@@ -6,13 +6,13 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 
 const Cart = ({ classes, itemsInCart }) => {
   return (
-    <IconButton className={classes.IconButton}>
-      <Badge badgeContent={itemsInCart} color="secondary">
-        <a href="#/cart" style={{ textDecoration: 'none', color: 'grey' }}>
-          <ShoppingCartIcon />
-        </a>
-      </Badge>
-    </IconButton>
+    <a href="#/cart" style={{ textDecoration: 'none', color: 'grey' }}>
+      <IconButton className={classes.IconButton}>
+        <Badge badgeContent={itemsInCart} color="secondary">
+          <ShoppingCartIcon style={{ color: 'grey' }} />
+        </Badge>
+      </IconButton>
+    </a>
   );
 };
 
