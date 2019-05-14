@@ -1,12 +1,14 @@
 import ProductsList from './ProductsList';
 import Login from './Login';
 import SingleProduct from './SingleProduct';
-import ManageProducts from './ManageProducts';
-import ManageCategories from './ManageCategories';
-import EditCategory from './EditCategory';
-import EditProduct from './EditProduct';
+import ManageProducts from './Admin/ManageProducts';
+import ManageCategories from './Admin/ManageCategories';
+import EditCategory from './Admin/EditCategory';
+import EditProduct from './Admin/EditProduct';
 import AccessDenied from './AccessDenied';
 import Orders from './Orders/Orders';
+import ManageUsers from './Admin/ManageUsers';
+import EditUser from './Admin/EditUser';
 
 export {
   ProductsList,
@@ -18,4 +20,6 @@ export {
   EditProduct,
   AccessDenied,
   Orders,
+  ManageUsers,
+  EditUser,
 };

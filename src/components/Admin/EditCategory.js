@@ -10,7 +10,7 @@ import {
   Button,
   Typography,
 } from '@material-ui/core';
-import { updateCategory, createCategory } from '../reducers';
+import { updateCategory, createCategory } from '../../reducers';
 
 // Custom hook for form input field
 // Sets input field value creates setValue and handleChage methods

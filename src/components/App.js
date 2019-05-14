@@ -16,6 +16,8 @@ import {
   ManageCategories,
   EditCategory,
   Orders,
+  ManageUsers,
+  EditUser,
 } from './';
 import Navbar from './Navbar';
 import Cart from './Cart';
@@ -41,12 +43,14 @@ class App extends Component {
       getCategories,
       lineItemsSession,
     } = this.props;
+
     Promise.all([
       getProducts(),
       loginSession(),
       getCategories(),
       lineItemsSession(),
     ]);
+
   }
 
   componentDidUpdate(prevProps) {
@@ -83,19 +87,20 @@ class App extends Component {
     return (
       <Router>
         <Navbar />
-        <Switch>
           <Route path="/" exact render={() => <Redirect to="/products" />} />
           <Route path="/orders" component={Orders} />
           <Route path="/login" exact component={Login} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/products" component={ProductsList} />
+        <Switch>
           <Route path="/products/search/:search" component={ProductsList} />
           <Route
             path="/category/:categoryId/search/:search"
             component={ProductsList}
           />
+          </Switch>
           <Route exact path="/category/:categoryId" component={ProductsList} />
-          <Route path="/products/:productId" component={SingleProduct} />
+          <Route path="/products/:productId" exact component={SingleProduct} />
           {user.admin ? (
             <Fragment>
               <Route path="/admin/products" exact component={ManageProducts} />
@@ -109,12 +114,13 @@ class App extends Component {
                 path="/admin/categories/edit/:id?"
                 component={EditCategory}
               />
+              <Route path="/admin/users" exact component={ManageUsers} />
+              <Route path="/admin/users/edit/:id?" component={EditUser} />
             </Fragment>
           ) : (
             <Route path="/admin" component={AccessDenied} />
           )}
           <Route path="/checkout" component={Checkout} />
-        </Switch>
       </Router>
     );
   }

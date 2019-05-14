@@ -6,14 +6,14 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true,
+      notEmpty: { msg: "First name can't be empty" },
     },
   },
   lastName: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true,
+      notEmpty: { msg: "Last name can't be empty" },
     },
   },
   imageUrl: {
@@ -29,7 +29,7 @@ const User = db.define('user', {
     allowNull: false,
     unique: { msg: 'Email must be unique' },
     validate: {
-      notEmpty: true,
+      notEmpty: { msg: "Email can't be empty" },
       isEmail: true,
     },
   },
@@ -38,13 +38,27 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      len: [5, 12],
+      len: {args: [5, 12], msg: "Password must be 5-12 characters long"},
     },
   },
   admin: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false,
+  },
+    fullName: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
+    },
+  },
+}, {
+  hooks: {
+    beforeValidate: user => {
+      if (!user.imageUrl)
+        user.imageUrl =
+          'https://images.dailykos.com/images/479822/story_image/unnamed.jpg?1512326578';
+    },
   },
 });
 

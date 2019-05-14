@@ -58,6 +58,8 @@ import {
   getPastOrders,
 } from './ordersReducer';
 
+import {usersReducer, getAllUsers, deleteUser, updateUser, createUser} from './usersReducer';
+
 const rootReducer = combineReducers({
   products: productsReducer,
   user: userReducer,
@@ -67,6 +69,7 @@ const rootReducer = combineReducers({
   currentOrders: currentOrdersReducer,
   pastOrders: pastOrdersReducer,
   addresses: addressReducer,
+  users: usersReducer,
 });
 
 export {
@@ -100,4 +103,8 @@ export {
   updateSelectedAddress,
   createAddress,
   updateAddress,
+  getAllUsers,
+  deleteUser,
+  updateUser,
+  createUser
 };
