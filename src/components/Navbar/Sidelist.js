@@ -62,15 +62,19 @@ const Sidelist = ({ classes, user }) => {
             <ListItemText primary="Orders" />
           </a>
         </ListItem>
-        <ListItem button>
-          <a href="#/login" style={{ textDecoration: 'none', display: 'flex' }}>
-            <ListItemIcon>
-              <AccountCircle />
-            </ListItemIcon>
-            <ListItemText primary="Login" />
-          </a>
-        </ListItem>
-
+        {!user.id && (
+          <ListItem button>
+            <a
+              href="#/login"
+              style={{ textDecoration: 'none', display: 'flex' }}
+            >
+              <ListItemIcon>
+                <AccountCircle />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
+            </a>
+          </ListItem>
+        )}
         {user.admin && (
           <Fragment>
             <ListItem button onClick={() => setOpen(!open)}>
